@@ -118,14 +118,20 @@
             </div>
         </div>
 
-        <div class="product-card__footer">
-            <div class="product-card__prices">
-                <ng-container *ngIf="product.compareAtPrice">
-                    <div class="product-card__price product-card__price--new">
-                        {{ product.price | currencyFormat }}
-                    </div>
-                </ng-container>
-            </div>
+        <div class="product-card__prices">
+            <ng-container *ngIf="product.compareAtPrice">
+                <div class="product-card__price product-card__price--new">
+                    {{ product.price | currencyFormat }}
+                </div>
+                <div class="product-card__price product-card__price--old">
+                    {{ product.compareAtPrice | currencyFormat }}
+                </div>
+            </ng-container>
+            <ng-container *ngIf="!product.compareAtPrice">
+                <div class="product-card__price product-card__price--current">
+                    {{ product.price | currencyFormat }}
+                </div>
+            </ng-container>
         </div>
 
         <div
@@ -149,13 +155,8 @@
 
     <div class="product-card__footer">
         <ng-container *ngIf="!exclude.includes('buttons')">
-            <button
-                type="button"
-                class="product-card__addtocart-icon"
-                [class.product-card__addtocart-icon--loading]="cart.inProgress"
-                [attr.aria-label]="'BUTTON_ADD_TO_CART' | translate"
-            >
-                <app-icon icon="cart-20"></app-icon>
+            <button type="button" class="btn btn-primary">
+                Ask for Quotation
             </button>
             <ng-container *ngIf="!exclude.includes('list-buttons')">
                 <button
