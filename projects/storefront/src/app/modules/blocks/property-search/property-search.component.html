@@ -18,77 +18,79 @@
         <div class="panels">
             <div class="panel" id="one-panel">
                 <div class="block-finder__body container container--max--xl">
-                    <form
-                        class="block-finder__form"
-                        (submit)="search()"
-                        [formGroup]="rentFormSearch"
-                    >
-                        <select
-                            class="vehicle-select__item-control"
-                            formControlName="Country"
-                        >
-                            <option value="none">Select Country</option>
+                    <form class="block-finder__form" (submit)="submit()">
+                        <select class="vehicle-select__item-control">
+                            <option value="none">Select City</option>
 
                             <option>
-                                <input
-                                    type="checkbox"
-                                    name="United States"
-                                    id=""
-                                />United States
+                                <input type="checkbox" name="" id="" /> City 1
+                            </option>
+                            <option>
+                                <input type="checkbox" name="" id="" />BBB
+                            </option>
+                            <option>
+                                <input type="checkbox" name="" id="" />CCC
+                            </option>
+                            <option>
+                                <input type="checkbox" name="" id="" />DDD
                             </option>
                         </select>
 
                         <select class="vehicle-select__item-control">
-                            <option value="none" selected>Select City</option>
+                            <option value="none">Select Area</option>
 
-                            <option value="San Francisco">San Francisco</option>
+                            <option>
+                                <input type="checkbox" name="" id="" />Area
+                            </option>
+                            <option>
+                                <input type="checkbox" name="" id="" />BBB
+                            </option>
+                            <option>
+                                <input type="checkbox" name="" id="" />CCC
+                            </option>
+                            <option>
+                                <input type="checkbox" name="" id="" />DDD
+                            </option>
                         </select>
-                        <select
-                            class="vehicle-select__item-control"
-                            formControlName="Type"
-                        >
+                        <select class="vehicle-select__item-control">
                             <option value="none">Select Type</option>
-
-                            <option>
-                                <input type="checkbox" name="" id="" />Select
-                                Type
-                            </option>
-                            <option>
-                                <input
-                                    type="checkbox"
-                                    name=""
-                                    id=""
-                                />Apartments
-                            </option>
-                        </select>
-                        <select
-                            class="vehicle-select__item-control"
-                            formControlName="Room"
-                        >
-                            <option value="none">Number of Rooms</option>
 
                             <option>
                                 <input type="checkbox" name="" id="" />Select
                                 Area
                             </option>
                             <option>
-                                <input type="checkbox" name="" id="" />1
+                                <input type="checkbox" name="" id="" />BBB
                             </option>
                             <option>
-                                <input type="checkbox" name="" id="" />2
+                                <input type="checkbox" name="" id="" />CCC
                             </option>
                             <option>
-                                <input type="checkbox" name="" id="" />3
+                                <input type="checkbox" name="" id="" />DDD
+                            </option>
+                        </select>
+                        <select class="vehicle-select__item-control">
+                            <option value="none">Number of Room</option>
+
+                            <option>
+                                <input type="checkbox" name="" id="" />Select
+                                Area
                             </option>
                             <option>
-                                <input type="checkbox" name="" id="" />4
+                                <input type="checkbox" name="" id="" />BBB
+                            </option>
+                            <option>
+                                <input type="checkbox" name="" id="" />CCC
+                            </option>
+                            <option>
+                                <input type="checkbox" name="" id="" />DDD
                             </option>
                         </select>
                         <a
-                            [routerLink]="['/shop/category/product']"
+                            [routerLink]="['/shop/category/products']"
                             rel="noopener noreferrer"
                         >
-                            <button class="block-finder__button">
+                            <button class="block-finder__button" type="submit">
                                 {{ "BUTTON_BLOCK_FINDER_SEARCH" | translate }}
                             </button></a
                         >
@@ -166,13 +168,10 @@
                                 <input type="checkbox" name="" id="" />DDD
                             </option>
                         </select>
-                        <a
-                        [routerLink]="['/shop/category/product']"
-                        rel="noopener noreferrer"
-                    >
+
                         <button class="block-finder__button" type="submit">
                             {{ "BUTTON_BLOCK_FINDER_SEARCH" | translate }}
-                        </button></a>
+                        </button>
                     </form>
                 </div>
             </div>
