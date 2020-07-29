@@ -1,0 +1,203 @@
+<app-decor class="block-finder__decor" type="bottom"></app-decor>
+<div
+    class="block-finder__image"
+    style="background-color: white; opacity: 1;"
+></div>
+<div class="block-finder__body container container--max--xl">
+    <div class="block-finder__title" style="color: black;">Car</div>
+    <!-- <div class="block-finder__subtitle">{{ 'TEXT_BLOCK_FINDER_SUBTITLE'|translate }}</div> -->
+    <div class="warpper">
+        <input class="radio" id="one" name="group" type="radio" checked />
+        <input class="radio" id="two" name="group" type="radio" />
+        <input class="radio" id="three" name="group" type="radio" />
+        <div class="tabs">
+            <label class="tab" id="one-tab" for="one">Buy</label>
+            <label class="tab" id="two-tab" for="two">Rent</label>
+            <label class="tab" id="three-tab" for="three">Plan</label>
+        </div>
+        <div class="panels">
+            <div class="panel" id="one-panel">
+                <div class="block-finder__body container container--max--xl">
+                    <form class="block-finder__form" (submit)="submit()">
+                        <select class="vehicle-select__item-control">
+                            <option value="none">Select Brand</option>
+
+                            <option>
+                                <input type="checkbox" name="" id="" /> City 1
+                            </option>
+                            <option>
+                                <input type="checkbox" name="" id="" />BBB
+                            </option>
+                            <option>
+                                <input type="checkbox" name="" id="" />CCC
+                            </option>
+                            <option>
+                                <input type="checkbox" name="" id="" />DDD
+                            </option>
+                        </select>
+
+                        <select class="vehicle-select__item-control">
+                            <option value="none">Select Model</option>
+
+                            <option>
+                                <input type="checkbox" name="" id="" />Area
+                            </option>
+                            <option>
+                                <input type="checkbox" name="" id="" />BBB
+                            </option>
+                            <option>
+                                <input type="checkbox" name="" id="" />CCC
+                            </option>
+                            <option>
+                                <input type="checkbox" name="" id="" />DDD
+                            </option>
+                        </select>
+                        <select class="vehicle-select__item-control">
+                            <option value="none">Select Type</option>
+
+                            <option>
+                                <input type="checkbox" name="" id="" />Select
+                                Area
+                            </option>
+                            <option>
+                                <input type="checkbox" name="" id="" />BBB
+                            </option>
+                            <option>
+                                <input type="checkbox" name="" id="" />CCC
+                            </option>
+                            <option>
+                                <input type="checkbox" name="" id="" />DDD
+                            </option>
+                        </select>
+                        <select class="vehicle-select__item-control">
+                            <option value="none">Number of Room</option>
+
+                            <option>
+                                <input type="checkbox" name="" id="" />Select
+                                Area
+                            </option>
+                            <option>
+                                <input type="checkbox" name="" id="" />BBB
+                            </option>
+                            <option>
+                                <input type="checkbox" name="" id="" />CCC
+                            </option>
+                            <option>
+                                <input type="checkbox" name="" id="" />DDD
+                            </option>
+                        </select>
+
+                        <button class="block-finder__button" type="submit">
+                            {{ "BUTTON_BLOCK_FINDER_SEARCH" | translate }}
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="panel" id="two-panel">
+                <div class="block-finder__body container container--max--xl">
+                    <form class="block-finder__form" (submit)="submit()">
+                        <select class="vehicle-select__item-control">
+                            <option value="none">Select City</option>
+
+                            <option>
+                                <input type="checkbox" name="" id="" /> City 1
+                            </option>
+                            <option>
+                                <input type="checkbox" name="" id="" />BBB
+                            </option>
+                            <option>
+                                <input type="checkbox" name="" id="" />CCC
+                            </option>
+                            <option>
+                                <input type="checkbox" name="" id="" />DDD
+                            </option>
+                        </select>
+
+                        <select class="vehicle-select__item-control">
+                            <option value="none">Select Area</option>
+
+                            <option>
+                                <input type="checkbox" name="" id="" />Area
+                            </option>
+                            <option>
+                                <input type="checkbox" name="" id="" />BBB
+                            </option>
+                            <option>
+                                <input type="checkbox" name="" id="" />CCC
+                            </option>
+                            <option>
+                                <input type="checkbox" name="" id="" />DDD
+                            </option>
+                        </select>
+                        <select class="vehicle-select__item-control">
+                            <option value="none">Select Type</option>
+
+                            <option>
+                                <input type="checkbox" name="" id="" />Select
+                                Area
+                            </option>
+                            <option>
+                                <input type="checkbox" name="" id="" />BBB
+                            </option>
+                            <option>
+                                <input type="checkbox" name="" id="" />CCC
+                            </option>
+                            <option>
+                                <input type="checkbox" name="" id="" />DDD
+                            </option>
+                        </select>
+                        <select class="vehicle-select__item-control">
+                            <option value="none">Number of Room</option>
+
+                            <option>
+                                <input type="checkbox" name="" id="" />Select
+                                Area
+                            </option>
+                            <option>
+                                <input type="checkbox" name="" id="" />BBB
+                            </option>
+                            <option>
+                                <input type="checkbox" name="" id="" />CCC
+                            </option>
+                            <option>
+                                <input type="checkbox" name="" id="" />DDD
+                            </option>
+                        </select>
+
+                        <button class="block-finder__button" type="submit">
+                            {{ "BUTTON_BLOCK_FINDER_SEARCH" | translate }}
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="panel" id="three-panel">
+                <div class="block-finder__body container container--max--xl">
+                    <form class="block-finder__form" (submit)="submit()">
+                        <h5>
+                            I'm looking for type
+                            <select style="width: 130px; border: none;">
+                                <option value="">apartemnt</option>
+                                <option value="">house</option>
+                            </select>
+                            . <br />
+                            I make
+                            <input
+                                type="text"
+                                placeholder="1000"
+                                style="width: 60px; border: none;"
+                            />
+                            JOD monthly , I can pay
+                            <input
+                                type="text"
+                                placeholder="1000"
+                                style="width: 60px; border: none;"
+                            />
+                            monthly.
+                        </h5>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
