@@ -8,8 +8,7 @@ import { UrlService } from '../../../../services/url.service';
     styleUrls: ['./page-wishlist.component.scss'],
 })
 export class PageWishlistComponent {
-    constructor(
-        public wishlist: WishlistService,
-        public url: UrlService,
-    ) { }
+    constructor(public wishlist: WishlistService, public url: UrlService) {
+        console.log(wishlist.count$);
+    }
 }

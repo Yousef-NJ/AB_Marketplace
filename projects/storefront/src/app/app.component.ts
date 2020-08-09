@@ -1,4 +1,12 @@
-import { Component, Inject, NgZone, OnDestroy, OnInit, PLATFORM_ID, Renderer2 } from '@angular/core';
+import {
+    Component,
+    Inject,
+    NgZone,
+    OnDestroy,
+    OnInit,
+    PLATFORM_ID,
+    Renderer2,
+} from '@angular/core';
 import { LanguageService } from './modules/language/services/language.service';
 import { ToastrService } from 'ngx-toastr';
 import { CartService } from './services/cart.service';
@@ -33,55 +41,82 @@ export class AppComponent implements OnInit, OnDestroy {
         private wishlist: WishlistService,
         private vehicleApi: VehicleApi,
         private currentVehicle: CurrentVehicleService,
-        private translate: TranslateService,
+        private translate: TranslateService
     ) {
-        this.language.direction$.pipe(
-            takeUntil(this.destroy$),
-        ).subscribe(direction => {
-            this.renderer.setAttribute(this.document.documentElement, 'dir', direction);
-        });
+        this.language.direction$
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((direction) => {
+                this.renderer.setAttribute(
+                    this.document.documentElement,
+                    'dir',
+                    direction
+                );
+            });
     }
 
     ngOnInit(): void {
-
         if (isPlatformBrowser(this.platformId)) {
             this.zone.runOutsideAngular(() => {
-                this.router.events.pipe(
-                    filter(event => event instanceof NavigationEnd),
-                    first(),
-                ).subscribe(() => {
-                    const preloader = document.querySelector('.site-preloader');
+                this.router.events
+                    .pipe(
+                        filter((event) => event instanceof NavigationEnd),
+                        first()
+                    )
+                    .subscribe(() => {
+                        const preloader = document.querySelector(
+                            '.site-preloader'
+                        );
 
-                    preloader.addEventListener('transitionend', (event: TransitionEvent) => {
-                        if (event.propertyName === 'opacity') {
-                            preloader.remove();
-                            document.querySelector('.site-preloader-style').remove();
-                        }
+                        preloader.addEventListener(
+                            'transitionend',
+                            (event: TransitionEvent) => {
+                                if (event.propertyName === 'opacity') {
+                                    preloader.remove();
+                                    document
+                                        .querySelector('.site-preloader-style')
+                                        .remove();
+                                }
+                            }
+                        );
+                        preloader.classList.add('site-preloader__fade');
                     });
-                    preloader.classList.add('site-preloader__fade');
-                });
             });
         }
 
-        this.cart.onAdding$.subscribe(product => {
+        this.cart.onAdding$.subscribe((product) => {
             this.toastr.success(
-                this.translate.instant('TEXT_TOAST_PRODUCT_ADDED_TO_CART', {productName: product.name}),
+                this.translate.instant('TEXT_TOAST_PRODUCT_ADDED_TO_CART', {
+                    productName: product.name,
+                })
             );
         });
-        this.compare.onAdding$.subscribe(product => {
+        this.compare.onAdding$.subscribe((product) => {
             this.toastr.success(
-                this.translate.instant('TEXT_TOAST_PRODUCT_ADDED_TO_COMPARE', {productName: product.name}),
+                this.translate.instant('TEXT_TOAST_PRODUCT_ADDED_TO_COMPARE', {
+                    productName: product.name,
+                })
             );
         });
-        this.wishlist.onAdding$.subscribe(product => {
-            this.toastr.success(
-                this.translate.instant('TEXT_TOAST_PRODUCT_ADDED_TO_WISHLIST', {productName: product.name}),
-            );
+        this.wishlist.onAdding$.subscribe((product) => {
+            if (product.type != 'car')
+                this.toastr.success(
+                    this.translate.instant(
+                        'TEXT_TOAST_PRODUCT_ADDED_TO_WISHLIST',
+                        { productName: product.name }
+                    )
+                );
+            else
+                this.toastr.success(
+                    this.translate.instant(
+                        'TEXT_TOAST_PRODUCT_ADDED_TO_WISHLIST',
+                        { productName: product.model }
+                    )
+                );
         });
 
-        this.vehicleApi.currentVehicle$.pipe(
-            takeUntil(this.destroy$),
-        ).subscribe(x => this.currentVehicle.value = x);
+        this.vehicleApi.currentVehicle$
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((x) => (this.currentVehicle.value = x));
     }
 
     ngOnDestroy(): void {

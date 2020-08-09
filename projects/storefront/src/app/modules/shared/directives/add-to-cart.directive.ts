@@ -13,27 +13,27 @@ export class AddToCartDirective implements OnDestroy {
 
     inProgress = false;
 
-    constructor(
-        private cart: CartService,
-        private cd: ChangeDetectorRef,
-    ) { }
+    constructor(private cart: CartService, private cd: ChangeDetectorRef) {}
 
     ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }
 
-    add(product: Product, quantity: number = 1): void {
+    add(product: any, quantity: number = 1): void {
         if (this.inProgress) {
             return;
         }
 
         this.inProgress = true;
-        this.cart.add(product, quantity).pipe(takeUntil(this.destroy$)).subscribe({
-            complete: () => {
-                this.inProgress = false;
-                this.cd.markForCheck();
-            },
-        });
+        this.cart
+            .add(product, quantity)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe({
+                complete: () => {
+                    this.inProgress = false;
+                    this.cd.markForCheck();
+                },
+            });
     }
 }

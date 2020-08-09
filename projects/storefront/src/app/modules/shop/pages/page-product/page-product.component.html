@@ -20,7 +20,7 @@
                         <div class="product__card product__card--one"></div>
                         <div class="product__card product__card--two"></div>
 
-                        <app-product-gallery class="product__gallery" [images]="product.images" [layout]="galleryLayout"></app-product-gallery>
+                        <app-product-gallery class="product__gallery" [images]="product.pictures" [layout]="galleryLayout"></app-product-gallery>
 
                         <div class="product__header">
                             <h1 class="product__title">{{ product.name }}</h1>
@@ -184,7 +184,7 @@
                                         <app-icon icon="wishlist-16"></app-icon>
                                         <span>{{ 'BUTTON_ADD_TO_WISHLIST'|translate }}</span>
                                     </button>
-                                    <button
+                                    <!-- <button
                                         appAddToCompare
                                         type="button"
                                         class="product__actions-item product__actions-item--compare"
@@ -194,7 +194,7 @@
                                     >
                                         <app-icon icon="compare-16"></app-icon>
                                         <span>{{ 'BUTTON_ADD_TO_COMPARE'|translate }}</span>
-                                    </button>
+                                    </button> -->
                                 </div>
 
                                 <div class="product__tags-and-share-links">

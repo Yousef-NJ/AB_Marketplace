@@ -20,7 +20,7 @@ export class QuickviewComponent implements OnDestroy, AfterViewInit {
 
     showGallery = false;
 
-    product: Product = null;
+    product: any = null;
 
     form: FormGroup;
 
@@ -34,38 +34,44 @@ export class QuickviewComponent implements OnDestroy, AfterViewInit {
         private translate: TranslateService,
         private cart: CartService,
         private router: Router,
-        public url: UrlService,
-    ) { }
+        public url: UrlService
+    ) {
+        console.log(this.product);
+    }
 
     ngAfterViewInit(): void {
-        this.quickview.show$.pipe(
-            switchMap(product => {
-                this.modal.show();
-                this.product = product;
+        this.quickview.show$
+            .pipe(
+                switchMap((product) => {
+                    this.modal.show();
+                    this.product = product;
 
-                this.form = this.fb.group({
-                    options: [{}],
-                    quantity: [1, [Validators.required]],
-                });
+                    this.form = this.fb.group({
+                        options: [{}],
+                        quantity: [1, [Validators.required]],
+                    });
 
-                // We are waiting for when the content will be rendered.
-                // 150 = BACKDROP_TRANSITION_DURATION
-                return timer(150);
-            }),
-            takeUntil(this.destroy$),
-        ).subscribe(() => {
-            // Show gallery only after content is rendered.
-            this.showGallery = this.product !== null;
-        });
+                    // We are waiting for when the content will be rendered.
+                    // 150 = BACKDROP_TRANSITION_DURATION
+                    return timer(150);
+                }),
+                takeUntil(this.destroy$)
+            )
+            .subscribe(() => {
+                // Show gallery only after content is rendered.
+                this.showGallery = this.product !== null;
+            });
 
-        this.router.events.pipe(
-            filter(event => event instanceof NavigationStart),
-            takeUntil(this.destroy$),
-        ).subscribe(() => {
-            if (this.modal && this.modal.isShown) {
-                this.modal.hide();
-            }
-        });
+        this.router.events
+            .pipe(
+                filter((event) => event instanceof NavigationStart),
+                takeUntil(this.destroy$)
+            )
+            .subscribe(() => {
+                if (this.modal && this.modal.isShown) {
+                    this.modal.hide();
+                }
+            });
 
         this.modal.onHidden.pipe(takeUntil(this.destroy$)).subscribe(() => {
             this.product = null;
@@ -91,29 +97,34 @@ export class QuickviewComponent implements OnDestroy, AfterViewInit {
             return;
         }
 
-        const options: {name: string; value: string}[] = [];
+        const options: { name: string; value: string }[] = [];
         const formOptions = this.form.get('options').value;
 
-        Object.keys(formOptions).forEach(optionSlug => {
-            const option = this.product.options.find(x => x.slug === optionSlug);
+        Object.keys(formOptions).forEach((optionSlug) => {
+            const option = this.product.options.find(
+                (x) => x.slug === optionSlug
+            );
 
             if (!option) {
                 return;
             }
 
-            const value = option.values.find(x => x.slug === formOptions[optionSlug]);
+            const value = option.values.find(
+                (x) => x.slug === formOptions[optionSlug]
+            );
 
             if (!value) {
                 return;
             }
 
-            options.push({name: option.name, value: value.name});
+            options.push({ name: option.name, value: value.name });
         });
 
         this.addToCartInProgress = true;
 
-        this.cart.add(this.product, this.form.get('quantity').value, options).pipe(
-            finalize(() => this.addToCartInProgress = false),
-        ).subscribe();
+        this.cart
+            .add(this.product, this.form.get('quantity').value, options)
+            .pipe(finalize(() => (this.addToCartInProgress = false)))
+            .subscribe();
     }
 }

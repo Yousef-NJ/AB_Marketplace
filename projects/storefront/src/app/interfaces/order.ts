@@ -1,14 +1,13 @@
 import { Product } from './product';
 import { AddressData } from './address';
 
-
 export interface OrderItemOption {
     name: string;
     value: string;
 }
 
 export interface OrderItem {
-    product: Product;
+    product: any;
     options: OrderItemOption[];
     price: number;
     quantity: number;

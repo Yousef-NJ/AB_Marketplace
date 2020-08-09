@@ -10,7 +10,7 @@
 <div class="checkout block" [formGroup]="form">
     <div class="container container--max--xl">
         <div class="row">
-            <div *ngIf="!(accountApi.user$|async)" class="col-12 mb-3">
+            <!-- <div *ngIf="!(accountApi.user$|async)" class="col-12 mb-3">
                 <div
                     class="alert alert-lg alert-primary"
                     [appSplitString]="'TEXT_ALERT_RETURNING_CUSTOMER'|translate"
@@ -20,7 +20,7 @@
                     <a [routerLink]="url.login()">{{ string.getPart(1) }}</a>
                     {{ string.getPart(2) }}
                 </div>
-            </div>
+            </div> -->
 
             <div class="col-12 col-lg-6 col-xl-7">
                 <div class="card mb-lg-0">

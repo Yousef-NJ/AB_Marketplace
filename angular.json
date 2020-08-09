@@ -107,9 +107,7 @@
               "projects/storefront/src/favicon.ico",
               "projects/storefront/src/assets"
             ],
-            "styles": [
-              "projects/storefront/src/styles.scss"
-            ],
+            "styles": ["projects/storefront/src/styles.scss"],
             "scripts": []
           }
         },
@@ -122,9 +120,7 @@
               "projects/storefront/e2e/tsconfig.json",
               "projects/storefront/tsconfig.server.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         },
         "e2e": {
@@ -178,9 +174,7 @@
           "options": {
             "browserTarget": "storefront:build:production",
             "serverTarget": "storefront:server:production",
-            "routes": [
-              "/"
-            ]
+            "routes": ["/"]
           },
           "configurations": {
             "production": {}

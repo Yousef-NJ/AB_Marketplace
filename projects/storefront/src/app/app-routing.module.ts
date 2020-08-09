@@ -6,6 +6,7 @@ import { CarsSearchHomeComponent } from './modules/home-one/pages/cars-search-ho
 import { PropertyComponent } from './modules/blocks/property/property.component';
 import { PropertySearchComponent } from './modules/blocks/property-search/property-search.component';
 import { PeopertySearchHomeComponent } from './modules/home-one/pages/peoperty-search-home/peoperty-search-home.component';
+import { QuotationComponent } from './modules/home-one/pages/quotation/quotation.component';
 
 const routes: Routes = [
     /**
@@ -113,6 +114,11 @@ const routes: Routes = [
                 path: 'cars',
                 pathMatch: 'full',
                 component: CarsSearchHomeComponent,
+            },
+            {
+                path: 'quotation',
+                pathMatch: 'full',
+                component: QuotationComponent,
             },
             {
                 path: 'property',

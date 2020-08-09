@@ -16,6 +16,7 @@ import { PeopertySearchHomeComponent } from './pages/peoperty-search-home/peoper
 import { TravelSearchHomeComponent } from './pages/travel-search-home/travel-search-home.component';
 import { IncuranseSearchHomeComponent } from './pages/incuranse-search-home/incuranse-search-home.component';
 import { ShopModule } from '../shop/shop.module';
+import { QuotationComponent } from './pages/quotation/quotation.component';
 
 @NgModule({
     declarations: [
@@ -25,6 +26,7 @@ import { ShopModule } from '../shop/shop.module';
         PeopertySearchHomeComponent,
         TravelSearchHomeComponent,
         IncuranseSearchHomeComponent,
+        QuotationComponent,
     ],
     imports: [
         // modules (angular)

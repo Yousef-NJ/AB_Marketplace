@@ -21,18 +21,19 @@
                 type="button"
                 class="product-card__action product-card__action--wishlist"
                 [class.product-card__action--loading]="wishlist.inProgress"
+                (click)="wishlist.add(product)"
                 [attr.aria-label]="'BUTTON_ADD_TO_WISHLIST' | translate"
             >
                 <app-icon icon="wishlist-16"></app-icon>
             </button>
-            <button
+            <!-- <button
                 type="button"
                 class="product-card__action product-card__action--compare"
                 [class.product-card__action--loading]="compare.inProgress"
                 [attr.aria-label]="'BUTTON_ADD_TO_COMPARE' | translate"
             >
                 <app-icon icon="compare-16"></app-icon>
-            </button>
+            </button> -->
         </ng-container>
     </div>
 
@@ -94,14 +95,30 @@
     </div>
 
     <div class="product-card__info">
-        <div *ngIf="!exclude.includes('meta')" class="product-card__meta">
-            <span class="product-card__meta-title">City:</span>
+        <div
+            *ngIf="!exclude.includes('meta') && product.type != 'car'"
+            class="product-card__meta"
+        >
+            <span
+                *ngIf="product.type != 'voucher' && product.type != 'car'"
+                class="product-card__meta-title"
+                >City:</span
+            >
             {{ product.city }}
+        </div>
+        <div *ngIf="!exclude.includes('meta')" class="product-card__meta">
+            <span *ngIf="product.type == 'car'" class="product-card__meta-title"
+                >Brand:</span
+            >
+            {{ product.brand }}
         </div>
 
         <div class="product-card__name">
-            <div>
+            <div *ngIf="product.type != 'car'">
                 {{ product.name }}
+            </div>
+            <div *ngIf="product.type == 'car'">
+                {{ product.model }}
             </div>
         </div>
 
@@ -110,7 +127,10 @@
                 class="product-card__rating-stars"
                 [value]="product.rating"
             ></app-rating>
-            <div class="product-card__rating-label">
+            <div
+                class="product-card__rating-label"
+                *ngIf="product.type != 'car'"
+            >
                 {{
                     "TEXT_RATING_LABEL"
                         | translate: { rating: product.rating, reviews: 0 }
@@ -118,7 +138,7 @@
             </div>
         </div>
 
-        <div class="product-card__prices">
+        <div class="product-card__prices" class="price-label">
             <ng-container *ngIf="product.compareAtPrice">
                 <div class="product-card__price product-card__price--new">
                     {{ product.price | currencyFormat }}
@@ -136,7 +156,9 @@
 
         <div
             *ngIf="
-                !exclude.includes('features') && featuredAttributes.length > 0
+                !exclude.includes('features') &&
+                featuredAttributes.length > 0 &&
+                product.type != 'car'
             "
             class="product-card__features"
         >
@@ -154,10 +176,25 @@
     </div>
 
     <div class="product-card__footer">
-        <ng-container *ngIf="!exclude.includes('buttons')">
-            <button type="button" class="btn btn-primary">
-                Ask for Quotation
+        <ng-container>
+            <button
+                type="button"
+                class="product-card__addtocart-icon"
+                *ngIf="product.type == 'voucher'"
+                [class.product-card__addtocart-icon--loading]="cart.inProgress"
+                [attr.aria-label]="'BUTTON_ADD_TO_CART' | translate"
+                (click)="cart.add(product)"
+            >
+                <app-icon icon="cart-20"></app-icon>
             </button>
+
+            <a
+                href="http://localhost:4200/quotation"
+                *ngIf="product.type != 'voucher'"
+                ><button type="button" class="btn btn-primary">
+                    Ask for Quotation
+                </button></a
+            >
             <ng-container *ngIf="!exclude.includes('list-buttons')">
                 <button
                     type="button"

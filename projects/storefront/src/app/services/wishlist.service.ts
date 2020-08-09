@@ -8,48 +8,58 @@ import { isPlatformBrowser } from '@angular/common';
     providedIn: 'root',
 })
 export class WishlistService implements OnDestroy {
-    private dataItems: Product[] = [];
+    private dataItems: any[] = [];
 
     private destroy$: Subject<void> = new Subject();
-    private itemsSubject$: BehaviorSubject<Product[]> = new BehaviorSubject([]);
-    private onAddingSubject$: Subject<Product> = new Subject();
+    private itemsSubject$: BehaviorSubject<any[]> = new BehaviorSubject([]);
+    private onAddingSubject$: Subject<any> = new Subject();
 
-    readonly items$: Observable<Product[]> = this.itemsSubject$.pipe(takeUntil(this.destroy$));
-    readonly count$: Observable<number> = this.itemsSubject$.pipe(map(items => items.length));
-    readonly onAdding$: Observable<Product> = this.onAddingSubject$.asObservable();
+    readonly items$: Observable<any[]> = this.itemsSubject$.pipe(
+        takeUntil(this.destroy$)
+    );
+    readonly count$: Observable<number> = this.itemsSubject$.pipe(
+        map((items) => items.length)
+    );
+    readonly onAdding$: Observable<any> = this.onAddingSubject$.asObservable();
 
-    constructor(
-        @Inject(PLATFORM_ID) private platformId: any,
-    ) {
+    constructor(@Inject(PLATFORM_ID) private platformId: any) {
         if (isPlatformBrowser(this.platformId)) {
             this.load();
         }
     }
 
-    add(product: Product): Observable<void> {
+    add(product: any): Observable<void> {
         // timer only for demo
-        return timer(350).pipe(map(() => {
-            this.onAddingSubject$.next(product);
+        return timer(350).pipe(
+            map(() => {
+                this.onAddingSubject$.next(product);
 
-            const index = this.dataItems.findIndex(item => item.id === product.id);
+                const index = this.dataItems.findIndex(
+                    (item) => item.id === product.id
+                );
 
-            if (index === -1) {
-                this.dataItems.push(product);
-                this.save();
-            }
-        }));
+                if (index === -1) {
+                    this.dataItems.push(product);
+                    this.save();
+                }
+            })
+        );
     }
 
-    remove(product: Product): Observable<void> {
+    remove(product: any): Observable<void> {
         // timer only for demo
-        return timer(350).pipe(map(() => {
-            const index = this.dataItems.findIndex(item => item.id === product.id);
+        return timer(350).pipe(
+            map(() => {
+                const index = this.dataItems.findIndex(
+                    (item) => item.id === product.id
+                );
 
-            if (index !== -1) {
-                this.dataItems.splice(index, 1);
-                this.save();
-            }
-        }));
+                if (index !== -1) {
+                    this.dataItems.splice(index, 1);
+                    this.save();
+                }
+            })
+        );
     }
 
     private save(): void {

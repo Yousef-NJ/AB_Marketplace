@@ -2,15 +2,18 @@ import { CustomFields } from './custom-fields';
 import { Brand } from './brand';
 import { ShopCategory } from './category';
 
-
 export interface BaseAttributeGroup {
     name: string;
     slug: string;
     customFields?: CustomFields;
 }
 
-export type ProductAttributeGroup = BaseAttributeGroup & { attributes: ProductAttribute[]; };
-export type ProductTypeAttributeGroup = BaseAttributeGroup & { attributes: string[]; };
+export type ProductAttributeGroup = BaseAttributeGroup & {
+    attributes: ProductAttribute[];
+};
+export type ProductTypeAttributeGroup = BaseAttributeGroup & {
+    attributes: string[];
+};
 
 export interface ProductType {
     name: string;
@@ -79,8 +82,8 @@ export interface Product {
     partNumber: string;
     stock: ProductStock;
     price: number;
-    compareAtPrice: number|null;
-    images?: string[];
+    compareAtPrice: number | null;
+    pictures?: string[];
     badges?: string[];
     rating?: number;
     reviews?: number;
@@ -91,7 +94,7 @@ export interface Product {
      * number[]  - An array of vehicle identifiers with which this part is compatible.
      */
     compatibility: 'all' | 'unknown' | number[];
-    brand?: Brand|null;
+    brand?: Brand | null;
     tags?: string[];
     type: ProductType;
     categories?: ShopCategory[];

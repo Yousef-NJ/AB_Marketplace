@@ -76,11 +76,12 @@
                             <td
                                 class="wishlist__column wishlist__column--body wishlist__column--image"
                             >
-                                <div class="image image--type--product">
+                                <div class="">
                                     <img
                                         class="image__tag"
-                                        [src]="product.images[0]"
+                                        [src]="product.pictures[0]"
                                         alt=""
+                                        width="150px"
                                     />
                                 </div>
                             </td>
@@ -103,8 +104,7 @@
                                                     : {
                                                           rating:
                                                               product.rating,
-                                                          reviews:
-                                                              product.reviews
+                                                          reviews: 0
                                                       }
                                         }}
                                     </div>
@@ -113,7 +113,7 @@
                             <td
                                 class="wishlist__column wishlist__column--body wishlist__column--stock"
                             >
-                                <app-status-badge
+                                <!-- <app-status-badge
                                     class="product__stock"
                                     [type]="
                                         {
@@ -131,7 +131,7 @@
                                                 'TEXT_STOCK_ON_BACKORDER'
                                         }[product.stock] | translate
                                     "
-                                ></app-status-badge>
+                                ></app-status-badge> -->
                             </td>
                             <td
                                 class="wishlist__column wishlist__column--body wishlist__column--price"

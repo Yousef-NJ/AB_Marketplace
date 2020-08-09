@@ -5,7 +5,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { map } from 'rxjs/operators';
 
 export interface CartItem {
-    product: Product;
+    product: any;
     options: {
         name: string;
         value: string;
@@ -16,7 +16,7 @@ export interface CartItem {
 interface CartTotal {
     title: string;
     price: number;
-    type: 'shipping'|'fee'|'tax'|'other';
+    type: 'shipping' | 'fee' | 'tax' | 'other';
 }
 
 interface CartData {
@@ -39,11 +39,21 @@ export class CartService {
         total: 0,
     };
 
-    private itemsSubject$: BehaviorSubject<CartItem[]> = new BehaviorSubject(this.data.items);
-    private quantitySubject$: BehaviorSubject<number> = new BehaviorSubject(this.data.quantity);
-    private subtotalSubject$: BehaviorSubject<number> = new BehaviorSubject(this.data.subtotal);
-    private totalsSubject$: BehaviorSubject<CartTotal[]> = new BehaviorSubject(this.data.totals);
-    private totalSubject$: BehaviorSubject<number> = new BehaviorSubject(this.data.total);
+    private itemsSubject$: BehaviorSubject<CartItem[]> = new BehaviorSubject(
+        this.data.items
+    );
+    private quantitySubject$: BehaviorSubject<number> = new BehaviorSubject(
+        this.data.quantity
+    );
+    private subtotalSubject$: BehaviorSubject<number> = new BehaviorSubject(
+        this.data.subtotal
+    );
+    private totalsSubject$: BehaviorSubject<CartTotal[]> = new BehaviorSubject(
+        this.data.totals
+    );
+    private totalSubject$: BehaviorSubject<number> = new BehaviorSubject(
+        this.data.total
+    );
     private onAddingSubject$: Subject<Product> = new Subject();
 
     get items(): ReadonlyArray<CartItem> {
@@ -67,89 +77,118 @@ export class CartService {
     }
 
     readonly items$: Observable<CartItem[]> = this.itemsSubject$.asObservable();
-    readonly quantity$: Observable<number> = this.quantitySubject$.asObservable();
-    readonly subtotal$: Observable<number> = this.subtotalSubject$.asObservable();
-    readonly totals$: Observable<CartTotal[]> = this.totalsSubject$.asObservable();
+    readonly quantity$: Observable<
+        number
+    > = this.quantitySubject$.asObservable();
+    readonly subtotal$: Observable<
+        number
+    > = this.subtotalSubject$.asObservable();
+    readonly totals$: Observable<
+        CartTotal[]
+    > = this.totalsSubject$.asObservable();
     readonly total$: Observable<number> = this.totalSubject$.asObservable();
 
-    readonly onAdding$: Observable<Product> = this.onAddingSubject$.asObservable();
+    readonly onAdding$: Observable<
+        Product
+    > = this.onAddingSubject$.asObservable();
 
-    constructor(
-        @Inject(PLATFORM_ID) private platformId: any,
-    ) {
+    constructor(@Inject(PLATFORM_ID) private platformId: any) {
         if (isPlatformBrowser(this.platformId)) {
             this.load();
             this.calc();
         }
     }
 
-    add(product: Product, quantity: number, options: {name: string; value: string}[] = []): Observable<CartItem> {
+    add(
+        product: any,
+        quantity: number,
+        options: { name: string; value: string }[] = []
+    ): Observable<CartItem> {
         // timer only for demo
-        return timer(350).pipe(map(() => {
-            this.onAddingSubject$.next(product);
+        return timer(350).pipe(
+            map(() => {
+                this.onAddingSubject$.next(product);
 
-            let item = this.items.find(eachItem => {
-                if (eachItem.product.id !== product.id || eachItem.options.length !== options.length) {
-                    return false;
-                }
+                let item = this.items.find((eachItem) => {
+                    if (
+                        eachItem.product.id !== product.id ||
+                        eachItem.options.length !== options.length
+                    ) {
+                        return false;
+                    }
 
-                if (eachItem.options.length) {
-                    for (const option of options) {
-                        if (!eachItem.options.find(itemOption => itemOption.name === option.name && itemOption.value === option.value)) {
-                            return false;
+                    if (eachItem.options.length) {
+                        for (const option of options) {
+                            if (
+                                !eachItem.options.find(
+                                    (itemOption) =>
+                                        itemOption.name === option.name &&
+                                        itemOption.value === option.value
+                                )
+                            ) {
+                                return false;
+                            }
                         }
                     }
-                }
 
-                return true;
-            });
-
-            if (item) {
-                item.quantity += quantity;
-            } else {
-                item = {product, quantity, options};
-
-                this.data.items.push(item);
-            }
-
-            this.save();
-            this.calc();
-
-            return item;
-        }));
-    }
-
-    update(updates: {item: CartItem, quantity: number}[]): Observable<void> {
-        // timer only for demo
-        return timer(350).pipe(map(() => {
-            updates.forEach(update => {
-                const item = this.items.find(eachItem => eachItem === update.item);
+                    return true;
+                });
 
                 if (item) {
-                    item.quantity = update.quantity;
-                }
-            });
+                    item.quantity += quantity;
+                } else {
+                    item = { product, quantity, options };
 
-            this.save();
-            this.calc();
-        }));
+                    this.data.items.push(item);
+                }
+
+                this.save();
+                this.calc();
+
+                return item;
+            })
+        );
+    }
+
+    update(updates: { item: CartItem; quantity: number }[]): Observable<void> {
+        // timer only for demo
+        return timer(350).pipe(
+            map(() => {
+                updates.forEach((update) => {
+                    const item = this.items.find(
+                        (eachItem) => eachItem === update.item
+                    );
+
+                    if (item) {
+                        item.quantity = update.quantity;
+                    }
+                });
+
+                this.save();
+                this.calc();
+            })
+        );
     }
 
     remove(item: CartItem): Observable<void> {
         // timer only for demo
-        return timer(350).pipe(map(() => {
-            this.data.items = this.data.items.filter(eachItem => eachItem !== item);
+        return timer(350).pipe(
+            map(() => {
+                this.data.items = this.data.items.filter(
+                    (eachItem) => eachItem !== item
+                );
 
-            this.save();
-            this.calc();
-        }));
+                this.save();
+                this.calc();
+            })
+        );
     }
 
     private calc(): void {
         let quantity = 0;
         let subtotal = 0;
 
-        this.data.items.forEach(item => {
+        this.data.items.forEach((item) => {
             quantity += item.quantity;
             subtotal += item.product.price * item.quantity;
         });
@@ -163,11 +202,13 @@ export class CartService {
         });
         totals.push({
             title: 'TAX',
-            price: subtotal * 0.20,
+            price: subtotal * 0.2,
             type: 'tax',
         });
 
-        const total = subtotal + totals.reduce((acc, eachTotal) => acc + eachTotal.price, 0);
+        const total =
+            subtotal +
+            totals.reduce((acc, eachTotal) => acc + eachTotal.price, 0);
 
         this.data.quantity = quantity;
         this.data.subtotal = subtotal;

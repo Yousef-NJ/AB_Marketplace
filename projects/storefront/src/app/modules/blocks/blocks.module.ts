@@ -27,6 +27,7 @@ import { CarSearchComponent } from './car-search/car-search.component';
 import { TravelSearchComponent } from './travel-search/travel-search.component';
 import { InsuranceSearchComponent } from './insurance-search/insurance-search.component';
 import { PropertySearchComponent } from './property-search/property-search.component';
+import { FilterRangeComponent } from '../shop/filters/filter-range/filter-range.component';
 
 @NgModule({
     declarations: [

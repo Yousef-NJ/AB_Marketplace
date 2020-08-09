@@ -24,10 +24,8 @@ import { SharedModule } from './modules/shared/shared.module';
 // components
 import { AppComponent } from './app.component';
 import { RootComponent } from './components/root/root.component';
-
 // pages
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
-
 
 @NgModule({
     declarations: [
@@ -40,7 +38,7 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
     imports: [
         // modules (angular)
         BrowserAnimationsModule,
-        BrowserModule.withServerTransition({appId: 'serverApp'}),
+        BrowserModule.withServerTransition({ appId: 'serverApp' }),
         // modules (third-party)
         ModalModule.forRoot(),
         ToastrModule.forRoot(),
@@ -75,7 +73,9 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
                     code: 'RUB',
                     rate: 64,
                     formatFn: (value) => {
-                        const digits = [].slice.call(Math.round(value).toFixed()).reverse();
+                        const digits = [].slice
+                            .call(Math.round(value).toFixed())
+                            .reverse();
                         const parts = [];
 
                         while (digits.length) {
@@ -119,14 +119,14 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
 })
 export class AppModule {
     constructor(router: Router, viewportScroller: ViewportScroller) {
-        router.events.pipe(
-            filter((e: Event): e is Scroll => e instanceof Scroll),
-        ).subscribe(e => {
-            if (e.position) {
-                viewportScroller.scrollToPosition(e.position);
-            } else if (!e.anchor) {
-                viewportScroller.scrollToPosition([0, 0]);
-            }
-        });
+        router.events
+            .pipe(filter((e: Event): e is Scroll => e instanceof Scroll))
+            .subscribe((e) => {
+                if (e.position) {
+                    viewportScroller.scrollToPosition(e.position);
+                } else if (!e.anchor) {
+                    viewportScroller.scrollToPosition([0, 0]);
+                }
+            });
     }
 }

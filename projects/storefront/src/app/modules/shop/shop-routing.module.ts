@@ -17,6 +17,9 @@ import { ProductsListResolver } from './resolvers/products-list.resolver';
 import { RootCategoriesResolver } from './resolvers/root-categories.resolver';
 // guards
 import { CheckoutGuard } from './guards/checkout.guard';
+import { CarsProductComponent } from './pages/cars-product/cars-product.component';
+import { VouchersViewComponent } from './components/vouchers-view/vouchers-view.component';
+import { CarsViewComponent } from './components/cars-view/cars-view.component';
 
 const routes: Routes = [
     {
@@ -37,6 +40,30 @@ const routes: Routes = [
     {
         path: 'category/products',
         component: PageShopComponent,
+        resolve: {
+            productsList: ProductsListResolver,
+        },
+        data: {
+            layout: 'list',
+            gridLayout: 'grid-4-sidebar',
+            sidebarPosition: 'start',
+        },
+    },
+    {
+        path: 'category/vouchers',
+        component: VouchersViewComponent,
+        resolve: {
+            productsList: ProductsListResolver,
+        },
+        data: {
+            layout: 'list',
+            gridLayout: 'grid-4-sidebar',
+            sidebarPosition: 'start',
+        },
+    },
+    {
+        path: 'category/cars',
+        component: CarsViewComponent,
         resolve: {
             productsList: ProductsListResolver,
         },

@@ -51,6 +51,11 @@ import { FilterRangeComponent } from './filters/filter-range/filter-range.compon
 import { FilterRatingComponent } from './filters/filter-rating/filter-rating.component';
 import { FilterVehicleComponent } from './filters/filter-vehicle/filter-vehicle.component';
 import { HttpClientModule } from '@angular/common/http';
+import { CarsProductComponent } from './pages/cars-product/cars-product.component';
+import { VouchersViewComponent } from './components/vouchers-view/vouchers-view.component';
+import { PageShopService } from './services/page-shop.service';
+import { ShopSidebarService } from './services/shop-sidebar.service';
+import { CarsViewComponent } from './components/cars-view/cars-view.component';
 
 @NgModule({
     declarations: [
@@ -86,6 +91,9 @@ import { HttpClientModule } from '@angular/common/http';
         FilterRangeComponent,
         FilterRatingComponent,
         FilterVehicleComponent,
+        CarsProductComponent,
+        VouchersViewComponent,
+        CarsViewComponent,
     ],
     imports: [
         // modules (angular)

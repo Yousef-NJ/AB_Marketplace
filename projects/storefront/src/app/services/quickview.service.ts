@@ -9,23 +9,23 @@ import { map, takeUntil, tap } from 'rxjs/operators';
 export class QuickviewService implements OnDestroy {
     private destroy$: Subject<void> = new Subject();
     private abortPrevious$: Subject<void> = new Subject<void>();
-    private showSubject$: Subject<Product> = new Subject();
+    private showSubject$: Subject<any> = new Subject();
 
-    show$: Observable<Product> = this.showSubject$.pipe(takeUntil(this.destroy$));
+    show$: Observable<any> = this.showSubject$.pipe(takeUntil(this.destroy$));
 
     ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }
 
-    show(product: Product): Observable<void> {
+    show(product: any): Observable<void> {
         this.abortPrevious$.next();
 
         // timer only for demo
         return timer(350).pipe(
             tap(() => this.showSubject$.next(product)),
             map(() => {}),
-            takeUntil(this.abortPrevious$),
+            takeUntil(this.abortPrevious$)
         );
     }
 }

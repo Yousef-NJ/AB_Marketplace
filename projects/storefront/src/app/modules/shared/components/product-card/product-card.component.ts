@@ -122,13 +122,13 @@ export class ProductCardComponent implements OnChanges, OnInit, OnDestroy {
             return;
         }
 
-        // this.showingQuickview = true;
-        // this.quickview.show(this.product).subscribe({
-        //     complete: () => {
-        //         this.showingQuickview = false;
-        //         this.cd.markForCheck();
-        //     },
-        // });
+        this.showingQuickview = true;
+        this.quickview.show(this.product).subscribe({
+            complete: () => {
+                this.showingQuickview = false;
+                this.cd.markForCheck();
+            },
+        });
     }
 
     compatibility(): ProductCompatibilityResult {
@@ -141,5 +141,9 @@ export class ProductCardComponent implements OnChanges, OnInit, OnDestroy {
         this.http
             .get('http://localhost:1515/listing')
             .subscribe((data: any) => console.log(data));
+    }
+
+    addToWishList(){
+        
     }
 }

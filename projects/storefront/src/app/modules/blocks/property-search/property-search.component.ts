@@ -18,6 +18,12 @@ export class PropertySearchComponent implements OnInit {
     vehicleControl: FormControl = new FormControl(null);
     rentFormSearch: FormGroup;
     formBuilder: FormBuilder;
+    range: any = 0;
+    value: any = 0;
+    yearsValue: any = 0;
+    liabilitiesValue: any = 0;
+    monthlyinstallmentValue: any = 0;
+    incomeValue: any = 0;
 
     get vehicle(): Vehicle {
         return this.vehicleControl.value;
@@ -76,4 +82,33 @@ export class PropertySearchComponent implements OnInit {
     ngOnInit(): void {}
 
     search() {}
+
+    onRangeValueChange(event: any) {
+        console.log(event);
+        this.value = event;
+    }
+
+    onChangeYearsValue(value: string) {
+        console.log('the selected value is ' + value);
+        this.value = value;
+        this.yearsValue = value;
+    }
+
+    onChangeLiabilitiesValue(value: string) {
+        console.log('the selected value is ' + value);
+        this.value = value;
+        this.liabilitiesValue = value;
+    }
+
+    onChangeMonthlyInstallmentValue(value: string) {
+        console.log('the selected value is ' + value);
+        this.value = value;
+        this.monthlyinstallmentValue = value;
+    }
+
+    onChangeIncomeValue(value: string) {
+        console.log('the selected value is ' + value);
+        this.value = value;
+        this.incomeValue = value;
+    }
 }

@@ -7,15 +7,21 @@ export const mobileMenuLinks: MobileMenuLink[] = [
     },
     {
         title: 'Property',
+        url: '/property',
     },
     {
         title: 'Cars',
+        url: '/cars',
     },
     {
         title: 'Travel',
     },
     {
         title: 'Insurance',
+    },
+    {
+        title: 'Voucher',
+        url: '/shop/category/vouchers',
     },
 
     //     submenu: {

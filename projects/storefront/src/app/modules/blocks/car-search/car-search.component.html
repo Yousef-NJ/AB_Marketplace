@@ -86,10 +86,11 @@
                                 <input type="checkbox" name="" id="" />DDD
                             </option>
                         </select>
-
-                        <button class="block-finder__button" type="submit">
-                            {{ "BUTTON_BLOCK_FINDER_SEARCH" | translate }}
-                        </button>
+                        <a [routerLink]="['/shop/category/cars']">
+                            <button class="block-finder__button" type="submit">
+                                {{ "BUTTON_BLOCK_FINDER_SEARCH" | translate }}
+                            </button></a
+                        >
                     </form>
                 </div>
             </div>
@@ -165,38 +166,98 @@
                             </option>
                         </select>
 
-                        <button class="block-finder__button" type="submit">
-                            {{ "BUTTON_BLOCK_FINDER_SEARCH" | translate }}
-                        </button>
+                        <a
+                            [routerLink]="[
+                                'http://localhost:4200/shop/category/cars'
+                            ]"
+                        >
+                            <button class="block-finder__button" type="submit">
+                                {{ "BUTTON_BLOCK_FINDER_SEARCH" | translate }}
+                            </button></a
+                        >
                     </form>
                 </div>
             </div>
             <div class="panel" id="three-panel">
+                <h5>How much I make monthlly</h5>
                 <div class="block-finder__body container container--max--xl">
-                    <form class="block-finder__form" (submit)="submit()">
-                        <h5>
-                            I'm looking for type
-                            <select style="width: 130px; border: none;">
-                                <option value="">apartemnt</option>
-                                <option value="">house</option>
-                            </select>
-                            . <br />
-                            I make
-                            <input
-                                type="text"
-                                placeholder="1000"
-                                style="width: 60px; border: none;"
-                            />
-                            JOD monthly , I can pay
-                            <input
-                                type="text"
-                                placeholder="1000"
-                                style="width: 60px; border: none;"
-                            />
-                            monthly.
-                        </h5>
-                    </form>
+                    <input
+                        type="range"
+                        min="1"
+                        max="10000"
+                        value="0"
+                        class="slider"
+                        #income
+                        (change)="onChangeIncomeValue(income.value)"
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        trigger="click"
+                        title="{{ incomeValue }}"
+                    />
+                    <p style="color: black;">{{ incomeValue }} $</p>
                 </div>
+
+                <h5>How much I could pay</h5>
+
+                <div class="block-finder__body container container--max--xl">
+                    <input
+                        type="range"
+                        min="1"
+                        max="10000"
+                        value="0"
+                        class="slider"
+                        #monthlyinstallment
+                        (change)="
+                            onChangeMonthlyInstallmentValue(
+                                monthlyinstallment.value
+                            )
+                        "
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title="{{ monthlyinstallmentValue }}"
+                    />
+                    <p style="color: black;">{{ monthlyinstallmentValue }} $</p>
+                </div>
+
+                <h5>How much I have as other liabilities</h5>
+
+                <div class="block-finder__body container container--max--xl">
+                    <input
+                        type="range"
+                        min="1"
+                        max="10000"
+                        value="0"
+                        class="slider"
+                        #liabilities
+                        (change)="onChangeLiabilitiesValue(liabilities.value)"
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title="{{ liabilitiesValue }}"
+                    />
+                    <p style="color: black;">{{ liabilitiesValue }} $</p>
+                </div>
+
+                <h5>How much months my plan</h5>
+
+                <div class="block-finder__body container container--max--xl">
+                    <input
+                        type="range"
+                        min="1"
+                        max="96"
+                        value="0"
+                        class="slider"
+                        #years
+                        (change)="onChangeYearsValue(years.value)"
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title="Tooltip on top"
+                    />
+                    <p style="color: black;">
+                        {{ yearsValue }} Months - {{ yearsValue / 12 }} Years
+                    </p>
+                </div>
+
+                <h3 style="color: black;">{{ value }} $</h3>
             </div>
         </div>
     </div>

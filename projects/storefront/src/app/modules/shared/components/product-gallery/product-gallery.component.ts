@@ -14,15 +14,22 @@ import {
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { OwlCarouselOConfig } from 'ngx-owl-carousel-o/lib/carousel/owl-carousel-o-config';
-import { PhotoSwipeItem, PhotoSwipeService, PhotoSwipeThumbBounds } from '../../../../services/photo-swipe.service';
+import {
+    PhotoSwipeItem,
+    PhotoSwipeService,
+    PhotoSwipeThumbBounds,
+} from '../../../../services/photo-swipe.service';
 import { CarouselComponent, SlidesOutputData } from 'ngx-owl-carousel-o';
 import { LanguageService } from '../../../language/services/language.service';
 import { Subject, timer } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
 
-export type ProductGalleryLayout = 'product-sidebar' | 'product-full' | 'quickview';
+export type ProductGalleryLayout =
+    | 'product-sidebar'
+    | 'product-full'
+    | 'quickview';
 
-export interface ProductGalleryItem {
+export interface ProductGalleryComponent {
     id: string;
     image: string;
 }
@@ -35,9 +42,9 @@ export interface ProductGalleryItem {
 export class ProductGalleryComponent implements OnInit, OnDestroy {
     private destroy$: Subject<void> = new Subject<void>();
 
-    items: ProductGalleryItem[] = [];
+    items: any = [];
 
-    currentItem: ProductGalleryItem = null;
+    currentItem: any = null;
 
     showGallery = true;
 
@@ -46,29 +53,35 @@ export class ProductGalleryComponent implements OnInit, OnDestroy {
     thumbnailsCarouselOptions: Partial<OwlCarouselOConfig>;
 
     @Input() set images(images: string[]) {
-        this.items = images.map((image, index) => ({id: `image-${index}`, image}));
+        this.items = images;
         this.currentItem = this.items[0] || null;
     }
 
     @Input() @HostBinding('attr.data-layout') layout: ProductGalleryLayout;
 
-    @ViewChild('featuredCarousel', { read: CarouselComponent }) featuredCarousel: CarouselComponent;
+    @ViewChild('featuredCarousel', { read: CarouselComponent })
+    featuredCarousel: CarouselComponent;
 
-    @ViewChild('thumbnailsCarousel', { read: CarouselComponent }) thumbnailsCarousel: CarouselComponent;
+    @ViewChild('thumbnailsCarousel', { read: CarouselComponent })
+    thumbnailsCarousel: CarouselComponent;
 
-    @ViewChildren('imageElement', {read: ElementRef}) imageElements: QueryList<ElementRef>;
+    @ViewChildren('imageElement', { read: ElementRef })
+    imageElements: QueryList<ElementRef>;
 
     @HostBinding('class.product-gallery') classProductGallery = true;
 
-    @HostBinding('class.product-gallery--layout--product-full') get classProductGalleryLayoutProductFull(): boolean {
+    @HostBinding('class.product-gallery--layout--product-full')
+    get classProductGalleryLayoutProductFull(): boolean {
         return this.layout === 'product-full';
     }
 
-    @HostBinding('class.product-gallery--layout--product-sidebar') get classProductGalleryLayoutProductSidebar(): boolean {
+    @HostBinding('class.product-gallery--layout--product-sidebar')
+    get classProductGalleryLayoutProductSidebar(): boolean {
         return this.layout === 'product-sidebar';
     }
 
-    @HostBinding('class.product-gallery--layout--quickview') get classProductGalleryLayoutQuickview(): boolean {
+    @HostBinding('class.product-gallery--layout--quickview')
+    get classProductGalleryLayoutQuickview(): boolean {
         return this.layout === 'quickview';
     }
 
@@ -76,8 +89,8 @@ export class ProductGalleryComponent implements OnInit, OnDestroy {
         @Inject(PLATFORM_ID) private platformId: any,
         private language: LanguageService,
         private photoSwipe: PhotoSwipeService,
-        private cd: ChangeDetectorRef,
-    ) { }
+        private cd: ChangeDetectorRef
+    ) {}
 
     ngOnInit(): void {
         this.initOptions();
@@ -87,17 +100,19 @@ export class ProductGalleryComponent implements OnInit, OnDestroy {
         }
 
         // Since ngx-owl-carousel-o cannot re-initialize itself, we will do it manually when the direction changes.
-        this.language.directionChange$.pipe(
-            switchMap(() => timer(250)),
-            takeUntil(this.destroy$),
-        ).subscribe(() => {
-            this.initOptions();
-            this.currentItem = this.items[0] || null;
+        this.language.directionChange$
+            .pipe(
+                switchMap(() => timer(250)),
+                takeUntil(this.destroy$)
+            )
+            .subscribe(() => {
+                this.initOptions();
+                this.currentItem = this.items[0] || null;
 
-            this.showGallery = false;
-            this.cd.detectChanges();
-            this.showGallery = true;
-        });
+                this.showGallery = false;
+                this.cd.detectChanges();
+                this.showGallery = true;
+            });
     }
 
     ngOnDestroy(): void {
@@ -109,9 +124,16 @@ export class ProductGalleryComponent implements OnInit, OnDestroy {
         if (event.slides.length) {
             const activeImageId = event.slides[0].id;
 
-            this.currentItem = this.items.find(x => x.id === activeImageId) || this.items[0] || null;
+            this.currentItem =
+                this.items.find((x) => x.id === activeImageId) ||
+                this.items[0] ||
+                null;
 
-            if (!this.thumbnailsCarousel.slidesData.find(slide => slide.id === activeImageId && slide.isActive)) {
+            if (
+                !this.thumbnailsCarousel.slidesData.find(
+                    (slide) => slide.id === activeImageId && slide.isActive
+                )
+            ) {
                 this.thumbnailsCarousel.to(activeImageId);
             }
         }
@@ -134,17 +156,17 @@ export class ProductGalleryComponent implements OnInit, OnDestroy {
         }
     }
 
-    onThumbnailImageClick(item: ProductGalleryItem): void {
-        this.featuredCarousel.to(item.id);
+    onThumbnailImageClick(item: any): void {
+        this.featuredCarousel.to(this.items.indexOf(item));
         this.currentItem = item;
     }
 
-    openPhotoSwipe(item: ProductGalleryItem): void {
+    openPhotoSwipe(item: any): void {
         if (!item) {
             return;
         }
 
-        const imageElements = this.imageElements.map(x => x.nativeElement);
+        const imageElements = this.imageElements.map((x) => x.nativeElement);
         const images: PhotoSwipeItem[] = this.items.map((eachItem, i) => {
             const tag: HTMLImageElement = imageElements[i];
             const width = parseFloat(tag.dataset.width) || tag.naturalWidth;
@@ -163,15 +185,19 @@ export class ProductGalleryComponent implements OnInit, OnDestroy {
         }
 
         const options = {
-            getThumbBoundsFn: index => this.getThumbBounds(index),
+            getThumbBoundsFn: (index) => this.getThumbBounds(index),
             index: this.getDirDependentIndex(this.items.indexOf(item)),
-            bgOpacity: .9,
+            bgOpacity: 0.9,
             history: false,
         };
 
-        this.photoSwipe.open(images, options).subscribe(galleryRef => {
+        this.photoSwipe.open(images, options).subscribe((galleryRef) => {
             galleryRef.listen('beforeChange', () => {
-                this.featuredCarousel.to(this.items[this.getDirDependentIndex(galleryRef.getCurrentIndex())].id);
+                this.featuredCarousel.to(
+                    this.items[
+                        this.getDirDependentIndex(galleryRef.getCurrentIndex())
+                    ].id
+                );
             });
         });
     }
@@ -205,7 +231,7 @@ export class ProductGalleryComponent implements OnInit, OnDestroy {
             autoplay: false,
             rtl: this.language.isRTL(),
             responsive: {
-                0: {items: 1},
+                0: { items: 1 },
             },
         };
         this.thumbnailsCarouselOptions = {
@@ -215,12 +241,12 @@ export class ProductGalleryComponent implements OnInit, OnDestroy {
             items: 5,
             rtl: this.language.isRTL(),
             responsive: {
-                580: {items: 8, margin: 10},
-                520: {items: 7, margin: 10},
-                400: {items: 6, margin: 10},
-                320: {items: 5, margin: 8},
-                260: {items: 4, margin: 8},
-                0: {items: 3},
+                580: { items: 8, margin: 10 },
+                520: { items: 7, margin: 10 },
+                400: { items: 6, margin: 10 },
+                320: { items: 5, margin: 8 },
+                260: { items: 4, margin: 8 },
+                0: { items: 3 },
             },
         };
     }

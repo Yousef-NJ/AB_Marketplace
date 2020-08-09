@@ -15,25 +15,28 @@ export class AddToWishlistDirective implements OnDestroy {
 
     constructor(
         private wishlist: WishlistService,
-        private cd: ChangeDetectorRef,
-    ) { }
+        private cd: ChangeDetectorRef
+    ) {}
 
     ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }
 
-    add(product: Product): void {
+    add(product: any): void {
         if (this.inProgress) {
             return;
         }
 
         this.inProgress = true;
-        this.wishlist.add(product).pipe(takeUntil(this.destroy$)).subscribe({
-            complete: () => {
-                this.inProgress = false;
-                this.cd.markForCheck();
-            },
-        });
+        this.wishlist
+            .add(product)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe({
+                complete: () => {
+                    this.inProgress = false;
+                    this.cd.markForCheck();
+                },
+            });
     }
 }
