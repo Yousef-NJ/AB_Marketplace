@@ -16,6 +16,7 @@ import { merge, Observable, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { CurrentVehicleService } from '../../../../services/current-vehicle.service';
+import { ActivatedRoute } from '@angular/router';
 
 export interface LayoutButton {
     layout: PageShopLayout;
@@ -29,6 +30,10 @@ export interface LayoutButton {
 })
 export class CarsViewComponent implements OnInit, OnDestroy {
     products: any;
+    cars: Array<any> = [];
+    carsByBrand: Array<any> = [];
+    carsByYear: Array<any> = [];
+    carsByPrice: Array<any> = [];
     private destroy$: Subject<void> = new Subject<void>();
 
     isEmptyList$: Observable<boolean>;
@@ -55,6 +60,11 @@ export class CarsViewComponent implements OnInit, OnDestroy {
     @Input() offCanvasSidebar: 'always' | 'mobile' = 'mobile';
 
     @HostBinding('class.products-view') classProductsView = true;
+    brand: any;
+    year: any;
+    priceFilter: string;
+    minPrice: number;
+    maxPrice: number;
 
     @HostBinding('class.products-view--loading')
     get classProductsViewLoading(): boolean {
@@ -64,11 +74,62 @@ export class CarsViewComponent implements OnInit, OnDestroy {
     constructor(
         public sidebar: ShopSidebarService,
         public page: PageShopService,
-        private http: HttpClient
-    ) {}
+        private http: HttpClient,
+        private route: ActivatedRoute
+    ) {
+        this.route.queryParams.subscribe((params) => {
+            this.brand = params['brand'];
+            console.log(this.brand);
+            this.year = params['year'];
+            console.log(this.year);
+            this.priceFilter = params['price'];
+            if (this.priceFilter.indexOf('-') > 0) {
+                var x: number = +this.priceFilter.split('-')[0];
+                this.minPrice = x;
+                var y: number = +this.priceFilter.split('-')[1];
+                this.maxPrice = y;
+            }
+            console.log(this.priceFilter);
+        });
+    }
 
     ngOnInit(): void {
         this.getProducts();
+
+        this.products.properties.forEach((element: any) => {
+            this.cars.push(element);
+        });
+
+        if (this.brand != 'none') {
+            this.cars.forEach((element: any) => {
+                if (element.brand == this.brand) {
+                    this.carsByBrand.push(element);
+                }
+            });
+            this.cars = this.carsByBrand;
+        }
+
+        if (this.year != 'all') {
+            this.cars.forEach((element: any) => {
+                if (element.year == this.year) {
+                    this.carsByYear.push(element);
+                }
+            });
+            this.cars = this.carsByYear;
+        }
+
+        if (this.priceFilter != 'all') {
+            this.cars.forEach((element: any) => {
+                if (
+                    element.price >= this.minPrice &&
+                    element.price <= this.maxPrice
+                ) {
+                    this.carsByPrice.push(element);
+                }
+            });
+            this.cars = this.carsByPrice;
+        }
+
         this.pageControl = new FormControl(this.page.defaultOptions.page);
         this.limitControl = new FormControl(this.page.defaultOptions.limit);
         this.sortControl = new FormControl(this.page.defaultOptions.sort);
@@ -119,6 +180,7 @@ export class CarsViewComponent implements OnInit, OnDestroy {
         this.products = {
             properties: [
                 {
+                    id: 991,
                     type: 'car',
                     brand: 'Ford',
 
@@ -134,6 +196,7 @@ export class CarsViewComponent implements OnInit, OnDestroy {
                     ],
                 },
                 {
+                    id: 992,
                     type: 'car',
                     brand: 'Ford',
                     name: 'Ford',
@@ -149,6 +212,7 @@ export class CarsViewComponent implements OnInit, OnDestroy {
                     ],
                 },
                 {
+                    id: 993,
                     type: 'car',
                     brand: 'Ford',
                     name: 'Ford',
@@ -164,6 +228,7 @@ export class CarsViewComponent implements OnInit, OnDestroy {
                     ],
                 },
                 {
+                    id: 994,
                     type: 'car',
                     brand: 'Ford',
                     name: 'Ford',
@@ -179,6 +244,7 @@ export class CarsViewComponent implements OnInit, OnDestroy {
                     ],
                 },
                 {
+                    id: 995,
                     type: 'car',
                     brand: 'Audi',
                     name: 'Audi',
@@ -194,6 +260,7 @@ export class CarsViewComponent implements OnInit, OnDestroy {
                     ],
                 },
                 {
+                    id: 996,
                     type: 'car',
                     brand: 'Audi',
                     name: 'Audi',
@@ -209,6 +276,7 @@ export class CarsViewComponent implements OnInit, OnDestroy {
                     ],
                 },
                 {
+                    id: 997,
                     type: 'car',
                     brand: 'BMW',
                     model: '7 Series',
@@ -223,6 +291,7 @@ export class CarsViewComponent implements OnInit, OnDestroy {
                     ],
                 },
                 {
+                    id: 998,
                     type: 'car',
                     brand: 'BMW',
                     model: '5 Series',
@@ -237,6 +306,7 @@ export class CarsViewComponent implements OnInit, OnDestroy {
                     ],
                 },
                 {
+                    id: 999,
                     type: 'car',
                     brand: 'BMW',
                     model: 'X5 M',
@@ -251,6 +321,7 @@ export class CarsViewComponent implements OnInit, OnDestroy {
                     ],
                 },
                 {
+                    id: 9910,
                     type: 'car',
                     brand: 'BMW ',
                     model: 'i3',

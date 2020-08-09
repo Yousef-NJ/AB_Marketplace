@@ -225,10 +225,7 @@
                 </div>
             </div>
             <div class="products-list__content">
-                <div
-                    *ngFor="let product of products.properties"
-                    class="products-list__item"
-                >
+                <div *ngFor="let product of cars" class="products-list__item">
                     <app-product-card [product]="product"></app-product-card>
                 </div>
             </div>

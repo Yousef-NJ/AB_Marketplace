@@ -11,6 +11,7 @@ import { SharedModule } from '../shared/shared.module';
 
 // pages
 import { PageTwoComponent } from './pages/page-two/page-two.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
     declarations: [
@@ -20,6 +21,7 @@ import { PageTwoComponent } from './pages/page-two/page-two.component';
     imports: [
         // modules (angular)
         CommonModule,
+        RouterModule,
         // modules (third-party)
         TranslateModule.forChild(),
         // modules
@@ -28,4 +30,4 @@ import { PageTwoComponent } from './pages/page-two/page-two.component';
         SharedModule,
     ],
 })
-export class HomeTwoModule { }
+export class HomeTwoModule {}

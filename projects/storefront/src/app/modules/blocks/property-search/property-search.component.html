@@ -250,11 +250,15 @@
                         title="{{ yearsValue }}"
                     />
                     <p style="color: black;">
-                        {{ yearsValue }} Months - {{ yearsValue / 12 }} Years
+                        {{ yearsValue }} Months 
+                        <!-- -
+                        {{ yearsValue / 12 | number: "1.1-2" }} Years -->
                     </p>
                 </div>
 
-                <h3 style="color: black;">{{ value }}</h3>
+                <h3 style="color: black;">
+                    {{ yearsValue * monthlyinstallmentValue }} $
+                </h3>
             </div>
         </div>
     </div>

@@ -5,7 +5,8 @@ import {
     FormBuilder,
     FormGroup,
     NG_VALIDATORS,
-    NG_VALUE_ACCESSOR, ValidationErrors,
+    NG_VALUE_ACCESSOR,
+    ValidationErrors,
     Validator,
     Validators,
 } from '@angular/forms';
@@ -47,7 +48,8 @@ export interface AddressFormValue {
         },
     ],
 })
-export class AddressFormComponent implements OnInit, OnDestroy, ControlValueAccessor, Validator {
+export class AddressFormComponent
+    implements OnInit, OnDestroy, ControlValueAccessor, Validator {
     private destroy$: Subject<void> = new Subject<void>();
     private readonly dataId: number = ++uniqueId;
 
@@ -65,30 +67,28 @@ export class AddressFormComponent implements OnInit, OnDestroy, ControlValueAcce
 
     constructor(
         private fb: FormBuilder,
-        private countriesService: CountriesApi,
-    ) { }
+        private countriesService: CountriesApi
+    ) {}
 
     ngOnInit(): void {
         this.form = this.fb.group({
-            firstName: ['', Validators.required],
-            lastName:  ['', Validators.required],
-            company:   [''],
-            country:   ['', Validators.required],
-            address1:  ['', Validators.required],
-            address2:  [''],
-            city:      ['', Validators.required],
-            state:     ['', Validators.required],
-            postcode:  ['', Validators.required],
-            email:     ['', [Validators.required, Validators.email]],
-            phone:     ['', Validators.required],
+            country: [''],
+            address1: [''],
+            address2: [''],
+            city: [''],
+            email: ['', [, Validators.email]],
+            phone: [''],
         });
 
-        this.form.valueChanges.subscribe(value => {
+        this.form.valueChanges.subscribe((value) => {
             this.changeFn(value);
             this.touchedFn();
         });
 
-        this.countriesService.getCountries().pipe(takeUntil(this.destroy$)).subscribe(x => this.countries = x);
+        this.countriesService
+            .getCountries()
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((x) => (this.countries = x));
     }
 
     ngOnDestroy(): void {
@@ -106,9 +106,9 @@ export class AddressFormComponent implements OnInit, OnDestroy, ControlValueAcce
 
     setDisabledState(isDisabled: boolean): void {
         if (isDisabled) {
-            this.form.disable({emitEvent: false});
+            this.form.disable({ emitEvent: false });
         } else {
-            this.form.enable({emitEvent: false});
+            this.form.enable({ emitEvent: false });
         }
     }
 
@@ -119,25 +119,21 @@ export class AddressFormComponent implements OnInit, OnDestroy, ControlValueAcce
 
         this.form.setValue(
             {
-                firstName: '',
-                lastName: '',
-                company: '',
                 country: '',
                 address1: '',
                 address2: '',
                 city: '',
-                state: '',
-                postcode: '',
+
                 email: '',
                 phone: '',
                 ...value,
             },
-            {emitEvent: false},
+            { emitEvent: false }
         );
     }
 
     validate(control: AbstractControl): ValidationErrors | null {
-        return this.form.valid ? null : {addressForm: this.form.errors};
+        return this.form.valid ? null : { addressForm: this.form.errors };
     }
 
     markAsTouched(): void {

@@ -19,74 +19,66 @@
             <div class="panel" id="one-panel">
                 <div class="block-finder__body container container--max--xl">
                     <form class="block-finder__form" (submit)="submit()">
-                        <select class="vehicle-select__item-control">
+                        <select
+                            class="vehicle-select__item-control"
+                            #selectedBrand
+                            (change)="onBrandSelected(selectedBrand.value)"
+                        >
                             <option value="none">Select Brand</option>
+                            <option value="Ford">Ford</option>
+                            <option value="Audi">Audi</option>
+                            <option value="BMW">BMW</option>
+                        </select>
 
-                            <option>
-                                <input type="checkbox" name="" id="" /> City 1
+                        <select
+                            class="vehicle-select__item-control"
+                            #selectedYear
+                            (change)="onYearSelected(selectedYear.value)"
+                        >
+                            <option value="all">Select Year </option>
+                            <option value="2015" name="" id="">
+                                2015
                             </option>
-                            <option>
-                                <input type="checkbox" name="" id="" />BBB
+                            <option value="2016" name="" id="">
+                                2016
                             </option>
-                            <option>
-                                <input type="checkbox" name="" id="" />CCC
+                            <option value="2017" name="" id="">
+                                2017
                             </option>
-                            <option>
-                                <input type="checkbox" name="" id="" />DDD
+                            <option value="2018" name="" id="">
+                                2018
+                            </option>
+                            <option value="2019" name="" id="">
+                                2019
+                            </option>
+                            <option value="2020" name="" id="">
+                                2020
                             </option>
                         </select>
 
-                        <select class="vehicle-select__item-control">
-                            <option value="none">Select Model</option>
+                        <select class="vehicle-select__item-control" #selectedPrice
+                        (change)="onYearSelected(selectedYear.value)">
+                            <option value="all">Select Price </option>
 
-                            <option>
-                                <input type="checkbox" name="" id="" />Area
+                            <option value="0-10000">
+                            0-10,000
                             </option>
-                            <option>
-                                <input type="checkbox" name="" id="" />BBB
+                            <option value="10001-15000">10,001-15,000
                             </option>
-                            <option>
-                                <input type="checkbox" name="" id="" />CCC
+                            <option value="15001-20000">15,001-20,000
                             </option>
-                            <option>
-                                <input type="checkbox" name="" id="" />DDD
+                            <option value="20001-50000">20,001-50,00
                             </option>
                         </select>
-                        <select class="vehicle-select__item-control">
-                            <option value="none">Select Type</option>
 
-                            <option>
-                                <input type="checkbox" name="" id="" />Select
-                                Area
-                            </option>
-                            <option>
-                                <input type="checkbox" name="" id="" />BBB
-                            </option>
-                            <option>
-                                <input type="checkbox" name="" id="" />CCC
-                            </option>
-                            <option>
-                                <input type="checkbox" name="" id="" />DDD
-                            </option>
-                        </select>
-                        <select class="vehicle-select__item-control">
-                            <option value="none">Number of Room</option>
-
-                            <option>
-                                <input type="checkbox" name="" id="" />Select
-                                Area
-                            </option>
-                            <option>
-                                <input type="checkbox" name="" id="" />BBB
-                            </option>
-                            <option>
-                                <input type="checkbox" name="" id="" />CCC
-                            </option>
-                            <option>
-                                <input type="checkbox" name="" id="" />DDD
-                            </option>
-                        </select>
-                        <a [routerLink]="['/shop/category/cars']">
+                        <a
+                            [routerLink]="['/shop/category/cars']"
+                            [queryParams]="{
+                                brand: selectedBrand.value,
+                                year: selectedYear.value,
+                                price: selectedPrice.value
+                            }"
+                        >
                             <button class="block-finder__button" type="submit">
                                 {{ "BUTTON_BLOCK_FINDER_SEARCH" | translate }}
                             </button></a
@@ -253,11 +245,15 @@
                         title="Tooltip on top"
                     />
                     <p style="color: black;">
-                        {{ yearsValue }} Months - {{ yearsValue / 12 }} Years
+                        {{ yearsValue }} Months
+                        <!-- -
+                        {{ yearsValue / 12 | number: "2.1-2" }} Years -->
                     </p>
                 </div>
 
-                <h3 style="color: black;">{{ value }} $</h3>
+                <h3 style="color: black;">
+                    {{ yearsValue * monthlyinstallmentValue }} $
+                </h3>
             </div>
         </div>
     </div>

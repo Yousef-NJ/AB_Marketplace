@@ -1,6 +1,6 @@
 <ng-container [formGroup]="form">
     <div class="form-row">
-        <div class="form-group col-md-6">
+        <!-- <div class="form-group col-md-6">
             <label for="{{ formId }}-first-name">{{ 'INPUT_FIRST_NAME_LABEL'|translate }}</label>
             <input
                 type="text"
@@ -31,9 +31,9 @@
                     {{ 'ERROR_FORM_REQUIRED'|translate }}
                 </div>
             </div>
-        </div>
+        </div>-->
     </div>
-    <div class="form-group">
+    <!-- <div class="form-group">
         <label for="{{ formId }}-company-name">{{ 'INPUT_COMPANY_LABEL'|translate }} <span class="text-muted">({{ 'TEXT_OPTIONAL'|translate }})</span></label>
         <input
             type="text"
@@ -42,67 +42,77 @@
             formControlName="company"
             [placeholder]="'INPUT_COMPANY_PLACEHOLDER'|translate"
         >
-    </div>
+    </div>  -->
     <div class="form-group">
-        <label for="{{ formId }}-country">{{ 'INPUT_COUNTRY_LABEL'|translate }}</label>
+        <label for="{{ formId }}-country">{{
+            "INPUT_COUNTRY_LABEL" | translate
+        }}</label>
         <select
             id="{{ formId }}-country"
             class="form-control"
             formControlName="country"
-            [class.is-invalid]="form.controls.country|isInvalid"
+            [class.is-invalid]="form.controls.country | isInvalid"
         >
-            <option value="">{{ 'INPUT_COUNTRY_PLACEHOLDER'|translate }}</option>
+            <option value="">{{
+                "INPUT_COUNTRY_PLACEHOLDER" | translate
+            }}</option>
             <option *ngFor="let country of countries" [value]="country.code">
-                {{ 'COUNTRY_NAME_' + country.code|translate }}
+                {{ "COUNTRY_NAME_" + country.code | translate }}
             </option>
         </select>
         <div class="invalid-feedback">
-            <div *ngIf="form.controls.country|hasError:'required'">
-                {{ 'ERROR_FORM_REQUIRED'|translate }}
+            <div *ngIf="form.controls.country | hasError: 'required'">
+                {{ "ERROR_FORM_REQUIRED" | translate }}
             </div>
         </div>
     </div>
     <div class="form-group">
-        <label for="{{ formId }}-address1">{{ 'INPUT_STREET_ADDRESS_LABEL'|translate }}</label>
+        <label for="{{ formId }}-address1">{{
+            "INPUT_STREET_ADDRESS_LABEL" | translate
+        }}</label>
         <input
             type="text"
             class="form-control"
             id="{{ formId }}-address1"
             formControlName="address1"
-            [class.is-invalid]="form.controls.address1|isInvalid"
-            [placeholder]="'INPUT_STREET_ADDRESS_PLACEHOLDER_1'|translate"
-        >
+            [class.is-invalid]="form.controls.address1 | isInvalid"
+            [placeholder]="'INPUT_STREET_ADDRESS_PLACEHOLDER_1' | translate"
+        />
         <div class="invalid-feedback">
-            <div *ngIf="form.controls.address1|hasError:'required'">
-                {{ 'ERROR_FORM_REQUIRED'|translate }}
+            <div *ngIf="form.controls.address1 | hasError: 'required'">
+                {{ "ERROR_FORM_REQUIRED" | translate }}
             </div>
         </div>
-        <label for="{{ formId }}-address2" class="sr-only">{{ 'INPUT_STREET_ADDRESS_LABEL'|translate }}</label>
+        <label for="{{ formId }}-address2" class="sr-only">{{
+            "INPUT_STREET_ADDRESS_LABEL" | translate
+        }}</label>
         <input
             type="text"
             class="form-control mt-2"
             id="{{ formId }}-address2"
             formControlName="address2"
-            [placeholder]="'INPUT_STREET_ADDRESS_PLACEHOLDER_2'|translate"
-        >
+            [placeholder]="'INPUT_STREET_ADDRESS_PLACEHOLDER_2' | translate"
+        />
     </div>
     <div class="form-group">
-        <label for="{{ formId }}-city">{{ 'INPUT_CITY_LABEL'|translate }}</label>
+        <label for="{{ formId }}-city">{{
+            "INPUT_CITY_LABEL" | translate
+        }}</label>
         <input
             type="text"
             class="form-control"
             id="{{ formId }}-city"
             formControlName="city"
-            [class.is-invalid]="form.controls.city|isInvalid"
-            [placeholder]="'INPUT_CITY_PLACEHOLDER'|translate"
-        >
+            [class.is-invalid]="form.controls.city | isInvalid"
+            [placeholder]="'INPUT_CITY_PLACEHOLDER' | translate"
+        />
         <div class="invalid-feedback">
-            <div *ngIf="form.controls.city|hasError:'required'">
-                {{ 'ERROR_FORM_REQUIRED'|translate }}
+            <div *ngIf="form.controls.city | hasError: 'required'">
+                {{ "ERROR_FORM_REQUIRED" | translate }}
             </div>
         </div>
     </div>
-    <div class="form-group">
+    <!-- <div class="form-group">
         <label for="{{ formId }}-state">{{ 'INPUT_STATE_LABEL'|translate }}</label>
         <input
             type="text"
@@ -117,8 +127,8 @@
                 {{ 'ERROR_FORM_REQUIRED'|translate }}
             </div>
         </div>
-    </div>
-    <div class="form-group">
+    </div> -->
+    <!-- <div class="form-group">
         <label for="{{ formId }}-postcode">{{ 'INPUT_POSTCODE_LABEL'|translate }}</label>
         <input
             type="text"
@@ -133,40 +143,44 @@
                 {{ 'ERROR_FORM_REQUIRED'|translate }}
             </div>
         </div>
-    </div>
+    </div> -->
     <div class="form-row">
         <div class="form-group col-md-6 mb-0">
-            <label for="{{ formId }}-email">{{ 'INPUT_EMAIL_ADDRESS_LABEL'|translate }}</label>
+            <label for="{{ formId }}-email">{{
+                "INPUT_EMAIL_ADDRESS_LABEL" | translate
+            }}</label>
             <input
                 type="email"
                 class="form-control"
                 id="{{ formId }}-email"
                 formControlName="email"
-                [class.is-invalid]="form.controls.email|isInvalid"
-                [placeholder]="'INPUT_EMAIL_ADDRESS_PLACEHOLDER'|translate"
-            >
+                [class.is-invalid]="form.controls.email | isInvalid"
+                [placeholder]="'INPUT_EMAIL_ADDRESS_PLACEHOLDER' | translate"
+            />
             <div class="invalid-feedback">
-                <div *ngIf="form.controls.email|hasError:'required'">
-                    {{ 'ERROR_FORM_REQUIRED'|translate }}
+                <div *ngIf="form.controls.email | hasError: 'required'">
+                    {{ "ERROR_FORM_REQUIRED" | translate }}
                 </div>
-                <div *ngIf="form.controls.email|hasError:'email'">
-                    {{ 'ERROR_FORM_INCORRECT_EMAIL'|translate }}
+                <div *ngIf="form.controls.email | hasError: 'email'">
+                    {{ "ERROR_FORM_INCORRECT_EMAIL" | translate }}
                 </div>
             </div>
         </div>
         <div class="form-group col-md-6 mb-0">
-            <label for="{{ formId }}-phone">{{ 'INPUT_PHONE_NUMBER_LABEL'|translate }}</label>
+            <label for="{{ formId }}-phone">{{
+                "INPUT_PHONE_NUMBER_LABEL" | translate
+            }}</label>
             <input
                 type="text"
                 class="form-control"
                 id="{{ formId }}-phone"
                 formControlName="phone"
-                [class.is-invalid]="form.controls.phone|isInvalid"
-                [placeholder]="'INPUT_PHONE_NUMBER_PLACEHOLDER'|translate"
-            >
+                [class.is-invalid]="form.controls.phone | isInvalid"
+                [placeholder]="'INPUT_PHONE_NUMBER_PLACEHOLDER' | translate"
+            />
             <div class="invalid-feedback">
-                <div *ngIf="form.controls.phone|hasError:'required'">
-                    {{ 'ERROR_FORM_REQUIRED'|translate }}
+                <div *ngIf="form.controls.phone | hasError: 'required'">
+                    {{ "ERROR_FORM_REQUIRED" | translate }}
                 </div>
             </div>
         </div>

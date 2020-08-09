@@ -39,7 +39,7 @@
 
     <div class="product-card__image">
         <div class="image image--type--product">
-            <a [routerLink]="url.product(product)" class="image__body">
+            <a class="image__body">
                 <img class="image__tag" [src]="product.pictures[0]" alt=""
             /></a>
         </div>
@@ -115,7 +115,7 @@
 
         <div class="product-card__name">
             <div *ngIf="product.type != 'car'">
-                {{ product.name }}
+                <a [routerLink]="['/products']">{{ product.name }}</a>
             </div>
             <div *ngIf="product.type == 'car'">
                 {{ product.model }}

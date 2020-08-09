@@ -165,7 +165,7 @@ const routes: Routes = [
     imports: [
         RouterModule.forRoot(routes, {
             scrollPositionRestoration: 'disabled',
-            anchorScrolling: 'disabled',
+            anchorScrolling: 'enabled',
             initialNavigation: 'enabled',
             preloadingStrategy: PreloadAllModules,
         }),

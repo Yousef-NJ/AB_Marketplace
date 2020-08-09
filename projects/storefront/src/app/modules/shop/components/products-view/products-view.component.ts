@@ -117,6 +117,7 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
         this.products = {
             properties: [
                 {
+                    id: 1,
                     city: 'San Francisco',
                     address: 'San Francisco, CA, United States',
                     name:
@@ -146,6 +147,7 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
                     currency: 'USD',
                 },
                 {
+                    id: 2,
                     city: 'San Francisco',
                     address: 'San Francisco, CA, United States',
                     name: 'Diva | Heart of Union Square | Loft Room 1 Double',
@@ -167,6 +169,7 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
                     currency: 'USD',
                 },
                 {
+                    id: 3,
                     city: 'San Francisco',
                     address: 'San Francisco, CA, United States',
                     name: 'Financial District, Amazing Building and View',
@@ -189,6 +192,7 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
                     currency: 'USD',
                 },
                 {
+                    id: 4,
                     city: 'San Francisco',
                     address: 'San Francisco, CA, United States',
                     name: '316 - Private Room, Clean and New!',
@@ -209,6 +213,7 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
                     currency: 'USD',
                 },
                 {
+                    id: 5,
                     city: 'San Francisco',
                     address: 'San Francisco, CA, United States',
                     name: 'Newly Renovated near Painted Ladies / Hayes Valley',
@@ -252,6 +257,7 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
                     currency: 'USD',
                 },
                 {
+                    id: 6,
                     city: 'San Francisco',
                     address: 'San Francisco, CA, United States',
                     name: 'Private room with very pretty bey view',
@@ -268,6 +274,7 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
                     currency: 'USD',
                 },
                 {
+                    id: 7,
                     city: 'San Francisco',
                     address: 'San Francisco, CA, United States',
                     name: 'FOUND Hotel San Francisco, Bed in Shared Room',
@@ -298,6 +305,7 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
                     currency: 'USD',
                 },
                 {
+                    id: 8,
                     city: 'San Francisco',
                     address: 'San Francisco, CA, United States',
                     name: 'Female room for 3 ppl at Japantown House',
@@ -329,6 +337,7 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
                     currency: 'USD',
                 },
                 {
+                    id: 9,
                     city: 'San Francisco',
                     address: 'San Francisco, CA, United States',
                     name: 'Safe Private entry Pac Heights Studio, Tree Lined',
@@ -361,6 +370,7 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
                     currency: 'USD',
                 },
                 {
+                    id: 10,
                     city: 'San Francisco',
                     address: 'San Francisco, CA, United States',
                     name: 'Centrally Located Studio',
@@ -386,6 +396,7 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
                     currency: 'USD',
                 },
                 {
+                    id: 11,
                     city: 'San Francisco',
                     address: 'San Francisco, CA, United States',
                     name: 'Grant Plaza Hotel, Standard Double',
@@ -414,6 +425,7 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
                     currency: 'USD',
                 },
                 {
+                    id: 12,
                     city: 'San Francisco',
                     address: 'San Francisco, CA, United States',
                     name: 'Sublease: Master Bedroom with Private Bathroom',
@@ -434,6 +446,7 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
                     currency: 'USD',
                 },
                 {
+                    id: 13,
                     city: 'San Francisco',
                     address: 'San Francisco, CA, United States',
                     name: 'Gorgeous Renovated Near Painted LadiesHayes Valley',
@@ -477,6 +490,7 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
                     currency: 'USD',
                 },
                 {
+                    id: 14,
                     city: 'San Francisco',
                     address: 'San Francisco, CA, United States',
                     name: 'Soma 2bunk bed/Furnished kitchen&laundry included',
@@ -500,6 +514,7 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
                     currency: 'USD',
                 },
                 {
+                    id: 15,
                     city: 'San Francisco',
                     address: 'San Francisco, CA, United States',
                     name: 'shared room in SoMa/1mon',
@@ -528,6 +543,7 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
                     currency: 'USD',
                 },
                 {
+                    id: 16,
                     city: 'San Francisco',
                     address: 'San Francisco, CA, United States',
                     name: 'Room for women/3-people shared room',
@@ -561,6 +577,7 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
                     currency: 'USD',
                 },
                 {
+                    id: 17,
                     city: 'San Francisco',
                     address: 'San Francisco, CA, United States',
                     name: 'Twin bed in private room/Outpost Club',
@@ -586,6 +603,7 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
                     currency: 'USD',
                 },
                 {
+                    id: 18,
                     city: 'San Francisco',
                     address: 'San Francisco, CA, United States',
                     name: 'Dorm Bed In Friendly Hostel Community #2',
@@ -619,6 +637,7 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
                     currency: 'USD',
                 },
                 {
+                    id: 19,
                     city: 'San Francisco',
                     address: 'San Francisco, CA, United States',
                     name: 'Cozy and Efficient SF Studio Condo.',
@@ -640,6 +659,7 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
                     currency: 'USD',
                 },
                 {
+                    id: 20,
                     city: 'San Francisco',
                     address: 'San Francisco, CA, United States',
                     name: 'Efficient SOMA Studio',

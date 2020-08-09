@@ -15,13 +15,15 @@
                     {{ "HEADER_ORDER_SUCCESS_SUBTITLE" | translate }}
                 </div>
                 <div class="order-success__actions">
-                    <a routerLink="/" class="btn btn-sm btn-secondary">{{
-                        "BUTTON_GO_TO_HOMEPAGE" | translate
-                    }}</a>
+                    <a
+                        href="http://localhost:4200/"
+                        class="btn btn-sm btn-secondary"
+                        >{{ "BUTTON_GO_TO_HOMEPAGE" | translate }}</a
+                    >
                 </div>
             </div>
 
-            <div class="card order-success__meta">
+            <!-- <div class="card order-success__meta">
                 <ul class="order-success__meta-list">
                     <li class="order-success__meta-item">
                         <span class="order-success__meta-title"
@@ -202,8 +204,9 @@
                     [label]="'TEXT_BILLING_ADDRESS' | translate"
                 ></app-address-card>
             </div>
+        </div> -->
         </div>
     </div>
-</div>
 
-<app-block-space layout="before-footer"></app-block-space>
+    <app-block-space layout="before-footer"></app-block-space>
+</div>

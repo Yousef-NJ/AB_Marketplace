@@ -17,7 +17,9 @@ export class CarSearchComponent implements OnInit {
     liabilitiesValue: any = 0;
     monthlyinstallmentValue: any = 0;
     incomeValue: any = 0;
-
+    selectedBrand: string = 'none';
+    selectedYear: string = 'all';
+    selectedPrice: string = 'all';
     get vehicle(): Vehicle {
         return this.vehicleControl.value;
     }
@@ -70,5 +72,13 @@ export class CarSearchComponent implements OnInit {
         console.log('the selected value is ' + value);
         this.value = value;
         this.incomeValue = value;
+    }
+
+    onBrandSelected(value: string) {
+        console.log('the selected value is ' + value);
+    }
+
+    onYearSelected(value: string) {
+        console.log('the selected value is ' + value);
     }
 }

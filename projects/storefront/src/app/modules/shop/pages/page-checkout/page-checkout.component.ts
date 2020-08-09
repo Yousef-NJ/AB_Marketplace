@@ -1,6 +1,15 @@
 import { Component, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { filter, finalize, map, pairwise, startWith, switchMap, takeUntil, tap } from 'rxjs/operators';
+import {
+    filter,
+    finalize,
+    map,
+    pairwise,
+    startWith,
+    switchMap,
+    takeUntil,
+    tap,
+} from 'rxjs/operators';
 import { ICreateOrderRequest, IPayPalConfig } from 'ngx-paypal';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { TermsModalComponent } from '../../../shared/components/terms-modal/terms-modal.component';
@@ -34,32 +43,35 @@ export class PageCheckoutComponent implements OnInit, OnDestroy {
 
     payments = [
         {
+            name: 'direct',
+            label: 'Direct from account',
+            description: 'Dirict from account',
+        },
+        {
             name: 'bank',
             label: 'TEXT_PAYMENT_BANK_LABEL',
             description: 'TEXT_PAYMENT_BANK_DESCRIPTION',
         },
         {
-            name: 'check',
-            label: 'TEXT_PAYMENT_CHECK_LABEL',
-            description: 'TEXT_PAYMENT_CHECK_DESCRIPTION',
+            name: 'points',
+            label: 'Loyalty points',
+            description: 'Loyalty points',
         },
         {
             name: 'cash',
             label: 'TEXT_PAYMENT_CASH_LABEL',
             description: 'TEXT_PAYMENT_CASH_DESCRIPTION',
         },
-        {
-            name: 'paypal',
-            label: 'TEXT_PAYMENT_PAYPAL_LABEL',
-            description: 'TEXT_PAYMENT_PAYPAL_DESCRIPTION',
-        },
     ];
 
-    @ViewChild('billingAddressForm', {read: AddressFormComponent}) billingAddressForm: AddressFormComponent;
+    @ViewChild('billingAddressForm', { read: AddressFormComponent })
+    billingAddressForm: AddressFormComponent;
 
-    @ViewChild('shippingAddressForm', {read: AddressFormComponent}) shippingAddressForm: AddressFormComponent;
+    @ViewChild('shippingAddressForm', { read: AddressFormComponent })
+    shippingAddressForm: AddressFormComponent;
 
-    @ViewChild('registerForm', {read: RegisterFormComponent}) registerForm: RegisterFormComponent;
+    @ViewChild('registerForm', { read: RegisterFormComponent })
+    registerForm: RegisterFormComponent;
 
     enablePaypalButton = () => {};
     disablePaypalButton = () => {};
@@ -73,7 +85,7 @@ export class PageCheckoutComponent implements OnInit, OnDestroy {
         private zone: NgZone,
         public url: UrlService,
         public accountApi: AccountApi,
-        public cart: CartService,
+        public cart: CartService
     ) {
         this.form = this.fb.group({
             billingAddress: [{}],
@@ -91,59 +103,75 @@ export class PageCheckoutComponent implements OnInit, OnDestroy {
             agree: [false, [Validators.requiredTrue]],
         });
 
-        this.form.get('account').disable({emitEvent: false});
-        this.form.get('shippingAddress').disable({emitEvent: false});
+        this.form.get('account').disable({ emitEvent: false });
+        this.form.get('shippingAddress').disable({ emitEvent: false });
 
-        this.form.valueChanges.pipe(
-            startWith(of(this.form.value)),
-            pairwise(),
-        ).subscribe(([oldValue, newValue]) => {
-            if (oldValue.shipToDifferentAddress !== newValue.shipToDifferentAddress) {
-                this.toggleFormControl('shippingAddress', newValue.shipToDifferentAddress);
-            }
-            if (oldValue.createAccount !== newValue.createAccount) {
-                this.toggleFormControl('account', newValue.createAccount);
-            }
-            if (oldValue.paymentMethod !== newValue.paymentMethod && newValue.paymentMethod === 'paypal') {
-                this.payPalInit = false;
-            }
+        this.form.valueChanges
+            .pipe(startWith(of(this.form.value)), pairwise())
+            .subscribe(([oldValue, newValue]) => {
+                if (
+                    oldValue.shipToDifferentAddress !==
+                    newValue.shipToDifferentAddress
+                ) {
+                    this.toggleFormControl(
+                        'shippingAddress',
+                        newValue.shipToDifferentAddress
+                    );
+                }
+                if (oldValue.createAccount !== newValue.createAccount) {
+                    this.toggleFormControl('account', newValue.createAccount);
+                }
+                if (
+                    oldValue.paymentMethod !== newValue.paymentMethod &&
+                    newValue.paymentMethod === 'paypal'
+                ) {
+                    this.payPalInit = false;
+                }
 
-            if (this.form.valid) {
-                this.enablePaypalButton();
-            } else {
-                this.disablePaypalButton();
-            }
-        });
+                if (this.form.valid) {
+                    this.enablePaypalButton();
+                } else {
+                    this.disablePaypalButton();
+                }
+            });
     }
 
     ngOnInit(): void {
         this.initConfig();
 
-        this.cart.quantity$.pipe(
-            filter(x => x === 0),
-            takeUntil(this.destroy$),
-        ).subscribe(() => this.router.navigateByUrl('/shop/cart').then());
+        this.cart.quantity$
+            .pipe(
+                filter((x) => x === 0),
+                takeUntil(this.destroy$)
+            )
+            .subscribe(() => this.router.navigateByUrl('/shop/cart').then());
 
-        this.checkout$.pipe(
-            tap(() => this.checkoutInProgress = true),
-            switchMap(checkoutData => {
-                const value = this.form.value;
+        this.checkout$
+            .pipe(
+                tap(() => (this.checkoutInProgress = true)),
+                switchMap((checkoutData) => {
+                    const value = this.form.value;
 
-                if (value.createAccount) {
-                    return this.accountApi.signUp(value.account.email, value.account.password).pipe(
-                        map(() => checkoutData),
-                    );
-                }
+                    if (value.createAccount) {
+                        return this.accountApi
+                            .signUp(value.account.email, value.account.password)
+                            .pipe(map(() => checkoutData));
+                    }
 
-                return of(checkoutData);
-            }),
-            switchMap(checkoutData => this.shopApi.checkout(checkoutData)),
-            tap(() => this.checkoutInProgress = false),
-            finalize(() => this.checkoutInProgress = false),
-            takeUntil(this.destroy$),
-        ).subscribe(order => {
-            this.router.navigateByUrl(`/shop/checkout/${order.token}`).then();
-        });
+                    return of(checkoutData);
+                }),
+                switchMap((checkoutData) =>
+                    this.shopApi.checkout(checkoutData)
+                ),
+                tap(() => (this.checkoutInProgress = false)),
+                finalize(() => (this.checkoutInProgress = false)),
+                takeUntil(this.destroy$)
+            )
+            .subscribe((order) => {
+                this.router
+                    .navigateByUrl(`/shop/checkout/${order.token}`)
+                    .then();
+            });
     }
 
     ngOnDestroy(): void {
@@ -153,16 +181,16 @@ export class PageCheckoutComponent implements OnInit, OnDestroy {
 
     toggleFormControl(controlName: string, isEnabled: boolean): void {
         if (isEnabled) {
-            this.form.get(controlName).enable({emitEvent: false});
+            this.form.get(controlName).enable({ emitEvent: false });
         } else {
-            this.form.get(controlName).disable({emitEvent: false});
+            this.form.get(controlName).disable({ emitEvent: false });
         }
     }
 
     showTerms(event: MouseEvent): void {
         event.preventDefault();
 
-        this.modalService.show(TermsModalComponent, {class: 'modal-lg'});
+        this.modalService.show(TermsModalComponent, { class: 'modal-lg' });
     }
 
     createOrder(): void {
@@ -175,9 +203,9 @@ export class PageCheckoutComponent implements OnInit, OnDestroy {
 
     private markAllAsTouched(): void {
         this.form.markAllAsTouched();
-        this.billingAddressForm.markAsTouched();
-        this.shippingAddressForm.markAsTouched();
-        this.registerForm.markAsTouched();
+        // this.billingAddressForm.markAsTouched();
+        // this.shippingAddressForm.markAsTouched();
+        // this.registerForm.markAsTouched();
     }
 
     private checkData(): boolean {
@@ -194,11 +222,13 @@ export class PageCheckoutComponent implements OnInit, OnDestroy {
         const value = this.form.value;
 
         const billingAddress = value.billingAddress;
-        const shippingAddress = value.shipToDifferentAddress ? value.shippingAddress : value.billingAddress;
+        const shippingAddress = value.shipToDifferentAddress
+            ? value.shippingAddress
+            : value.billingAddress;
 
         const checkoutData: CheckoutData = {
             payment: value.paymentMethod,
-            items: this.cart.items.map(item => ({
+            items: this.cart.items.map((item) => ({
                 productId: item.product.id,
                 options: item.options,
                 quantity: item.quantity,
@@ -215,7 +245,8 @@ export class PageCheckoutComponent implements OnInit, OnDestroy {
         this.payPalConfig = {
             currency: 'USD',
             clientId: environment.paypalClientId,
-            createOrderOnClient: (): ICreateOrderRequest => this.createPayPalOrderRequest(),
+            createOrderOnClient: (): ICreateOrderRequest =>
+                this.createPayPalOrderRequest(),
             advanced: {
                 commit: 'true',
             },
@@ -237,7 +268,7 @@ export class PageCheckoutComponent implements OnInit, OnDestroy {
             onClientAuthorization: () => {
                 this.zone.run(() => this.checkout());
             },
-            onError: err => {
+            onError: (err) => {
                 alert(err);
             },
             onClick: () => {
@@ -250,10 +281,16 @@ export class PageCheckoutComponent implements OnInit, OnDestroy {
         const value = this.form.value;
 
         const billingAddress: AddressData = value.billingAddress;
-        const shippingAddress: AddressData = value.shipToDifferentAddress ? value.shippingAddress : value.billingAddress;
+        const shippingAddress: AddressData = value.shipToDifferentAddress
+            ? value.shippingAddress
+            : value.billingAddress;
 
-        const shipping = this.cart.totals.filter(x => x.type === 'shipping').reduce((acc, total) => acc + total.price, 0);
-        const taxes = this.cart.totals.filter(x => x.type === 'tax').reduce((acc, total) => acc + total.price, 0);
+        const shipping = this.cart.totals
+            .filter((x) => x.type === 'shipping')
+            .reduce((acc, total) => acc + total.price, 0);
+        const taxes = this.cart.totals
+            .filter((x) => x.type === 'tax')
+            .reduce((acc, total) => acc + total.price, 0);
 
         return {
             intent: 'CAPTURE',
@@ -277,7 +314,7 @@ export class PageCheckoutComponent implements OnInit, OnDestroy {
                             },
                         },
                     },
-                    items: this.cart.items.map(item => ({
+                    items: this.cart.items.map((item) => ({
                         category: 'PHYSICAL_GOODS',
                         name: item.product.name,
                         quantity: item.quantity.toString(),
