@@ -1,0 +1,157 @@
+<!-- Left Column / Headphones Image -->
+<!-- <div class="left-column">
+    <div *ngFor="let image of product.pictures">
+        <img data-image="red" class="active" [src]="image" alt="" />
+    </div>
+</div> -->
+
+<!-- <div class="slideshow-container">
+    <div *ngFor="let image of product.pictures">
+        <div class="mySlides fade">
+            <img [src]="image" style="width: 100%;" />
+        </div>
+    </div>
+</div> -->
+<div class="quickview__body" [formGroup]="form">
+    <app-product-gallery
+        *ngIf="true"
+        class="quickview__gallery"
+        layout="quickview"
+        [images]="product.pictures"
+    ></app-product-gallery>
+
+    <div class="quickview__product">
+        <div class="quickview__product-name">
+            {{ product.name }}
+        </div>
+        <div class="quickview__product-rating">
+            <div class="quickview__product-rating-stars">
+                <app-rating [value]="product.rating"></app-rating>
+            </div>
+            <div class="quickview__product-rating-title">
+                {{
+                    "TEXT_RATING_LABEL"
+                        | translate: { rating: product.rating, reviews: 0 }
+                }}
+            </div>
+        </div>
+        <div class="quickview__product-meta"></div>
+        <div
+            class="quickview__product-description"
+            *ngIf="product.type != 'voucher' && product.type != 'car'"
+        >
+            {{ product.address }}
+
+            <br />
+            <br />
+
+            Bathrooms : {{ product.bathroomLabel }}<br />
+            Beds : {{ product.bedLabel }}<br />
+            Label : {{ product.bedroomLabel }}<br />
+        </div>
+
+        <div
+            class="quickview__product-description"
+            *ngIf="product.type == 'car'"
+        >
+            {{ product.brand }}
+
+            <br />
+            <br />
+
+            Model : {{ product.model }}<br />
+            Year of manufacture : {{ product.year }}<br />
+        </div>
+        <div class="quickview__product-prices-stock">
+            <div class="quickview__product-prices">
+                <ng-container *ngIf="product.compareAtPrice">
+                    <div
+                        class="quickview__product-price quickview__product-price--old"
+                    >
+                        {{ product.price | currencyFormat }}
+                    </div>
+                    <div
+                        class="quickview__product-price quickview__product-price--new"
+                    >
+                        {{ product.price | currencyFormat }}
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="!product.compareAtPrice">
+                    <div
+                        class="quickview__product-price quickview__product-price--current"
+                    >
+                        {{ product.price | currencyFormat }}
+                    </div>
+                </ng-container>
+            </div>
+            <!-- <app-status-badge
+                            class="quickview__product-stock"
+                            [type]="{
+                                'in-stock': 'success',
+                                'out-of-stock': 'failure',
+                                'on-backorder': 'warning'
+                            }[product.stock]"
+                            [text]="{
+                                'in-stock': 'TEXT_STOCK_IN_STOCK',
+                                'out-of-stock': 'TEXT_STOCK_OUT_OF_STOCK',
+                                'on-backorder': 'TEXT_STOCK_ON_BACKORDER'
+                            }[product.stock]|translate"
+                        ></app-status-badge> -->
+        </div>
+
+        <!-- <app-product-form
+                        *ngIf="product.options.length > 0"
+                        formControlName="options"
+                        class="quickview__product-form"
+                        [options]="product.options"
+                    ></app-product-form> -->
+
+        <div class="quickview__product-actions">
+            <!-- <div
+                            class="quickview__product-actions-item quickview__product-actions-item--quantity"
+                        >
+                            <app-input-number
+                                formControlName="quantity"
+                                min="1"
+                            ></app-input-number>
+                        </div> -->
+            <div
+                class="quickview__product-actions-item quickview__product-actions-item--addtocart"
+            >
+                <a href="http://localhost:4200/quotation"
+                    ><button type="button" class="btn btn-primary">
+                        Ask for Quotation
+                    </button></a
+                >
+            </div>
+            <div
+                class="quickview__product-actions-item quickview__product-actions-item--wishlist"
+            >
+                <!-- <button
+                                appAddToWishlist
+                                type="button"
+                                class="btn btn-muted btn-icon"
+                                [class.btn-loading]="addToWishlist.inProgress"
+                                (click)="addToWishlist.add(product)"
+                                #addToWishlist="addToWishlist"
+                            >
+                                <app-icon icon="wishlist-16"></app-icon>
+                            </button> -->
+            </div>
+            <!-- <div
+                            class="quickview__product-actions-item quickview__product-actions-item--compare"
+                        >
+                            <button
+                                appAddToCompare
+                                type="button"
+                                class="btn btn-muted btn-icon"
+                                [class.btn-loading]="addToCompare.inProgress"
+                                (click)="addToCompare.add(product)"
+                                #addToCompare="addToCompare"
+                            >
+                                <app-icon icon="compare-16"></app-icon>
+                            </button>
+                        </div> -->
+        </div>
+    </div>
+</div>

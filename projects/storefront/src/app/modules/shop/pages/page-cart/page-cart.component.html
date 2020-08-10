@@ -65,7 +65,7 @@
                                 {{ item.product.price|currencyFormat }}
                             </td>
                             <td class="cart-table__column cart-table__column--quantity" [attr.data-title]="'TABLE_QUANTITY'|translate">
-                                <app-input-number class="cart-table__quantity" min="1" [formControl]="quantityControls[i]"></app-input-number>
+                                <app-input-number (click)="update()" class="cart-table__quantity" min="1" [formControl]="quantityControls[i]"></app-input-number>
                             </td>
                             <td class="cart-table__column cart-table__column--total" [attr.data-title]="'TABLE_TOTAL'|translate">
                                 {{ item.product.price * item.quantity|currencyFormat }}
