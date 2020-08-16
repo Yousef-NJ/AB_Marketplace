@@ -20,6 +20,8 @@ export class CarSearchComponent implements OnInit {
     selectedBrand: string = 'none';
     selectedYear: string = 'all';
     selectedPrice: string = 'all';
+    downpaymentValue: any = 0;
+    incomeValueInput: any;
     get vehicle(): Vehicle {
         return this.vehicleControl.value;
     }
@@ -63,22 +65,29 @@ export class CarSearchComponent implements OnInit {
     }
 
     onChangeMonthlyInstallmentValue(value: string) {
-        console.log('the selected value is ' + value);
+        // console.log('the selected value is ' + value);
         this.value = value;
         this.monthlyinstallmentValue = value;
     }
 
     onChangeIncomeValue(value: string) {
-        console.log('the selected value is ' + value);
+        // console.log('the selected value is ' + value);
         this.value = value;
         this.incomeValue = value;
     }
 
+    onChangedownpaymentValue(value: string) {
+        this.downpaymentValue = value;
+    }
+
     onBrandSelected(value: string) {
-        console.log('the selected value is ' + value);
+        // console.log('the selected value is ' + value);
     }
 
     onYearSelected(value: string) {
-        console.log('the selected value is ' + value);
+        // console.log('the selected value is ' + value);
+    }
+    changeIncome(value: string) {
+        // console.log('the selected value is ' + value);
     }
 }

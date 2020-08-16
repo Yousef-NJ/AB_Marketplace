@@ -24,6 +24,8 @@ export class PropertySearchComponent implements OnInit {
     liabilitiesValue: any = 0;
     monthlyinstallmentValue: any = 0;
     incomeValue: any = 0;
+    numberOfRooms: string = 'all';
+    downpaymentValue: any = 0;
 
     get vehicle(): Vehicle {
         return this.vehicleControl.value;
@@ -110,5 +112,11 @@ export class PropertySearchComponent implements OnInit {
         console.log('the selected value is ' + value);
         this.value = value;
         this.incomeValue = value;
+    }
+    onNumberOfRoomsSelected(value: string) {
+        this.numberOfRooms = value;
+    }
+    onChangedownpaymentValue(value: string) {
+        this.downpaymentValue = value;
     }
 }

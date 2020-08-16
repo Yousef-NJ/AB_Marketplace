@@ -268,24 +268,15 @@
                             ></ngx-paypal>
                         </div>
 
-                        <button
-                            *ngIf="
-                                form.controls.paymentMethod.value !==
-                                    'paypal' || !payPalInit
-                            "
-                            type="submit"
-                            class="btn btn-primary btn-xl btn-block"
-                            [disabled]="
-                                form.controls.paymentMethod.value === 'paypal'
-                            "
-                            [class.btn-loading]="
-                                form.controls.paymentMethod.value ===
-                                    'paypal' || checkoutInProgress
-                            "
-                            (click)="createOrder()"
+                        <a [routerLink]="['/shop/order-success']">
+                            <button
+                                type="submit"
+                                class="btn btn-primary btn-xl btn-block"
+                                (click)="checkout()"
+                            >
+                                {{ "BUTTON_PLACE_ORDER" | translate }}
+                            </button></a
                         >
-                            {{ "BUTTON_PLACE_ORDER" | translate }}
-                        </button>
                     </div>
                 </div>
             </div>

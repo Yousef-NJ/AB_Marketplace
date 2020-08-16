@@ -22,7 +22,9 @@
                     </div>
                     <div class="quickview__product-rating">
                         <div class="quickview__product-rating-stars">
-                            <app-rating [value]="product.rating"></app-rating>
+                            <app-rating
+                                [value]="product.avgRating"
+                            ></app-rating>
                         </div>
                         <div class="quickview__product-rating-title">
                             {{
@@ -117,7 +119,7 @@
                         <div
                             class="quickview__product-actions-item quickview__product-actions-item--addtocart"
                         >
-                            <a href="http://localhost:4200/quotation"
+                            <a routerLink="/quotation"
                                 ><button type="button" class="btn btn-primary">
                                     Ask for Quotation
                                 </button></a
@@ -154,12 +156,12 @@
                     </div>
                 </div>
             </div>
-            <a
+            <!-- <a
                 [routerLink]="url.product(product)"
                 class="quickview__see-details"
             >
                 {{ "BUTTON_SEE_FULL_DETAILS" | translate }}
-            </a>
+            </a> -->
         </div>
     </div>
 </div>

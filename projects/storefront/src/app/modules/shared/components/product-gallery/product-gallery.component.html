@@ -16,18 +16,18 @@
             <ng-template
                 *ngFor="let item of items"
                 carouselSlide
-                [id]="items.indexOf(item)"
+                [id]="item.id"
             >
                 <div class="image image--type--product">
                     <a
                         class="image__body"
                         (click)="onFeaturedImageClick($event, item)"
-                        [href]="item"
+                        [href]="item.image"
                         target="_blank"
                     >
                         <img
                             class="image__tag"
-                            [src]="item"
+                            [src]="item.image"
                             alt=""
                             #imageElement
                         />
@@ -47,17 +47,17 @@
             <ng-template
                 *ngFor="let item of items"
                 carouselSlide
-                [id]="items.indexOf(item)"
+                [id]="item.id"
             >
                 <div
                     class="product-gallery__thumbnails-item image image--type--product"
-                    [class.product-gallery__thumbnails-item]="
+                    [class.product-gallery__thumbnails-item--active]="
                         item === currentItem
                     "
                     (click)="onThumbnailImageClick(item)"
                 >
                     <div class="image__body">
-                        <img class="image__tag" [src]="item" alt="" />
+                        <img class="image__tag" [src]="item.image" alt="" />
                     </div>
                 </div>
             </ng-template>

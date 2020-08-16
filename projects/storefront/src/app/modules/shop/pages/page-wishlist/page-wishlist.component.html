@@ -73,47 +73,55 @@
                             *ngFor="let product of wishlist.items$ | async"
                             class="wishlist__row wishlist__row--body"
                         >
-                            <td
-                                class="wishlist__column wishlist__column--body wishlist__column--image"
+                            <a
+                                [routerLink]="['/shop/product-details']"
+                                [queryParams]="{ id: product.id }"
                             >
-                                <div class="">
-                                    <img
-                                        class="image__tag"
-                                        [src]="product.pictures[0]"
-                                        alt=""
-                                        width="150px"
-                                    />
-                                </div>
-                            </td>
-                            <td
-                                class="wishlist__column wishlist__column--body wishlist__column--product"
-                            >
-                                <div class="wishlist__product-name">
-                                    {{ product.name }}
-                                </div>
-                                <div class="wishlist__product-rating">
-                                    <div class="wishlist__product-rating-stars">
-                                        <app-rating
-                                            [value]="product.rating"
-                                        ></app-rating>
+                                <td
+                                    class="wishlist__column wishlist__column--body wishlist__column--image"
+                                >
+                                    <div class="">
+                                        <img
+                                            class="image__tag"
+                                            [src]="product.pictures[0]"
+                                            alt=""
+                                            width="150px"
+                                        />
                                     </div>
-                                    <div class="wishlist__product-rating-title">
-                                        {{
-                                            "TEXT_RATING_LABEL"
-                                                | translate
-                                                    : {
-                                                          rating:
-                                                              product.rating,
-                                                          reviews: 0
-                                                      }
-                                        }}
+                                </td>
+                                <td
+                                    class="wishlist__column wishlist__column--body wishlist__column--product"
+                                >
+                                    <div class="wishlist__product-name">
+                                        {{ product.name }}
                                     </div>
-                                </div>
-                            </td>
-                            <td
-                                class="wishlist__column wishlist__column--body wishlist__column--stock"
-                            >
-                                <!-- <app-status-badge
+                                    <div class="wishlist__product-rating">
+                                        <div
+                                            class="wishlist__product-rating-stars"
+                                        >
+                                            <app-rating
+                                                [value]="product.rating"
+                                            ></app-rating>
+                                        </div>
+                                        <div
+                                            class="wishlist__product-rating-title"
+                                        >
+                                            {{
+                                                "TEXT_RATING_LABEL"
+                                                    | translate
+                                                        : {
+                                                              rating:
+                                                                  product.rating,
+                                                              reviews: 0
+                                                          }
+                                            }}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td
+                                    class="wishlist__column wishlist__column--body wishlist__column--stock"
+                                >
+                                    <!-- <app-status-badge
                                     class="product__stock"
                                     [type]="
                                         {
@@ -132,42 +140,47 @@
                                         }[product.stock] | translate
                                     "
                                 ></app-status-badge> -->
-                            </td>
-                            <td
-                                class="wishlist__column wishlist__column--body wishlist__column--price"
-                            >
-                                {{ product.price | currencyFormat }}
-                            </td>
-                            <td
-                                class="wishlist__column wishlist__column--body wishlist__column--button"
-                            >
-                                <button
-                                    appAddToCart
-                                    type="button"
-                                    class="btn btn-sm btn-primary"
-                                    [class.btn-loading]="addToCart.inProgress"
-                                    (click)="addToCart.add(product)"
-                                    #addToCart="addToCart"
+                                </td>
+                                <td
+                                    class="wishlist__column wishlist__column--body wishlist__column--price"
                                 >
-                                    {{ "BUTTON_ADD_TO_CART" | translate }}
-                                </button>
-                            </td>
-                            <td
-                                class="wishlist__column wishlist__column--body wishlist__column--remove"
-                            >
-                                <button
-                                    appRemoveFromWishlist
-                                    type="button"
-                                    class="wishlist__remove btn btn-sm btn-muted btn-icon"
-                                    [class.btn-loading]="
-                                        removeFromWishlist.inProgress
-                                    "
-                                    (click)="removeFromWishlist.remove(product)"
-                                    #removeFromWishlist="removeFromWishlist"
+                                    {{ product.price | currencyFormat }}
+                                </td>
+                                <td
+                                    class="wishlist__column wishlist__column--body wishlist__column--button"
                                 >
-                                    <app-icon icon="cross-12"></app-icon>
-                                </button>
-                            </td>
+                                    <button
+                                        appAddToCart
+                                        type="button"
+                                        class="btn btn-sm btn-primary"
+                                        [class.btn-loading]="
+                                            addToCart.inProgress
+                                        "
+                                        (click)="addToCart.add(product)"
+                                        #addToCart="addToCart"
+                                    >
+                                        {{ "BUTTON_ADD_TO_CART" | translate }}
+                                    </button>
+                                </td>
+                                <td
+                                    class="wishlist__column wishlist__column--body wishlist__column--remove"
+                                >
+                                    <button
+                                        appRemoveFromWishlist
+                                        type="button"
+                                        class="wishlist__remove btn btn-sm btn-muted btn-icon"
+                                        [class.btn-loading]="
+                                            removeFromWishlist.inProgress
+                                        "
+                                        (click)="
+                                            removeFromWishlist.remove(product)
+                                        "
+                                        #removeFromWishlist="removeFromWishlist"
+                                    >
+                                        <app-icon icon="cross-12"></app-icon>
+                                    </button>
+                                </td>
+                            </a>
                         </tr>
                     </tbody>
                 </table>

@@ -177,7 +177,6 @@ export class CartService {
                 this.data.items = this.data.items.filter(
                     (eachItem) => eachItem !== item
                 );
-
                 this.save();
                 this.calc();
             })
@@ -232,5 +231,12 @@ export class CartService {
         if (items) {
             this.data.items = JSON.parse(items);
         }
+    }
+
+    clearCart() {
+        this.data.items = [];
+
+        this.save();
+        this.calc();
     }
 }

@@ -56,6 +56,7 @@ import { VouchersViewComponent } from './components/vouchers-view/vouchers-view.
 import { PageShopService } from './services/page-shop.service';
 import { ShopSidebarService } from './services/shop-sidebar.service';
 import { CarsViewComponent } from './components/cars-view/cars-view.component';
+import { ProductDetailsComponent } from './pages/product-details/product-details.component';
 
 @NgModule({
     declarations: [
@@ -94,6 +95,7 @@ import { CarsViewComponent } from './components/cars-view/cars-view.component';
         CarsProductComponent,
         VouchersViewComponent,
         CarsViewComponent,
+        ProductDetailsComponent,
     ],
     imports: [
         // modules (angular)

@@ -1,15 +1,26 @@
-<div class="block-sale__content">
+<div class="block-sale__content" style="background-color: #ffffff;">
     <div class="block-sale__header">
-        <div class="block-sale__title">{{ 'HEADER_DEAL_ZONE_TITLE'|translate }}</div>
-        <div class="block-sale__subtitle">{{ 'HEADER_DEAL_ZONE_SUBTITLE'|translate }}</div>
-        <div class="block-sale__timer">
+        <!-- <div class="block-sale__title">{{ 'HEADER_DEAL_ZONE_TITLE'|translate }}</div>
+        <div class="block-sale__subtitle">{{ 'HEADER_DEAL_ZONE_SUBTITLE'|translate }}</div> -->
+        <!-- <div class="block-sale__timer">
             <app-timer [time]="3 * 24 * 60 * 60"></app-timer>
-        </div>
+        </div> -->
         <div class="block-sale__controls">
-            <app-arrow class="block-sale__arrow block-sale__arrow--prev" direction="prev" (click)="carousel.prev()"></app-arrow>
-            <div class="block-sale__link"><a routerLink="/">{{ 'LINK_VIEW_ALL_AVAILABLE_OFFERS'|translate }}</a></div>
-            <app-arrow class="block-sale__arrow block-sale__arrow--next" direction="next" (click)="carousel.next()"></app-arrow>
-            <app-decor class="block-sale__header-decor" type="center"></app-decor>
+            <app-arrow
+                class="block-sale__arrow block-sale__arrow--prev"
+                direction="prev"
+                (click)="carousel.prev()"
+            ></app-arrow>
+            <div class="block-sale__link">Some Related Products</div>
+            <app-arrow
+                class="block-sale__arrow block-sale__arrow--next"
+                direction="next"
+                (click)="carousel.next()"
+            ></app-arrow>
+            <app-decor
+                class="block-sale__header-decor"
+                type="center"
+            ></app-decor>
         </div>
     </div>
     <div class="block-sale__body">

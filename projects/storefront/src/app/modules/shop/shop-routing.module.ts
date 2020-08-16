@@ -20,6 +20,7 @@ import { CheckoutGuard } from './guards/checkout.guard';
 import { CarsProductComponent } from './pages/cars-product/cars-product.component';
 import { VouchersViewComponent } from './components/vouchers-view/vouchers-view.component';
 import { CarsViewComponent } from './components/cars-view/cars-view.component';
+import { ProductDetailsComponent } from './pages/product-details/product-details.component';
 
 const routes: Routes = [
     {
@@ -106,6 +107,10 @@ const routes: Routes = [
             layout: 'full',
             sidebarPosition: 'start',
         },
+    },
+    {
+        path: 'product-details',
+        component: ProductDetailsComponent,
     },
     {
         path: 'cart',

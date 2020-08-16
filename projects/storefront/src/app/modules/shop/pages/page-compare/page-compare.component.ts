@@ -10,7 +10,7 @@ interface Attribute {
     slug: string;
     name: string;
     sameValues: boolean;
-    values: {[productId: number]: ProductAttributeValue[]};
+    values: { [productId: number]: ProductAttributeValue[] };
 }
 
 @Component({
@@ -21,57 +21,66 @@ interface Attribute {
 export class PageCompareComponent implements OnDestroy {
     destroy$: Subject<void> = new Subject<void>();
 
-    products$: Observable<Product[]>;
+    products$: Observable<any[]>;
     attributes$: Observable<Attribute[]>;
     differentAttributes$: Observable<Attribute[]>;
 
     show: FormControl = new FormControl('all');
 
     clearInProgress = false;
+    type: any;
 
-    constructor(
-        public compare: CompareService,
-        public url: UrlService,
-    ) {
+    constructor(public compare: CompareService, public url: UrlService) {
         this.products$ = this.compare.items$.pipe(shareReplay(1));
         this.attributes$ = this.products$.pipe(
-            map(products => {
+            map((products) => {
                 const attributes: Attribute[] = [];
 
-                products.forEach(product => product.attributes.forEach(pa => {
-                    let attribute = attributes.find(x => x.slug === pa.slug);
+                this.type = products[0].type;
+                products.forEach((product) =>
+                    product.attributes.forEach((pa) => {
+                        let attribute = attributes.find(
+                            (x) => x.slug === pa.slug
+                        );
 
-                    if (!attribute) {
-                        attribute = {
-                            slug: pa.slug,
-                            name: pa.name,
-                            sameValues: false,
-                            values: {},
-                        };
+                        if (!attribute) {
+                            attribute = {
+                                slug: pa.slug,
+                                name: pa.name,
+                                sameValues: false,
+                                values: {},
+                            };
 
-                        attributes.push(attribute);
-                    }
+                            attributes.push(attribute);
+                        }
 
-                    attribute.values[product.id] = pa.values;
-                }));
+                        attribute.values[product.id] = pa.values;
+                    })
+                );
 
-                attributes.forEach(attribute => {
-                    const values = products.map(product => {
-                        return (attribute.values[product.id] || []).map(x => x.slug).sort();
+                attributes.forEach((attribute) => {
+                    const values = products.map((product) => {
+                        return (attribute.values[product.id] || [])
+                            .map((x) => x.slug)
+                            .sort();
                     });
 
                     attribute.sameValues = values.reduce((sameValues, curr) => {
-                        return sameValues && (values[0].length === curr.length && values[0].join() === curr.join());
+                        return (
+                            sameValues &&
+                            values[0].length === curr.length &&
+                            values[0].join() === curr.join()
+                        );
                     }, true);
                 });
 
                 return attributes;
             }),
-            shareReplay(1),
+            shareReplay(1)
         );
         this.differentAttributes$ = this.attributes$.pipe(
-            map(attributes => attributes.filter(x => !x.sameValues)),
-            shareReplay(1),
+            map((attributes) => attributes.filter((x) => !x.sameValues)),
+            shareReplay(1)
         );
     }
 
@@ -86,10 +95,13 @@ export class PageCompareComponent implements OnDestroy {
         }
 
         this.clearInProgress = true;
-        this.compare.clear().pipe(takeUntil(this.destroy$)).subscribe({
-            complete: () => {
-                this.clearInProgress = false;
-            },
-        });
+        this.compare
+            .clear()
+            .pipe(takeUntil(this.destroy$))
+            .subscribe({
+                complete: () => {
+                    this.clearInProgress = false;
+                },
+            });
     }
 }

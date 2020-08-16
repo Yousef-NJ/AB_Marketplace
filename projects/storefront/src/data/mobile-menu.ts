@@ -23,6 +23,10 @@ export const mobileMenuLinks: MobileMenuLink[] = [
         title: 'Voucher',
         url: '/shop/category/vouchers',
     },
+    {
+        title: 'Compare',
+        url: '/shop/compare',
+    },
 
     //     submenu: {
     //         type: 'menu',

@@ -10,9 +10,9 @@
 }
 .tab {
     cursor: pointer;
-    padding: 10px 20px;
+    padding: 10px 41px;
     margin: 0px 2px;
-    background: #ffffff;
+    background: whitesmoke;
     display: inline-block;
     color: #000000;
     border-radius: 3px 3px 0px 0px;
@@ -27,7 +27,7 @@
     max-width: 800px;
     border-radius: 3px;
     overflow: hidden;
-    padding: 20px;
+    padding-top: 20px;
 }
 .panel {
     display: none;
@@ -58,7 +58,7 @@
 #two:checked ~ .tabs #two-tab,
 #three:checked ~ .tabs #three-tab {
     background: #fffffff6;
-    color: #000;
+    color: #1a79ff;
     border-bottom: 3px solid #1a79ff;
 }
 button {
@@ -196,4 +196,12 @@ h5 {
     border-radius: 50%;
     background: #1a79ff;
     cursor: pointer;
+}
+
+.vehicle-select__item-control {
+    width: 100%;
+    padding-left: 4px;
+    padding-right: 0px;
+    background-image: url("../../../../assets/images/arrow-img.png");
+    background-size: 18px 18px;
 }

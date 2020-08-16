@@ -26,155 +26,166 @@
             >
                 <app-icon icon="wishlist-16"></app-icon>
             </button>
-            <!-- <button
+            <button
                 type="button"
                 class="product-card__action product-card__action--compare"
                 [class.product-card__action--loading]="compare.inProgress"
                 [attr.aria-label]="'BUTTON_ADD_TO_COMPARE' | translate"
+                (click)="compare.add(product)"
             >
                 <app-icon icon="compare-16"></app-icon>
-            </button> -->
+            </button>
         </ng-container>
     </div>
-
-    <div class="product-card__image">
-        <div class="image image--type--product">
-            <a class="image__body">
-                <img class="image__tag" [src]="product.pictures[0]" alt=""
-            /></a>
-        </div>
-
-        <app-status-badge
-            *ngIf="!exclude.includes('status-badge') && vehicle"
-            class="product-card__fit"
-            [type]="
-                {
-                    all: 'unknown',
-                    fit: 'success',
-                    'not-fit': 'failure',
-                    unknown: 'warning'
-                }[compatibility()]
-            "
-            [icon]="
-                {
-                    all: 'success',
-                    fit: 'success',
-                    'not-fit': 'failure',
-                    unknown: 'failure'
-                }[compatibility()]
-            "
-            [text]="
-                {
-                    all: 'TEXT_COMPATIBILITY_ALL',
-                    fit: 'TEXT_COMPATIBILITY_FIT',
-                    'not-fit': 'TEXT_COMPATIBILITY_NOT_FIT',
-                    unknown: 'TEXT_COMPATIBILITY_UNKNOWN'
-                }[compatibility()]
-                    | translate
-                        : {
-                              year: vehicle.year,
-                              make: vehicle.make,
-                              model: vehicle.model
-                          }
-            "
-            [tooltipContent]="
-                {
-                    all: 'TEXT_COMPATIBILITY_ALL',
-                    fit: 'TEXT_COMPATIBILITY_FIT',
-                    'not-fit': 'TEXT_COMPATIBILITY_NOT_FIT',
-                    unknown: 'TEXT_COMPATIBILITY_UNKNOWN'
-                }[compatibility()]
-                    | translate
-                        : {
-                              year: vehicle.year,
-                              make: vehicle.make,
-                              model: vehicle.model
-                          }
-            "
-        ></app-status-badge>
-    </div>
-
-    <div class="product-card__info">
-        <div
-            *ngIf="!exclude.includes('meta') && product.type != 'car'"
-            class="product-card__meta"
-        >
-            <span
-                *ngIf="product.type != 'voucher' && product.type != 'car'"
-                class="product-card__meta-title"
-                >City:</span
-            >
-            {{ product.city }}
-        </div>
-        <div *ngIf="!exclude.includes('meta')" class="product-card__meta">
-            <span *ngIf="product.type == 'car'" class="product-card__meta-title"
-                >Brand:</span
-            >
-            {{ product.brand }}
-        </div>
-
-        <div class="product-card__name">
-            <div *ngIf="product.type != 'car'">
-                <a [routerLink]="['/products']">{{ product.name }}</a>
+    <a
+        [routerLink]="['/shop/product-details']"
+        [queryParams]="{ id: product.id }"
+    >
+        <div class="product-card__image">
+            <div class="image image--type--product">
+                <a class="image__body">
+                    <img class="image__tag" [src]="product.pictures[0]" alt=""
+                /></a>
             </div>
-            <div *ngIf="product.type == 'car'">
-                {{ product.model }}
-            </div>
+
+            <app-status-badge
+                *ngIf="!exclude.includes('status-badge') && vehicle"
+                class="product-card__fit"
+                [type]="
+                    {
+                        all: 'unknown',
+                        fit: 'success',
+                        'not-fit': 'failure',
+                        unknown: 'warning'
+                    }[compatibility()]
+                "
+                [icon]="
+                    {
+                        all: 'success',
+                        fit: 'success',
+                        'not-fit': 'failure',
+                        unknown: 'failure'
+                    }[compatibility()]
+                "
+                [text]="
+                    {
+                        all: 'TEXT_COMPATIBILITY_ALL',
+                        fit: 'TEXT_COMPATIBILITY_FIT',
+                        'not-fit': 'TEXT_COMPATIBILITY_NOT_FIT',
+                        unknown: 'TEXT_COMPATIBILITY_UNKNOWN'
+                    }[compatibility()]
+                        | translate
+                            : {
+                                  year: vehicle.year,
+                                  make: vehicle.make,
+                                  model: vehicle.model
+                              }
+                "
+                [tooltipContent]="
+                    {
+                        all: 'TEXT_COMPATIBILITY_ALL',
+                        fit: 'TEXT_COMPATIBILITY_FIT',
+                        'not-fit': 'TEXT_COMPATIBILITY_NOT_FIT',
+                        unknown: 'TEXT_COMPATIBILITY_UNKNOWN'
+                    }[compatibility()]
+                        | translate
+                            : {
+                                  year: vehicle.year,
+                                  make: vehicle.make,
+                                  model: vehicle.model
+                              }
+                "
+            ></app-status-badge>
         </div>
 
-        <div class="product-card__rating">
-            <app-rating
-                class="product-card__rating-stars"
-                [value]="product.rating"
-            ></app-rating>
+        <div class="product-card__info">
             <div
-                class="product-card__rating-label"
-                *ngIf="product.type != 'car'"
+                *ngIf="!exclude.includes('meta') && product.type != 'car'"
+                class="product-card__meta"
             >
-                {{
-                    "TEXT_RATING_LABEL"
-                        | translate: { rating: product.rating, reviews: 0 }
-                }}
+                <span
+                    *ngIf="product.type != 'voucher' && product.type != 'car'"
+                    class="product-card__meta-title"
+                    >City:</span
+                >
+                {{ product.city }}
+            </div>
+            <div *ngIf="!exclude.includes('meta')" class="product-card__meta">
+                <span
+                    *ngIf="product.type == 'car'"
+                    class="product-card__meta-title"
+                    >Brand:</span
+                >
+                {{ product.brand }}
+            </div>
+
+            <div class="product-card__name">
+                <div *ngIf="product.type != 'car'">
+                    {{ product.name }}
+                </div>
+                <div *ngIf="product.type == 'car'">
+                    {{ product.model }}
+                </div>
+            </div>
+
+            <div class="product-card__rating">
+                <app-rating
+                    class="product-card__rating-stars"
+                    [value]="product.avgRating"
+                ></app-rating>
+                <div
+                    class="product-card__rating-label"
+                    *ngIf="product.type != 'car'"
+                >
+                    {{
+                        "TEXT_RATING_LABEL"
+                            | translate: { rating: product.rating, reviews: 0 }
+                    }}
+                </div>
+            </div>
+
+            <div class="product-card__prices" class="price-label">
+                <ng-container *ngIf="product.compareAtPrice">
+                    <div class="product-card__price product-card__price--new">
+                        {{ product.price | currencyFormat }}
+                    </div>
+                    <div class="product-card__price product-card__price--old">
+                        {{ product.compareAtPrice | currencyFormat }}
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="!product.compareAtPrice">
+                    <div
+                        class="product-card__price product-card__price--current"
+                    >
+                        {{ product.price | currencyFormat }}
+                    </div>
+                </ng-container>
+            </div>
+
+            <div
+                *ngIf="
+                    !exclude.includes('features') &&
+                    featuredAttributes.length > 0 &&
+                    product.type != 'car'
+                "
+                class="product-card__features"
+            >
+                <ul>
+                    <li *ngFor="let attribute of featuredAttributes">
+                        {{ attribute.name }}:
+                        <ng-container
+                            *ngFor="
+                                let value of attribute.values;
+                                let last = last
+                            "
+                        >
+                            {{ value.name + (!last ? ", " : "") }}
+                        </ng-container>
+                    </li>
+                </ul>
             </div>
         </div>
-
-        <div class="product-card__prices" class="price-label">
-            <ng-container *ngIf="product.compareAtPrice">
-                <div class="product-card__price product-card__price--new">
-                    {{ product.price | currencyFormat }}
-                </div>
-                <div class="product-card__price product-card__price--old">
-                    {{ product.compareAtPrice | currencyFormat }}
-                </div>
-            </ng-container>
-            <ng-container *ngIf="!product.compareAtPrice">
-                <div class="product-card__price product-card__price--current">
-                    {{ product.price | currencyFormat }}
-                </div>
-            </ng-container>
-        </div>
-
-        <div
-            *ngIf="
-                !exclude.includes('features') &&
-                featuredAttributes.length > 0 &&
-                product.type != 'car'
-            "
-            class="product-card__features"
-        >
-            <ul>
-                <li *ngFor="let attribute of featuredAttributes">
-                    {{ attribute.name }}:
-                    <ng-container
-                        *ngFor="let value of attribute.values; let last = last"
-                    >
-                        {{ value.name + (!last ? ", " : "") }}
-                    </ng-container>
-                </li>
-            </ul>
-        </div>
-    </div>
-
+    </a>
     <div class="product-card__footer">
         <ng-container>
             <button
@@ -189,7 +200,7 @@
             </button>
 
             <a
-                href="http://localhost:4200/quotation"
+                routerLink="/quotation"
                 *ngIf="product.type != 'voucher'"
                 ><button type="button" class="btn btn-primary">
                     Ask for Quotation

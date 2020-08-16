@@ -17,23 +17,21 @@ export class PageOrdersComponent implements OnInit, OnDestroy {
     currentPage: FormControl = new FormControl(1);
     list: OrdersList;
 
-    constructor(
-        private accountApi: AccountApi,
-        public url: UrlService,
-    ) { }
+    constructor(private accountApi: AccountApi, public url: UrlService) {}
 
     ngOnInit(): void {
-        merge(
-            of(this.currentPage.value),
-            this.currentPage.valueChanges,
-        ).pipe(
-            distinctUntilChanged(),
-            mergeMap(page => this.accountApi.getOrdersList({
-                limit: 5,
-                page,
-            })),
-            takeUntil(this.destroy$),
-        ).subscribe(x => this.list = x);
+        merge(of(this.currentPage.value), this.currentPage.valueChanges)
+            .pipe(
+                distinctUntilChanged(),
+                mergeMap((page) =>
+                    this.accountApi.getOrdersList({
+                        limit: 5,
+                        page,
+                    })
+                ),
+                takeUntil(this.destroy$)
+            )
+            .subscribe((x) => (this.list = x));
     }
 
     ngOnDestroy(): void {

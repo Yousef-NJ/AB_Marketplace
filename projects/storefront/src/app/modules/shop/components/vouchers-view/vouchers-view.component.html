@@ -87,19 +87,21 @@
                         id="view-option-sort"
                         class="form-control form-control-sm"
                         [formControl]="sortControl"
+                        #sorting
+                        (change)="sort(sorting.value)"
                     >
                         <option value="default">{{
                             "INPUT_SORT_OPTION_DEFAULT" | translate
                         }}</option>
-                        <option value="name_asc">{{
-                            "INPUT_SORT_OPTION_NAME_ASC" | translate
-                        }}</option>
-                        <option value="name_desc">{{
-                            "INPUT_SORT_OPTION_NAME_DESC" | translate
-                        }}</option>
+                        <option value="asc" (click)="sortLowToHigh()"
+                            >Price Low to High</option
+                        >
+                        <option value="desc" (click)="sortHighToLow()"
+                            >Price High to Low</option
+                        >
                     </select>
                 </div>
-                <div class="view-options__select">
+                <!--<div class="view-options__select">
                     <label for="view-option-limit"
                         >{{ "INPUT_LIMIT_LABEL" | translate }}:</label
                     >
@@ -113,7 +115,7 @@
                         <option value="24">24</option>
                         <option value="32">32</option>
                     </select>
-                </div>
+                </div> -->
             </div>
 
             <!-- <div

@@ -4,7 +4,12 @@
     style="background-color: white; opacity: 1;"
 ></div>
 <div class="block-finder__body container container--max--xl">
-    <div class="block-finder__title" style="color: black;">Property</div>
+    <div
+        class="block-finder__title"
+        style="color: royalblue; margin-bottom: 30px; margin-top: 10px;"
+    >
+        <i class="fas fa-house-user fa-3x"></i>
+    </div>
     <!-- <div class="block-finder__subtitle">{{ 'TEXT_BLOCK_FINDER_SUBTITLE'|translate }}</div> -->
     <div class="warpper">
         <input class="radio" id="one" name="group" type="radio" checked />
@@ -12,7 +17,7 @@
         <input class="radio" id="three" name="group" type="radio" />
         <div class="tabs">
             <label class="tab" id="one-tab" for="one">Buy</label>
-            <label class="tab" id="two-tab" for="two">Rent</label>
+            <!-- <label class="tab" id="two-tab" for="two">Rent</label> -->
             <label class="tab" id="three-tab" for="three">Plan</label>
         </div>
         <div class="panels">
@@ -20,75 +25,48 @@
                 <div class="block-finder__body container container--max--xl">
                     <form class="block-finder__form" (submit)="submit()">
                         <select class="vehicle-select__item-control">
-                            <option value="none">Select City</option>
+                            <option value="none">City</option>
 
-                            <option>
-                                <input type="checkbox" name="" id="" /> City 1
-                            </option>
-                            <option>
-                                <input type="checkbox" name="" id="" />BBB
-                            </option>
-                            <option>
-                                <input type="checkbox" name="" id="" />CCC
-                            </option>
-                            <option>
-                                <input type="checkbox" name="" id="" />DDD
+                            <option value="all">
+                                San Francisco
                             </option>
                         </select>
 
                         <select class="vehicle-select__item-control">
-                            <option value="none">Select Area</option>
+                            <option value="all">Area</option>
 
-                            <option>
-                                <input type="checkbox" name="" id="" />Area
-                            </option>
-                            <option>
-                                <input type="checkbox" name="" id="" />BBB
-                            </option>
-                            <option>
-                                <input type="checkbox" name="" id="" />CCC
-                            </option>
-                            <option>
-                                <input type="checkbox" name="" id="" />DDD
+                            <option value="United States">
+                                United States
                             </option>
                         </select>
                         <select class="vehicle-select__item-control">
-                            <option value="none">Select Type</option>
+                            <option value="all"> Type</option>
 
-                            <option>
-                                <input type="checkbox" name="" id="" />Select
-                                Area
-                            </option>
-                            <option>
-                                <input type="checkbox" name="" id="" />BBB
-                            </option>
-                            <option>
-                                <input type="checkbox" name="" id="" />CCC
-                            </option>
-                            <option>
-                                <input type="checkbox" name="" id="" />DDD
+                            <option value="apartment">
+                                Apartment
                             </option>
                         </select>
-                        <select class="vehicle-select__item-control">
-                            <option value="none">Number of Room</option>
-
-                            <option>
-                                <input type="checkbox" name="" id="" />Select
-                                Area
-                            </option>
-                            <option>
-                                <input type="checkbox" name="" id="" />BBB
-                            </option>
-                            <option>
-                                <input type="checkbox" name="" id="" />CCC
-                            </option>
-                            <option>
-                                <input type="checkbox" name="" id="" />DDD
-                            </option>
+                        <select
+                            class="vehicle-select__item-control"
+                            #numberOfRooms
+                            (change)="
+                                onNumberOfRoomsSelected(numberOfRooms.value)
+                            "
+                        >
+                            <option value="all">Number of Room</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="1000">>= 6 </option>
                         </select>
                         <a
                             [routerLink]="['/shop/category/products']"
                             rel="noopener noreferrer"
+                            [queryParams]="{
+                                numberOfRooms: numberOfRooms.value
+                            }"
                         >
                             <button class="block-finder__button" type="submit">
                                 {{ "BUTTON_BLOCK_FINDER_SEARCH" | translate }}
@@ -102,7 +80,7 @@
                 <div class="block-finder__body container container--max--xl">
                     <form class="block-finder__form" (submit)="submit()">
                         <select class="vehicle-select__item-control">
-                            <option value="none">Select City</option>
+                            <option value="none">City</option>
 
                             <option>
                                 <input type="checkbox" name="" id="" /> City 1
@@ -119,7 +97,7 @@
                         </select>
 
                         <select class="vehicle-select__item-control">
-                            <option value="none">Select Area</option>
+                            <option value="none">Area</option>
 
                             <option>
                                 <input type="checkbox" name="" id="" />Area
@@ -135,7 +113,7 @@
                             </option>
                         </select>
                         <select class="vehicle-select__item-control">
-                            <option value="none">Select Type</option>
+                            <option value="none">Type</option>
 
                             <option>
                                 <input type="checkbox" name="" id="" />Select
@@ -184,14 +162,15 @@
                         max="10000"
                         value="0"
                         class="slider"
-                        #income
                         (change)="onChangeIncomeValue(income.value)"
                         data-toggle="tooltip"
                         data-placement="top"
                         trigger="click"
                         title="{{ incomeValue }}"
+                        (input)="onChangeIncomeValue(income.value)"
+                        #income
                     />
-                    <p style="color: black;">{{ incomeValue }} $</p>
+                    <p style="color: black;">{{ income.value }} $</p>
                 </div>
 
                 <h5>How much I could pay</h5>
@@ -212,8 +191,32 @@
                         data-toggle="tooltip"
                         data-placement="top"
                         title="{{ monthlyinstallmentValue }}"
+                        (input)="
+                            onChangeMonthlyInstallmentValue(
+                                monthlyinstallment.value
+                            )
+                        "
                     />
                     <p style="color: black;">{{ monthlyinstallmentValue }} $</p>
+                </div>
+
+                <h5>How much I have as downpayment</h5>
+
+                <div class="block-finder__body container container--max--xl">
+                    <input
+                        type="range"
+                        min="1"
+                        max="10000"
+                        value="0"
+                        class="slider"
+                        #downpayment
+                        (change)="onChangedownpaymentValue(downpayment.value)"
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title="{{ downpayment }}"
+                        (input)="onChangedownpaymentValue(downpayment.value)"
+                    />
+                    <p style="color: black;">{{ downpaymentValue }} $</p>
                 </div>
 
                 <h5>How much I have as other liabilities</h5>
@@ -230,6 +233,7 @@
                         data-toggle="tooltip"
                         data-placement="top"
                         title="{{ liabilitiesValue }}"
+                        (input)="onChangeLiabilitiesValue(liabilities.value)"
                     />
                     <p style="color: black;">{{ liabilitiesValue }} $</p>
                 </div>
@@ -247,18 +251,35 @@
                         (change)="onChangeYearsValue(years.value)"
                         data-toggle="tooltip"
                         data-placement="top"
-                        title="{{ yearsValue }}"
+                        title="Tooltip on top"
+                        (input)="onChangeYearsValue(years.value)"
                     />
                     <p style="color: black;">
-                        {{ yearsValue }} Months 
+                        {{ yearsValue }} Months
                         <!-- -
-                        {{ yearsValue / 12 | number: "1.1-2" }} Years -->
+                        {{ yearsValue / 12 | number: "2.1-2" }} Years -->
                     </p>
                 </div>
-
-                <h3 style="color: black;">
-                    {{ yearsValue * monthlyinstallmentValue }} $
-                </h3>
+                <div *ngIf="yearsValue != 0">
+                    <h5>You are eligible to take a loan for car cost</h5>
+                    <h3 style="color: black;">
+                        {{ yearsValue * monthlyinstallmentValue }} $
+                    </h3>
+                    <h5>with 7% interest rate</h5>
+                </div>
+                <div *ngIf="yearsValue != 0">
+                    <a
+                        [routerLink]="['/shop/category/products']"
+                        rel="noopener noreferrer"
+                        [queryParams]="{
+                            numberOfRooms: numberOfRooms.value
+                        }"
+                    >
+                        <button class="block-finder__button" type="submit">
+                            {{ "BUTTON_BLOCK_FINDER_SEARCH" | translate }}
+                        </button></a
+                    >
+                </div>
             </div>
         </div>
     </div>

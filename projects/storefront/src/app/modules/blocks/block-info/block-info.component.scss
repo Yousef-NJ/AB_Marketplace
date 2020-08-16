@@ -1,0 +1,147 @@
+#div-car {
+    background-image: url("../../../../assets/images/img-car11.jpg");
+
+    /* Full height */
+    height: 150px;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: whitesmoke;
+    padding: 10px;
+}
+
+#div-car img {
+    height: 100%;
+}
+
+#div-property {
+    background-image: url("../../../../assets/images/property-img.jpg");
+
+    /* Full height */
+    height: 150px;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: whitesmoke;
+    padding: 10px;
+}
+#div-property img {
+    height: 100%;
+}
+#div-travel {
+    background-image: url("../../../../assets/images/img-travel.jpg");
+
+    /* Full height */
+    height: 150px;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: whitesmoke;
+    padding: 10px;
+}
+#div-travel img {
+    height: 100%;
+}
+
+#div-property img {
+    height: 100%;
+}
+#div-insurance {
+    background-image: url("../../../../assets/images/insurance-img.jpg");
+
+    /* Full height */
+    height: 150px;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: whitesmoke;
+    padding: 10px;
+}
+#div-insurance img {
+    height: 100%;
+}
+
+#div-voucher {
+    background-image: url("../../../../assets/images/voucher-img21.jpg");
+
+    /* Full height */
+    height: 150px;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: whitesmoke;
+    padding: 10px;
+}
+#div-voucher img {
+    height: 100%;
+}
+.in {
+    width: 100%;
+    border-bottom: white;
+}
+.in :hover {
+    opacity: 1;
+}
+.navbar3 {
+    width: 100%;
+    background-color: black;
+    overflow: auto;
+}
+
+.navbar2 {
+    width: 100%;
+    background-color: black;
+    overflow: auto;
+}
+.navbar1 {
+    width: 100%;
+    background-color: black;
+    overflow: auto;
+}
+/* Navbar links */
+.navbar3 a {
+    float: left;
+    text-align: center;
+    padding: 8px;
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    width: 50%;
+}
+.navbar3 a:hover {
+    background-color: grey;
+}
+.navbar2 a {
+    float: left;
+    text-align: center;
+    padding: 8px;
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    width: 50%;
+}
+.navbar2 a:hover {
+    background-color: grey;
+}
+.navbar1 a {
+    float: left;
+    text-align: center;
+    padding: 8px;
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    width: 100%;
+}
+.navbar1 a:hover {
+    background-color: grey;
+}

@@ -15,6 +15,7 @@ import { FormControl } from '@angular/forms';
 import { merge, Observable, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 
 export interface LayoutButton {
     layout: PageShopLayout;
@@ -27,6 +28,12 @@ export interface LayoutButton {
 })
 export class ProductsViewComponent implements OnInit, OnDestroy {
     products: any;
+
+    properties: Array<any> = [];
+    propertiesByNumberOfRooms: Array<any> = [];
+    propertiesByYear: Array<any> = [];
+    propertiesByPrice: Array<any> = [];
+
     private destroy$: Subject<void> = new Subject<void>();
 
     isEmptyList$: Observable<boolean>;
@@ -37,7 +44,6 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
 
     layoutButtons: LayoutButton[] = [
         { layout: 'grid', icon: 'layout-grid-16' },
-        { layout: 'grid-with-features', icon: 'layout-grid-with-details-16' },
         { layout: 'list', icon: 'layout-list-16' },
         { layout: 'table', icon: 'layout-table-16' },
     ];
@@ -53,6 +59,7 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
     @Input() offCanvasSidebar: 'always' | 'mobile' = 'mobile';
 
     @HostBinding('class.products-view') classProductsView = true;
+    numberOfRooms: any;
 
     @HostBinding('class.products-view--loading')
     get classProductsViewLoading(): boolean {
@@ -62,11 +69,31 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
     constructor(
         public sidebar: ShopSidebarService,
         public page: PageShopService,
-        private http: HttpClient
-    ) {}
+        private http: HttpClient,
+        private route: ActivatedRoute
+    ) {
+        this.route.queryParams.subscribe((params) => {
+            this.numberOfRooms = params['numberOfRooms'];
+            console.log(this.numberOfRooms);
+        });
+    }
 
     ngOnInit(): void {
         this.getProducts();
+
+        this.products.properties.forEach((element: any) => {
+            this.properties.push(element);
+        });
+
+        if (this.numberOfRooms != 'all') {
+            this.properties.forEach((element: any) => {
+                if (element.bedroomLabel.split(' ')[0] == this.numberOfRooms) {
+                    this.propertiesByNumberOfRooms.push(element);
+                }
+            });
+            this.properties = this.propertiesByNumberOfRooms;
+        }
+
         this.pageControl = new FormControl(this.page.defaultOptions.page);
         this.limitControl = new FormControl(this.page.defaultOptions.limit);
         this.sortControl = new FormControl(this.page.defaultOptions.sort);
@@ -113,12 +140,86 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
         return entity.id;
     }
 
+    sort(s: string) {
+        if (s == 'asc') {
+            this.sortLowToHigh();
+        } else if (s == 'desc') {
+            this.sortHighToLow();
+        }
+    }
+
+    sortLowToHigh() {
+        this.properties = this.insertionSort();
+    }
+    sortHighToLow() {
+        this.properties = this.insertionSortDesc();
+    }
+
+    insertionSort(): any[] {
+        if (this.products) {
+            let listToSort = this.properties;
+
+            let i = 0,
+                j = 0,
+                len = listToSort.length,
+                holePosition = 0,
+                valueToInsert = null;
+            for (i = 0; i < len; i++) {
+                valueToInsert = listToSort[i]; /* select value to be inserted */
+                holePosition = i;
+                /*locate hole position for the element to be inserted */
+                while (
+                    holePosition > 0 &&
+                    listToSort[holePosition - 1].price > valueToInsert.price
+                ) {
+                    listToSort[holePosition] = listToSort[holePosition - 1];
+                    holePosition = holePosition - 1;
+                }
+                listToSort[
+                    holePosition
+                ] = valueToInsert; /* insert the number at hole position */
+            }
+            return listToSort;
+        }
+        return [];
+    }
+
+    insertionSortDesc(): any[] {
+        if (this.products) {
+            let listToSort = this.properties;
+
+            let i = 0,
+                j = 0,
+                len = listToSort.length,
+                holePosition = 0,
+                valueToInsert = null;
+            for (i = 0; i < len; i++) {
+                valueToInsert = listToSort[i]; /* select value to be inserted */
+                holePosition = i;
+                /*locate hole position for the element to be inserted */
+                while (
+                    holePosition > 0 &&
+                    listToSort[holePosition - 1].price < valueToInsert.price
+                ) {
+                    listToSort[holePosition] = listToSort[holePosition - 1];
+                    holePosition = holePosition - 1;
+                }
+                listToSort[
+                    holePosition
+                ] = valueToInsert; /* insert the number at hole position */
+            }
+            return listToSort;
+        }
+        return [];
+    }
+
     getProducts() {
         this.products = {
             properties: [
                 {
                     id: 1,
                     city: 'San Francisco',
+                    type: 'apartment',
                     address: 'San Francisco, CA, United States',
                     name:
                         'Civic Center Views from a Contemporary City Pad and Parking',
@@ -149,6 +250,7 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
                 {
                     id: 2,
                     city: 'San Francisco',
+                    type: 'apartment',
                     address: 'San Francisco, CA, United States',
                     name: 'Diva | Heart of Union Square | Loft Room 1 Double',
                     pictures: [
@@ -171,6 +273,7 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
                 {
                     id: 3,
                     city: 'San Francisco',
+                    type: 'apartment',
                     address: 'San Francisco, CA, United States',
                     name: 'Financial District, Amazing Building and View',
                     pictures: [
@@ -194,6 +297,7 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
                 {
                     id: 4,
                     city: 'San Francisco',
+                    type: 'apartment',
                     address: 'San Francisco, CA, United States',
                     name: '316 - Private Room, Clean and New!',
                     pictures: [
@@ -215,6 +319,7 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
                 {
                     id: 5,
                     city: 'San Francisco',
+                    type: 'apartment',
                     address: 'San Francisco, CA, United States',
                     name: 'Newly Renovated near Painted Ladies / Hayes Valley',
                     pictures: [
@@ -259,6 +364,7 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
                 {
                     id: 6,
                     city: 'San Francisco',
+                    type: 'apartment',
                     address: 'San Francisco, CA, United States',
                     name: 'Private room with very pretty bey view',
                     pictures: [
@@ -276,6 +382,7 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
                 {
                     id: 7,
                     city: 'San Francisco',
+                    type: 'apartment',
                     address: 'San Francisco, CA, United States',
                     name: 'FOUND Hotel San Francisco, Bed in Shared Room',
                     pictures: [
@@ -307,6 +414,7 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
                 {
                     id: 8,
                     city: 'San Francisco',
+                    type: 'apartment',
                     address: 'San Francisco, CA, United States',
                     name: 'Female room for 3 ppl at Japantown House',
                     pictures: [
@@ -339,6 +447,7 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
                 {
                     id: 9,
                     city: 'San Francisco',
+                    type: 'apartment',
                     address: 'San Francisco, CA, United States',
                     name: 'Safe Private entry Pac Heights Studio, Tree Lined',
                     pictures: [
@@ -372,6 +481,7 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
                 {
                     id: 10,
                     city: 'San Francisco',
+                    type: 'apartment',
                     address: 'San Francisco, CA, United States',
                     name: 'Centrally Located Studio',
                     pictures: [
@@ -398,6 +508,7 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
                 {
                     id: 11,
                     city: 'San Francisco',
+                    type: 'apartment',
                     address: 'San Francisco, CA, United States',
                     name: 'Grant Plaza Hotel, Standard Double',
                     pictures: [
@@ -427,6 +538,7 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
                 {
                     id: 12,
                     city: 'San Francisco',
+                    type: 'apartment',
                     address: 'San Francisco, CA, United States',
                     name: 'Sublease: Master Bedroom with Private Bathroom',
                     pictures: [
@@ -448,6 +560,7 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
                 {
                     id: 13,
                     city: 'San Francisco',
+                    type: 'apartment',
                     address: 'San Francisco, CA, United States',
                     name: 'Gorgeous Renovated Near Painted LadiesHayes Valley',
                     pictures: [
@@ -492,6 +605,7 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
                 {
                     id: 14,
                     city: 'San Francisco',
+                    type: 'apartment',
                     address: 'San Francisco, CA, United States',
                     name: 'Soma 2bunk bed/Furnished kitchen&laundry included',
                     pictures: [
@@ -516,6 +630,7 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
                 {
                     id: 15,
                     city: 'San Francisco',
+                    type: 'apartment',
                     address: 'San Francisco, CA, United States',
                     name: 'shared room in SoMa/1mon',
                     pictures: [
@@ -545,6 +660,7 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
                 {
                     id: 16,
                     city: 'San Francisco',
+                    type: 'apartment',
                     address: 'San Francisco, CA, United States',
                     name: 'Room for women/3-people shared room',
                     pictures: [
@@ -579,6 +695,7 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
                 {
                     id: 17,
                     city: 'San Francisco',
+                    type: 'apartment',
                     address: 'San Francisco, CA, United States',
                     name: 'Twin bed in private room/Outpost Club',
                     pictures: [
@@ -605,6 +722,7 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
                 {
                     id: 18,
                     city: 'San Francisco',
+                    type: 'apartment',
                     address: 'San Francisco, CA, United States',
                     name: 'Dorm Bed In Friendly Hostel Community #2',
                     pictures: [
@@ -639,6 +757,7 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
                 {
                     id: 19,
                     city: 'San Francisco',
+                    type: 'apartment',
                     address: 'San Francisco, CA, United States',
                     name: 'Cozy and Efficient SF Studio Condo.',
                     pictures: [
@@ -661,6 +780,7 @@ export class ProductsViewComponent implements OnInit, OnDestroy {
                 {
                     id: 20,
                     city: 'San Francisco',
+                    type: 'apartment',
                     address: 'San Francisco, CA, United States',
                     name: 'Efficient SOMA Studio',
                     pictures: [

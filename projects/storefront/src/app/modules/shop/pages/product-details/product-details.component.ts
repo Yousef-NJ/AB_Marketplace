@@ -21,6 +21,7 @@ export class ProductDetailsComponent implements OnInit {
     showGallery = false;
 
     products: Array<any> = [];
+    similarProducts: Array<any> = [];
 
     form: FormGroup;
 
@@ -48,6 +49,15 @@ export class ProductDetailsComponent implements OnInit {
         this.products.forEach((product: any) => {
             if (product.id == this.productId) {
                 this.product = product;
+            }
+        });
+
+        this.products.forEach((product: any) => {
+            if (
+                this.product.type == product.type &&
+                product.id != this.productId
+            ) {
+                this.similarProducts.push(product);
             }
         });
 

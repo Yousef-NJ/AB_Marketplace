@@ -29,6 +29,8 @@ import { InsuranceSearchComponent } from './insurance-search/insurance-search.co
 import { PropertySearchComponent } from './property-search/property-search.component';
 import { FilterRangeComponent } from '../shop/filters/filter-range/filter-range.component';
 import { TooltipModule } from 'ngx-bootstrap/tooltip/public_api';
+import { BlockFastComponent } from './block-fast/block-fast.component';
+import { BlockInfoComponent } from './block-info/block-info.component';
 
 @NgModule({
     declarations: [
@@ -49,6 +51,8 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip/public_api';
         TravelSearchComponent,
         InsuranceSearchComponent,
         PropertySearchComponent,
+        BlockFastComponent,
+        BlockInfoComponent,
     ],
     exports: [
         // blocks
@@ -69,6 +73,8 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip/public_api';
         InsuranceSearchComponent,
         PropertySearchComponent,
         CarSearchComponent,
+        BlockFastComponent,
+        BlockInfoComponent,
     ],
     imports: [
         // modules (angular)

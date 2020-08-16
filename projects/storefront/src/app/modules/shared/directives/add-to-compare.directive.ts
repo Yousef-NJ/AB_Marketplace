@@ -13,27 +13,48 @@ export class AddToCompareDirective implements OnDestroy {
 
     inProgress = false;
 
+    static type: string = 'any';
+
     constructor(
         private compare: CompareService,
-        private cd: ChangeDetectorRef,
-    ) { }
+        private cd: ChangeDetectorRef
+    ) {}
 
     ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }
 
-    add(product: Product): void {
+    add(product: any): void {
         if (this.inProgress) {
             return;
         }
 
+        console.log(product.type);
+        console.log(AddToCompareDirective.type);
+
+        if (product.type != AddToCompareDirective.type) {
+            console.log('clear');
+            this.compare
+                .clear()
+                .pipe(takeUntil(this.destroy$))
+                .subscribe({
+                    complete: () => {},
+                });
+            AddToCompareDirective.type = product.type;
+        }
+
+        console.log('current type' + AddToCompareDirective.type);
+
         this.inProgress = true;
-        this.compare.add(product).pipe(takeUntil(this.destroy$)).subscribe({
-            complete: () => {
-                this.inProgress = false;
-                this.cd.markForCheck();
-            },
-        });
+        this.compare
+            .add(product)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe({
+                complete: () => {
+                    this.inProgress = false;
+                    this.cd.markForCheck();
+                },
+            });
     }
 }

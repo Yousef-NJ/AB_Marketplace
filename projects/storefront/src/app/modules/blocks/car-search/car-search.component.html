@@ -4,7 +4,12 @@
     style="background-color: white; opacity: 1;"
 ></div>
 <div class="block-finder__body container container--max--xl">
-    <div class="block-finder__title" style="color: black;">Car</div>
+    <div
+        class="block-finder__title"
+        style="color: royalblue; margin-bottom: 30px; margin-top: 10px;"
+    >
+        <i class="fas fa-car fa-3x"></i>
+    </div>
     <!-- <div class="block-finder__subtitle">{{ 'TEXT_BLOCK_FINDER_SUBTITLE'|translate }}</div> -->
     <div class="warpper">
         <input class="radio" id="one" name="group" type="radio" checked />
@@ -12,19 +17,21 @@
         <input class="radio" id="three" name="group" type="radio" />
         <div class="tabs">
             <label class="tab" id="one-tab" for="one">Buy</label>
-            <label class="tab" id="two-tab" for="two">Rent</label>
+            <!-- <label class="tab" id="two-tab" for="two">Rent</label> -->
             <label class="tab" id="three-tab" for="three">Plan</label>
         </div>
         <div class="panels">
             <div class="panel" id="one-panel">
-                <div class="block-finder__body container container--max--xl">
+                <div
+                    class="block-finder__body container container--max--xl w-100"
+                >
                     <form class="block-finder__form" (submit)="submit()">
                         <select
                             class="vehicle-select__item-control"
                             #selectedBrand
                             (change)="onBrandSelected(selectedBrand.value)"
                         >
-                            <option value="none">Select Brand</option>
+                            <option value="none">Brand</option>
                             <option value="Ford">Ford</option>
                             <option value="Audi">Audi</option>
                             <option value="BMW">BMW</option>
@@ -35,7 +42,7 @@
                             #selectedYear
                             (change)="onYearSelected(selectedYear.value)"
                         >
-                            <option value="all">Select Year </option>
+                            <option value="all">Year </option>
                             <option value="2015" name="" id="">
                                 2015
                             </option>
@@ -56,19 +63,19 @@
                             </option>
                         </select>
 
-                        <select class="vehicle-select__item-control" #selectedPrice
-                        (change)="onYearSelected(selectedYear.value)">
-                            <option value="all">Select Price </option>
+                        <select
+                            class="vehicle-select__item-control"
+                            #selectedPrice
+                            (change)="onYearSelected(selectedYear.value)"
+                        >
+                            <option value="all">Price </option>
 
                             <option value="0-10000">
-                            0-10,000
+                                0-10,000
                             </option>
-                            <option value="10001-15000">10,001-15,000
-                            </option>
-                            <option value="15001-20000">15,001-20,000
-                            </option>
-                            <option value="20001-50000">20,001-50,00
-                            </option>
+                            <option value="10001-15000">10,001-15,000 </option>
+                            <option value="15001-20000">15,001-20,000 </option>
+                            <option value="20001-50000">20,001-50,00 </option>
                         </select>
 
                         <a
@@ -90,78 +97,65 @@
             <div class="panel" id="two-panel">
                 <div class="block-finder__body container container--max--xl">
                     <form class="block-finder__form" (submit)="submit()">
-                        <select class="vehicle-select__item-control">
-                            <option value="none">Select City</option>
+                        <select
+                            class="vehicle-select__item-control"
+                            #selectedBrand
+                            (change)="onBrandSelected(selectedBrand.value)"
+                        >
+                            <option value="none">Brand</option>
+                            <option value="Ford">Ford</option>
+                            <option value="Audi">Audi</option>
+                            <option value="BMW">BMW</option>
+                        </select>
 
-                            <option>
-                                <input type="checkbox" name="" id="" /> City 1
+                        <select
+                            class="vehicle-select__item-control"
+                            #selectedYear
+                            (change)="onYearSelected(selectedYear.value)"
+                        >
+                            <option value="all">Year </option>
+                            <option value="2015" name="" id="">
+                                2015
                             </option>
-                            <option>
-                                <input type="checkbox" name="" id="" />BBB
+                            <option value="2016" name="" id="">
+                                2016
                             </option>
-                            <option>
-                                <input type="checkbox" name="" id="" />CCC
+                            <option value="2017" name="" id="">
+                                2017
                             </option>
-                            <option>
-                                <input type="checkbox" name="" id="" />DDD
+                            <option value="2018" name="" id="">
+                                2018
+                            </option>
+                            <option value="2019" name="" id="">
+                                2019
+                            </option>
+                            <option value="2020" name="" id="">
+                                2020
                             </option>
                         </select>
 
-                        <select class="vehicle-select__item-control">
-                            <option value="none">Select Area</option>
+                        <select
+                            class="vehicle-select__item-control"
+                            #selectedPrice
+                            (change)="onYearSelected(selectedYear.value)"
+                        >
+                            <option value="all">Price </option>
 
-                            <option>
-                                <input type="checkbox" name="" id="" />Area
+                            <option value="0-10000">
+                                0-10,000
                             </option>
-                            <option>
-                                <input type="checkbox" name="" id="" />BBB
-                            </option>
-                            <option>
-                                <input type="checkbox" name="" id="" />CCC
-                            </option>
-                            <option>
-                                <input type="checkbox" name="" id="" />DDD
-                            </option>
-                        </select>
-                        <select class="vehicle-select__item-control">
-                            <option value="none">Select Type</option>
-
-                            <option>
-                                <input type="checkbox" name="" id="" />Select
-                                Area
-                            </option>
-                            <option>
-                                <input type="checkbox" name="" id="" />BBB
-                            </option>
-                            <option>
-                                <input type="checkbox" name="" id="" />CCC
-                            </option>
-                            <option>
-                                <input type="checkbox" name="" id="" />DDD
-                            </option>
-                        </select>
-                        <select class="vehicle-select__item-control">
-                            <option value="none">Number of Room</option>
-
-                            <option>
-                                <input type="checkbox" name="" id="" />Select
-                                Area
-                            </option>
-                            <option>
-                                <input type="checkbox" name="" id="" />BBB
-                            </option>
-                            <option>
-                                <input type="checkbox" name="" id="" />CCC
-                            </option>
-                            <option>
-                                <input type="checkbox" name="" id="" />DDD
-                            </option>
+                            <option value="10001-15000">10,001-15,000 </option>
+                            <option value="15001-20000">15,001-20,000 </option>
+                            <option value="20001-50000">20,001-50,00 </option>
                         </select>
 
                         <a
-                            [routerLink]="[
-                                'http://localhost:4200/shop/category/cars'
-                            ]"
+                            [routerLink]="['/shop/category/cars']"
+                            [queryParams]="{
+                                brand: selectedBrand.value,
+                                year: selectedYear.value,
+                                price: selectedPrice.value
+                            }"
                         >
                             <button class="block-finder__button" type="submit">
                                 {{ "BUTTON_BLOCK_FINDER_SEARCH" | translate }}
@@ -171,23 +165,24 @@
                 </div>
             </div>
             <div class="panel" id="three-panel">
-                <h5>How much I make monthlly</h5>
-                <div class="block-finder__body container container--max--xl">
+                <!-- <h5>How much I make monthlly</h5> -->
+                <!-- <div class="block-finder__body container container--max--xl">
                     <input
                         type="range"
                         min="1"
                         max="10000"
                         value="0"
                         class="slider"
-                        #income
                         (change)="onChangeIncomeValue(income.value)"
                         data-toggle="tooltip"
                         data-placement="top"
                         trigger="click"
                         title="{{ incomeValue }}"
+                        (input)="changeIncome(income.value)"
+                        #income
                     />
-                    <p style="color: black;">{{ incomeValue }} $</p>
-                </div>
+                    <p style="color: black;">{{ income.value }} $</p>
+                </div> -->
 
                 <h5>How much I could pay</h5>
 
@@ -195,7 +190,7 @@
                     <input
                         type="range"
                         min="1"
-                        max="10000"
+                        max="5000"
                         value="0"
                         class="slider"
                         #monthlyinstallment
@@ -207,13 +202,37 @@
                         data-toggle="tooltip"
                         data-placement="top"
                         title="{{ monthlyinstallmentValue }}"
+                        (input)="
+                            onChangeMonthlyInstallmentValue(
+                                monthlyinstallment.value
+                            )
+                        "
                     />
                     <p style="color: black;">{{ monthlyinstallmentValue }} $</p>
                 </div>
 
-                <h5>How much I have as other liabilities</h5>
+                <h5>How much I have as downpayment</h5>
 
                 <div class="block-finder__body container container--max--xl">
+                    <input
+                        type="range"
+                        min="1"
+                        max="10000"
+                        value="0"
+                        class="slider"
+                        #downpayment
+                        (change)="onChangedownpaymentValue(downpayment.value)"
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title="{{ downpayment }}"
+                        (input)="onChangedownpaymentValue(downpayment.value)"
+                    />
+                    <p style="color: black;">{{ downpaymentValue }} $</p>
+                </div>
+
+                <!-- <h5>How much I have as other liabilities</h5> -->
+
+                <!-- <div class="block-finder__body container container--max--xl">
                     <input
                         type="range"
                         min="1"
@@ -225,9 +244,10 @@
                         data-toggle="tooltip"
                         data-placement="top"
                         title="{{ liabilitiesValue }}"
+                        (input)="onChangeLiabilitiesValue(liabilities.value)"
                     />
                     <p style="color: black;">{{ liabilitiesValue }} $</p>
-                </div>
+                </div> -->
 
                 <h5>How much months my plan</h5>
 
@@ -243,6 +263,7 @@
                         data-toggle="tooltip"
                         data-placement="top"
                         title="Tooltip on top"
+                        (input)="onChangeYearsValue(years.value)"
                     />
                     <p style="color: black;">
                         {{ yearsValue }} Months
@@ -250,10 +271,38 @@
                         {{ yearsValue / 12 | number: "2.1-2" }} Years -->
                     </p>
                 </div>
-
-                <h3 style="color: black;">
-                    {{ yearsValue * monthlyinstallmentValue }} $
-                </h3>
+                <div *ngIf="yearsValue != 0">
+                    <h5>You are eligible to take a loan for car cost</h5>
+                    <h3 style="color: black;">
+                        {{
+                            yearsValue * monthlyinstallmentValue -
+                                (yearsValue * monthlyinstallmentValue * 7) /
+                                    100 -
+                                downpaymentValue
+                        }}
+                        $
+                    </h3>
+                    <h5>with 7% interest rate</h5>
+                </div>
+                <div *ngIf="yearsValue != 0">
+                    <a
+                        [routerLink]="['/shop/category/cars']"
+                        [queryParams]="{
+                            brand: 'none',
+                            year: 'all',
+                            price:
+                                '0-' +
+                                (yearsValue * monthlyinstallmentValue -
+                                    (yearsValue * monthlyinstallmentValue * 7) /
+                                        100 -
+                                    downpaymentValue)
+                        }"
+                    >
+                        <button class="block-finder__button" type="submit">
+                            {{ "BUTTON_BLOCK_FINDER_SEARCH" | translate }}
+                        </button></a
+                    >
+                </div>
             </div>
         </div>
     </div>

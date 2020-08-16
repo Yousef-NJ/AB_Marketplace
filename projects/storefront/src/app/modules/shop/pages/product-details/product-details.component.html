@@ -12,79 +12,86 @@
         </div>
     </div>
 </div> -->
-<div class="quickview__body" [formGroup]="form">
-    <app-product-gallery
-        *ngIf="true"
-        class="quickview__gallery"
-        layout="quickview"
-        [images]="product.pictures"
-    ></app-product-gallery>
+<ng-container
+    appAddToCart
+    appAddToWishlist
+    appAddToCompare
+    #cart="addToCart"
+    #wishlist="addToWishlist"
+    #compare="addToCompare"
+>
+    <div class="quickview__body">
+        <app-product-gallery
+            class="quickview__gallery"
+            layout="quickview"
+            [images]="product.pictures"
+        ></app-product-gallery>
 
-    <div class="quickview__product">
-        <div class="quickview__product-name">
-            {{ product.name }}
-        </div>
-        <div class="quickview__product-rating">
-            <div class="quickview__product-rating-stars">
-                <app-rating [value]="product.rating"></app-rating>
+        <div class="quickview__product">
+            <div class="quickview__product-name">
+                {{ product.name }}
             </div>
-            <div class="quickview__product-rating-title">
-                {{
-                    "TEXT_RATING_LABEL"
-                        | translate: { rating: product.rating, reviews: 0 }
-                }}
+            <div class="quickview__product-rating">
+                <div class="quickview__product-rating-stars">
+                    <app-rating [value]="product.rating"></app-rating>
+                </div>
+                <div class="quickview__product-rating-title">
+                    {{
+                        "TEXT_RATING_LABEL"
+                            | translate: { rating: product.rating, reviews: 0 }
+                    }}
+                </div>
             </div>
-        </div>
-        <div class="quickview__product-meta"></div>
-        <div
-            class="quickview__product-description"
-            *ngIf="product.type != 'voucher' && product.type != 'car'"
-        >
-            {{ product.address }}
+            <div class="quickview__product-meta"></div>
+            <div
+                class="quickview__product-description"
+                *ngIf="product.type != 'voucher' && product.type != 'car'"
+            >
+                {{ product.address }}
 
-            <br />
-            <br />
+                <br />
+                <br />
 
-            Bathrooms : {{ product.bathroomLabel }}<br />
-            Beds : {{ product.bedLabel }}<br />
-            Label : {{ product.bedroomLabel }}<br />
-        </div>
-
-        <div
-            class="quickview__product-description"
-            *ngIf="product.type == 'car'"
-        >
-            {{ product.brand }}
-
-            <br />
-            <br />
-
-            Model : {{ product.model }}<br />
-            Year of manufacture : {{ product.year }}<br />
-        </div>
-        <div class="quickview__product-prices-stock">
-            <div class="quickview__product-prices">
-                <ng-container *ngIf="product.compareAtPrice">
-                    <div
-                        class="quickview__product-price quickview__product-price--old"
-                    >
-                        {{ product.price | currencyFormat }}
-                    </div>
-                    <div
-                        class="quickview__product-price quickview__product-price--new"
-                    >
-                        {{ product.price | currencyFormat }}
-                    </div>
-                </ng-container>
-                <ng-container *ngIf="!product.compareAtPrice">
-                    <div
-                        class="quickview__product-price quickview__product-price--current"
-                    >
-                        {{ product.price | currencyFormat }}
-                    </div>
-                </ng-container>
+                Bathrooms : {{ product.bathroomLabel }}<br />
+                Beds : {{ product.bedLabel }}<br />
+                Label : {{ product.bedroomLabel }}<br />
             </div>
-            <!-- <app-status-badge
+
+            <div
+                class="quickview__product-description"
+                *ngIf="product.type == 'car'"
+            >
+                {{ product.brand }}
+
+                <br />
+                <br />
+
+                Model : {{ product.model }}<br />
+                Year of manufacture : {{ product.year }}<br />
+            </div>
+            <div class="quickview__product-prices-stock">
+                <div class="quickview__product-prices">
+                    <ng-container *ngIf="product.compareAtPrice">
+                        <div
+                            class="quickview__product-price quickview__product-price--old"
+                        >
+                            {{ product.price | currencyFormat }}
+                        </div>
+                        <div
+                            class="quickview__product-price quickview__product-price--new"
+                        >
+                            {{ product.price | currencyFormat }}
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="!product.compareAtPrice">
+                        <div
+                            class="quickview__product-price quickview__product-price--current"
+                        >
+                            {{ product.price | currencyFormat }}
+                        </div>
+                    </ng-container>
+                </div>
+                <!-- <app-status-badge
                             class="quickview__product-stock"
                             [type]="{
                                 'in-stock': 'success',
@@ -97,17 +104,17 @@
                                 'on-backorder': 'TEXT_STOCK_ON_BACKORDER'
                             }[product.stock]|translate"
                         ></app-status-badge> -->
-        </div>
+            </div>
 
-        <!-- <app-product-form
+            <!-- <app-product-form
                         *ngIf="product.options.length > 0"
                         formControlName="options"
                         class="quickview__product-form"
                         [options]="product.options"
                     ></app-product-form> -->
 
-        <div class="quickview__product-actions">
-            <!-- <div
+            <div class="quickview__product-actions">
+                <!-- <div
                             class="quickview__product-actions-item quickview__product-actions-item--quantity"
                         >
                             <app-input-number
@@ -115,19 +122,32 @@
                                 min="1"
                             ></app-input-number>
                         </div> -->
-            <div
-                class="quickview__product-actions-item quickview__product-actions-item--addtocart"
-            >
-                <a href="http://localhost:4200/quotation"
-                    ><button type="button" class="btn btn-primary">
-                        Ask for Quotation
-                    </button></a
+                <div
+                    class="quickview__product-actions-item quickview__product-actions-item--addtocart"
                 >
-            </div>
-            <div
-                class="quickview__product-actions-item quickview__product-actions-item--wishlist"
-            >
-                <!-- <button
+                    <a routerLink="/quotation" *ngIf="product.type != 'voucher'"
+                        ><button type="button" class="btn btn-primary">
+                            Ask for Quotation
+                        </button></a
+                    >
+
+                    <button
+                        type="button"
+                        class="product-card__addtocart-icon"
+                        *ngIf="product.type == 'voucher'"
+                        [class.product-card__addtocart-icon--loading]="
+                            cart.inProgress
+                        "
+                        [attr.aria-label]="'BUTTON_ADD_TO_CART' | translate"
+                        (click)="cart.add(product)"
+                    >
+                        <app-icon icon="cart-20"></app-icon>
+                    </button>
+                </div>
+                <div
+                    class="quickview__product-actions-item quickview__product-actions-item--wishlist"
+                >
+                    <!-- <button
                                 appAddToWishlist
                                 type="button"
                                 class="btn btn-muted btn-icon"
@@ -137,8 +157,8 @@
                             >
                                 <app-icon icon="wishlist-16"></app-icon>
                             </button> -->
-            </div>
-            <!-- <div
+                </div>
+                <!-- <div
                             class="quickview__product-actions-item quickview__product-actions-item--compare"
                         >
                             <button
@@ -152,6 +172,12 @@
                                 <app-icon icon="compare-16"></app-icon>
                             </button>
                         </div> -->
+            </div>
         </div>
     </div>
-</div>
+
+    <app-block-sale
+        [loading]="false"
+        [products]="similarProducts"
+    ></app-block-sale>
+</ng-container>

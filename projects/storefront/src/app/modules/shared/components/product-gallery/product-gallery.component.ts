@@ -29,7 +29,7 @@ export type ProductGalleryLayout =
     | 'product-full'
     | 'quickview';
 
-export interface ProductGalleryComponent {
+export interface ProductGalleryItem {
     id: string;
     image: string;
 }
@@ -42,9 +42,9 @@ export interface ProductGalleryComponent {
 export class ProductGalleryComponent implements OnInit, OnDestroy {
     private destroy$: Subject<void> = new Subject<void>();
 
-    items: any = [];
+    items: ProductGalleryItem[] = [];
 
-    currentItem: any = null;
+    currentItem: ProductGalleryItem = null;
 
     showGallery = true;
 
@@ -53,7 +53,10 @@ export class ProductGalleryComponent implements OnInit, OnDestroy {
     thumbnailsCarouselOptions: Partial<OwlCarouselOConfig>;
 
     @Input() set images(images: string[]) {
-        this.items = images;
+        this.items = images.map((image, index) => ({
+            id: `image-${index}`,
+            image,
+        }));
         this.currentItem = this.items[0] || null;
     }
 
@@ -156,12 +159,12 @@ export class ProductGalleryComponent implements OnInit, OnDestroy {
         }
     }
 
-    onThumbnailImageClick(item: any): void {
-        this.featuredCarousel.to(this.items.indexOf(item));
+    onThumbnailImageClick(item: ProductGalleryItem): void {
+        this.featuredCarousel.to(item.id);
         this.currentItem = item;
     }
 
-    openPhotoSwipe(item: any): void {
+    openPhotoSwipe(item: ProductGalleryItem): void {
         if (!item) {
             return;
         }

@@ -48,9 +48,14 @@
                         </thead>
                         <tbody class="cart-table__body">
                         <tr *ngFor="let item of cart.items; index as i" class="cart-table__row" appRemoveFromCart #removeFromCart="removeFromCart">
-                            <td class="cart-table__column cart-table__column--image">
+                            
+                            <td class="cart-table__column cart-table__column--image" C>
                                 <div class="image image--type--product">
-                                    <a [routerLink]="url.product(item.product)" class="image__body">
+                                    <a
+        [routerLink]="['/shop/product-details']"
+        [queryParams]="{ id: item.product.id }"
+     class="image__body">
+                                        
                                         <img class="image__tag" [src]="item.product.pictures[0]" alt="">
                                     </a>
                                 </div>

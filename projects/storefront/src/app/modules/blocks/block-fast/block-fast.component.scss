@@ -1,0 +1,24 @@
+.navbar {
+    width: 100%;
+    background-color: black;
+    overflow: auto;
+}
+
+/* Navbar links */
+.navbar a {
+    float: left;
+    text-align: center;
+    padding: 8px;
+    color: white;
+    text-decoration: none;
+    font-size: 22px;
+    width: 20%;
+}
+.navbar i {
+    align-items: center;
+}
+
+/* Navbar links on mouse-over */
+.navbar a:hover {
+    background-color: grey;
+}

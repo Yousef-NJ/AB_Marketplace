@@ -44,7 +44,6 @@ export class CarsViewComponent implements OnInit, OnDestroy {
 
     layoutButtons: LayoutButton[] = [
         { layout: 'grid', icon: 'layout-grid-16' },
-        { layout: 'grid-with-features', icon: 'layout-grid-with-details-16' },
         { layout: 'list', icon: 'layout-list-16' },
         { layout: 'table', icon: 'layout-table-16' },
     ];
@@ -174,6 +173,79 @@ export class CarsViewComponent implements OnInit, OnDestroy {
 
     trackById(index: number, entity: { id: string | number }): string | number {
         return entity.id;
+    }
+
+    sort(s: string) {
+        if (s == 'asc') {
+            this.sortLowToHigh();
+        } else if (s == 'desc') {
+            this.sortHighToLow();
+        }
+    }
+
+    sortLowToHigh() {
+        this.cars = this.insertionSort();
+    }
+    sortHighToLow() {
+        this.cars = this.insertionSortDesc();
+    }
+
+    insertionSort(): any[] {
+        if (this.products) {
+            let listToSort = this.cars;
+
+            let i = 0,
+                j = 0,
+                len = listToSort.length,
+                holePosition = 0,
+                valueToInsert = null;
+            for (i = 0; i < len; i++) {
+                valueToInsert = listToSort[i]; /* select value to be inserted */
+                holePosition = i;
+                /*locate hole position for the element to be inserted */
+                while (
+                    holePosition > 0 &&
+                    listToSort[holePosition - 1].price > valueToInsert.price
+                ) {
+                    listToSort[holePosition] = listToSort[holePosition - 1];
+                    holePosition = holePosition - 1;
+                }
+                listToSort[
+                    holePosition
+                ] = valueToInsert; /* insert the number at hole position */
+            }
+            return listToSort;
+        }
+        return [];
+    }
+
+    insertionSortDesc(): any[] {
+        if (this.products) {
+            let listToSort = this.cars;
+
+            let i = 0,
+                j = 0,
+                len = listToSort.length,
+                holePosition = 0,
+                valueToInsert = null;
+            for (i = 0; i < len; i++) {
+                valueToInsert = listToSort[i]; /* select value to be inserted */
+                holePosition = i;
+                /*locate hole position for the element to be inserted */
+                while (
+                    holePosition > 0 &&
+                    listToSort[holePosition - 1].price < valueToInsert.price
+                ) {
+                    listToSort[holePosition] = listToSort[holePosition - 1];
+                    holePosition = holePosition - 1;
+                }
+                listToSort[
+                    holePosition
+                ] = valueToInsert; /* insert the number at hole position */
+            }
+            return listToSort;
+        }
+        return [];
     }
 
     getProducts() {

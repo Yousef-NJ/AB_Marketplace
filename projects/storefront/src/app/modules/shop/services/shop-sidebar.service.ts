@@ -20,7 +20,7 @@ export class ShopSidebarService {
         }
     }
 
-    constructor() { }
+    constructor() {}
 
     open(): void {
         this.isOpen = true;

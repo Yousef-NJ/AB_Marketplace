@@ -14,7 +14,7 @@ import { ICreateOrderRequest, IPayPalConfig } from 'ngx-paypal';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { TermsModalComponent } from '../../../shared/components/terms-modal/terms-modal.component';
 import { CartService } from '../../../../services/cart.service';
-import { of, Subject } from 'rxjs';
+import { of, Subject, BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { AddressFormComponent } from '../../../shared/components/address-form/address-form.component';
 import { RegisterFormComponent } from '../../../shared/components/register-form/register-form.component';
@@ -23,6 +23,8 @@ import { AccountApi, CheckoutData, ShopApi } from '../../../../api/base';
 import { environment } from '../../../../../environments/environment';
 import { AddressData } from '../../../../interfaces/address';
 import { UrlService } from '../../../../services/url.service';
+
+import { Order } from '../../../../interfaces/order';
 
 @Component({
     selector: 'app-page-checkout',
@@ -40,6 +42,7 @@ export class PageCheckoutComponent implements OnInit, OnDestroy {
     payPalInit = false;
 
     checkoutInProgress = false;
+    order: any = [];
 
     payments = [
         {
@@ -49,8 +52,8 @@ export class PageCheckoutComponent implements OnInit, OnDestroy {
         },
         {
             name: 'bank',
-            label: 'TEXT_PAYMENT_BANK_LABEL',
-            description: 'TEXT_PAYMENT_BANK_DESCRIPTION',
+            label: 'MobiCash',
+            description: 'MobiCash',
         },
         {
             name: 'points',
@@ -146,32 +149,32 @@ export class PageCheckoutComponent implements OnInit, OnDestroy {
             )
             .subscribe(() => this.router.navigateByUrl('/shop/cart').then());
 
-        this.checkout$
-            .pipe(
-                tap(() => (this.checkoutInProgress = true)),
-                switchMap((checkoutData) => {
-                    const value = this.form.value;
+        // this.checkout$
+        //     .pipe(
+        //         tap(() => (this.checkoutInProgress = true)),
+        //         switchMap((checkoutData) => {
+        //             const value = this.form.value;
 
-                    if (value.createAccount) {
-                        return this.accountApi
-                            .signUp(value.account.email, value.account.password)
-                            .pipe(map(() => checkoutData));
-                    }
+        //             if (value.createAccount) {
+        //                 return this.accountApi
+        //                     .signUp(value.account.email, value.account.password)
+        //                     .pipe(map(() => checkoutData));
+        //             }
 
-                    return of(checkoutData);
-                }),
-                switchMap((checkoutData) =>
-                    this.shopApi.checkout(checkoutData)
-                ),
-                tap(() => (this.checkoutInProgress = false)),
-                finalize(() => (this.checkoutInProgress = false)),
-                takeUntil(this.destroy$)
-            )
-            .subscribe((order) => {
-                this.router
-                    .navigateByUrl(`/shop/checkout/${order.token}`)
-                    .then();
-            });
+        //             return of(checkoutData);
+        //         }),
+        //         switchMap((checkoutData) =>
+        //             this.shopApi.checkout(checkoutData)
+        //         ),
+        //         tap(() => (this.checkoutInProgress = false)),
+        //         finalize(() => (this.checkoutInProgress = false)),
+        //         takeUntil(this.destroy$)
+        //     )
+        //     .subscribe((order) => {
+        //         this.router
+        //             .navigateByUrl(`/shop/checkout/${order.token}`)
+        //             .then();
+        //     });
     }
 
     ngOnDestroy(): void {
@@ -218,7 +221,7 @@ export class PageCheckoutComponent implements OnInit, OnDestroy {
         return this.form.valid;
     }
 
-    private checkout(): void {
+    checkout(): void {
         const value = this.form.value;
 
         const billingAddress = value.billingAddress;
@@ -237,8 +240,6 @@ export class PageCheckoutComponent implements OnInit, OnDestroy {
             shippingAddress,
             comment: value.comment,
         };
-
-        this.checkout$.next(checkoutData);
     }
 
     private initConfig(): void {

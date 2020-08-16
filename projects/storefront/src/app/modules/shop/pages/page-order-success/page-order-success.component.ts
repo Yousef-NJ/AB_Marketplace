@@ -5,6 +5,7 @@ import { map, switchMap, takeUntil } from 'rxjs/operators';
 import { AccountApi } from '../../../../api/base';
 import { Order } from '../../../../interfaces/order';
 import { UrlService } from '../../../../services/url.service';
+import { CartService } from '../../../../services/cart.service';
 
 export interface PageOrderSuccessParams {
     orderToken: string;
@@ -24,14 +25,23 @@ export class PageOrderSuccessComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private accountApi: AccountApi,
         public url: UrlService,
-    ) { }
+        private cart: CartService
+    ) {}
 
     ngOnInit(): void {
-        this.route.params.pipe(
-            map((params: PageOrderSuccessParams) => params.orderToken || this.route.snapshot.data.orderToken),
-            switchMap(orderToken => this.accountApi.getOrderByToken(orderToken)),
-            takeUntil(this.destroy$),
-        ).subscribe(order => this.order = order);
+        this.cart.clearCart();
+        this.route.params
+            .pipe(
+                map(
+                    (params: PageOrderSuccessParams) =>
+                        params.orderToken || this.route.snapshot.data.orderToken
+                ),
+                switchMap((orderToken) =>
+                    this.accountApi.getOrderByToken(orderToken)
+                ),
+                takeUntil(this.destroy$)
+            )
+            .subscribe((order) => (this.order = order));
     }
 
     ngOnDestroy(): void {

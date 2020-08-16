@@ -56,6 +56,12 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
                     rate: 1,
                 },
                 {
+                    symbol: 'JOD',
+                    name: 'Jordanian Dinar',
+                    code: 'JOD',
+                    rate: 0.71,
+                },
+                {
                     symbol: '£',
                     name: 'Pound Sterling',
                     code: 'GBP',
@@ -99,12 +105,12 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
                     image: 'assets/images/languages/language-1.png',
                     direction: 'ltr',
                 },
-                {
-                    code: 'ru',
-                    name: 'Russian',
-                    image: 'assets/images/languages/language-2.png',
-                    direction: 'ltr',
-                },
+                // {
+                //     code: 'ru',
+                //     name: 'Russian',
+                //     image: 'assets/images/languages/language-2.png',
+                //     direction: 'ltr',
+                // },
                 {
                     code: 'ar',
                     name: 'العربية',

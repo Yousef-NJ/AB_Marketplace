@@ -1,3 +1,6 @@
+import { CheckoutItemData } from '../../app/api/base';
+import { AddressData } from '../../app/interfaces/address';
+
 export interface OrderItemOptionDef {
     name: string;
     value: string;
@@ -10,9 +13,9 @@ export interface OrderItemDef {
 }
 
 export interface OrderDef {
-    number: string;
-    createdAt: string;
     payment: string;
-    status: string;
-    items: OrderItemDef[];
+    items: CheckoutItemData[];
+    billingAddress: AddressData;
+    shippingAddress: AddressData;
+    comment: string;
 }

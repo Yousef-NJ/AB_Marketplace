@@ -11,15 +11,17 @@
         <div class="products-view__empty-subtitle">
             {{ "TEXT_NO_MATCHING_ITEMS_SUBTITLE" | translate }}
         </div>
-        <div class="products-view__empty-actions">
-            <button
-                type="button"
-                class="btn btn-primary btn-sm"
-                (click)="page.resetAllFilters()"
-            >
-                {{ "BUTTON_RESET_FILTERS" | translate }}
-            </button>
-        </div>
+        <a routerLink="/cars">
+            <div class="products-view__empty-actions">
+                <button
+                    type="button"
+                    class="btn btn-primary btn-sm"
+                    (click)="page.resetAllFilters()"
+                >
+                    {{ "BUTTON_RESET_FILTERS" | translate }}
+                </button>
+            </div></a
+        >
     </div>
 
     <div
@@ -45,21 +47,23 @@
             "
         >
             <div class="view-options__body">
-                <button
-                    type="button"
-                    class="view-options__filters-button filters-button"
-                    (click)="sidebar.open()"
+                <a routerLink="/cars">
+                    <button
+                        type="button"
+                        class="view-options__filters-button filters-button"
+                        (click)="sidebar.open()"
+                    >
+                        <span class="filters-button__icon"
+                            ><app-icon icon="filters-16"></app-icon
+                        ></span>
+                        <span class="filters-button__title">{{
+                            "BUTTON_FILTERS" | translate
+                        }}</span>
+                        <span class="filters-button__counter">{{
+                            currentFiltersCount$ | async
+                        }}</span>
+                    </button></a
                 >
-                    <span class="filters-button__icon"
-                        ><app-icon icon="filters-16"></app-icon
-                    ></span>
-                    <!-- <span class="filters-button__title">{{
-                        "BUTTON_FILTERS" | translate
-                    }}</span> -->
-                    <span class="filters-button__counter">{{
-                        currentFiltersCount$ | async
-                    }}</span>
-                </button>
 
                 <div class="view-options__layout layout-switcher">
                     <div class="layout-switcher__list">
@@ -86,20 +90,22 @@
                     <select
                         id="view-option-sort"
                         class="form-control form-control-sm"
-                        [formControl]="sortControl"
+                        #sorting
+                        (change)="sort(sorting.value)"
                     >
                         <option value="default">{{
                             "INPUT_SORT_OPTION_DEFAULT" | translate
                         }}</option>
-                        <option value="name_asc">{{
-                            "INPUT_SORT_OPTION_NAME_ASC" | translate
-                        }}</option>
-                        <option value="name_desc">{{
-                            "INPUT_SORT_OPTION_NAME_DESC" | translate
-                        }}</option>
+                        <option value="asc" (click)="sortLowToHigh()"
+                            >Price Low to High</option
+                        >
+                        <option value="desc" (click)="sortHighToLow()"
+                            >Price High to Low</option
+                        >
                     </select>
                 </div>
-                <div class="view-options__select">
+
+                <!-- <div class="view-options__select">
                     <label for="view-option-limit"
                         >{{ "INPUT_LIMIT_LABEL" | translate }}:</label
                     >
@@ -113,10 +119,10 @@
                         <option value="24">24</option>
                         <option value="32">32</option>
                     </select>
-                </div>
+                </div> -->
             </div>
 
-            <!-- <div
+            <div
                 class="view-options__body view-options__body--filters"
                 *ngIf="hasActiveFilters$ | async"
             >
@@ -185,7 +191,7 @@
                         </li>
                     </ul>
                 </div>
-            </div> -->
+            </div>
         </div>
 
         <div
@@ -228,6 +234,11 @@
                 <div *ngFor="let product of cars" class="products-list__item">
                     <app-product-card [product]="product"></app-product-card>
                 </div>
+            </div>
+
+            <div *ngIf="cars.length == 0">
+                <h2>Sorry ...</h2>
+                <h4>No results are available</h4>
             </div>
         </div>
 
