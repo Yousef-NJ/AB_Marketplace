@@ -25,14 +25,14 @@ export interface GetProductsListOptions {
     page?: number;
     limit?: number;
     sort?: string;
-    filters?: {[slug: string]: string};
+    filters?: { [slug: string]: string };
 }
 
 export interface GetProductReviewsOptions {
     page?: number;
     limit?: number;
     sort?: string;
-    filters?: {[slug: string]: string};
+    filters?: { [slug: string]: string };
 }
 
 export interface AddProductReviewData {
@@ -68,39 +68,66 @@ export interface CheckoutData {
     items: CheckoutItemData[];
     billingAddress: AddressData;
     shippingAddress: AddressData;
-    comment: string;
 }
 
 export abstract class ShopApi {
-    abstract getCategoryBySlug(slug: string, options?: GetCategoryBySlugOptions): Observable<ShopCategory>;
+    abstract getCategoryBySlug(
+        slug: string,
+        options?: GetCategoryBySlugOptions
+    ): Observable<ShopCategory>;
 
-    abstract getCategories(options?: GetCategoriesOptions): Observable<ShopCategory[]>;
+    abstract getCategories(
+        options?: GetCategoriesOptions
+    ): Observable<ShopCategory[]>;
 
     abstract getBrands(options?: GetBrandsOptions): Observable<Brand[]>;
 
-    abstract getProductsList(options?: GetProductsListOptions): Observable<ProductsList>;
+    abstract getProductsList(
+        options?: GetProductsListOptions
+    ): Observable<ProductsList>;
 
     abstract getProductBySlug(slug: string): Observable<Product>;
 
-    abstract getProductReviews(productId: number, options?: GetProductReviewsOptions): Observable<ReviewsList>;
+    abstract getProductReviews(
+        productId: number,
+        options?: GetProductReviewsOptions
+    ): Observable<ReviewsList>;
 
-    abstract addProductReview(productId: number, data: AddProductReviewData): Observable<Review>;
+    abstract addProductReview(
+        productId: number,
+        data: AddProductReviewData
+    ): Observable<Review>;
 
     abstract getProductAnalogs(productId: number): Observable<Product[]>;
 
-    abstract getRelatedProducts(productId: number, limit: number): Observable<Product[]>;
+    abstract getRelatedProducts(
+        productId: number,
+        limit: number
+    ): Observable<Product[]>;
 
-    abstract getFeaturedProducts(categorySlug: string, limit: number): Observable<Product[]>;
+    abstract getFeaturedProducts(
+        categorySlug: string,
+        limit: number
+    ): Observable<Product[]>;
 
-    abstract getPopularProducts(categorySlug: string, limit: number): Observable<Product[]>;
+    abstract getPopularProducts(
+        categorySlug: string,
+        limit: number
+    ): Observable<Product[]>;
 
-    abstract getTopRatedProducts(categorySlug: string, limit: number): Observable<Product[]>;
+    abstract getTopRatedProducts(
+        categorySlug: string,
+        limit: number
+    ): Observable<Product[]>;
 
     abstract getSpecialOffers(limit: number): Observable<Product[]>;
 
     abstract getLatestProducts(limit: number): Observable<Product[]>;
 
-    abstract getSearchSuggestions(query: string, options?: GetSearchSuggestionsOptions): Observable<GetSearchSuggestionsResult>;
+    abstract getSearchSuggestions(
+        query: string,
+        options?: GetSearchSuggestionsOptions
+    ): Observable<GetSearchSuggestionsResult>;
 
     abstract checkout(data: CheckoutData): Observable<Order>;
 }

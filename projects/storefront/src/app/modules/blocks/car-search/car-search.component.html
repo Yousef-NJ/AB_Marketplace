@@ -26,7 +26,7 @@
                     class="block-finder__body container container--max--xl w-100"
                 >
                     <form class="block-finder__form" (submit)="submit()">
-                        <select
+                        <!-- <select
                             class="vehicle-select__item-control"
                             #selectedBrand
                             (change)="onBrandSelected(selectedBrand.value)"
@@ -35,9 +35,160 @@
                             <option value="Ford">Ford</option>
                             <option value="Audi">Audi</option>
                             <option value="BMW">BMW</option>
-                        </select>
+                        </select> -->
 
-                        <select
+                        <div style="width: 100%; color: black;">
+                            <button class="filter-btn" (click)="showBrands()">
+                                <div style="float: left;">
+                                    Brand
+                                </div>
+                                <div style="float: right;">
+                                    <img
+                                        src="../../../../assets/images/arrow-img.png"
+                                        alt=""
+                                        width="18px"
+                                    />
+                                </div>
+                                <div style="float: right; margin: 2px;">
+                                    {{ filterdBrands }}
+                                </div>
+                            </button>
+                            <br />
+                            <div *ngIf="brandShowen">
+                                <div>
+                                    <label class="checkBoxContainer"
+                                        >Audi
+                                        <input
+                                            type="checkbox"
+                                            value="Audi"
+                                            #audi
+                                            (change)="addBrand(audi.value)"
+                                        />
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <label class="checkBoxContainer"
+                                        >BMW
+                                        <input
+                                            type="checkbox"
+                                            value="BMW"
+                                            #BMW
+                                            (change)="addBrand(BMW.value)"
+                                        />
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <label class="checkBoxContainer"
+                                        >Ford
+                                        <input
+                                            type="checkbox"
+                                            value="Ford"
+                                            #ford
+                                            (change)="addBrand(ford.value)"
+                                        />
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr />
+                        <br />
+
+                        <div style="width: 100%; color: black;">
+                            <button class="filter-btn" (click)="showUYear()">
+                                <div style="float: left;">
+                                    Year
+                                </div>
+                                <div style="float: right;">
+                                    <img
+                                        src="../../../../assets/images/arrow-img.png"
+                                        alt=""
+                                        width="18px"
+                                    />
+                                </div>
+                                <div style="float: right; margin: 2px;">
+                                    All
+                                </div>
+                            </button>
+                            <br />
+                            <div *ngIf="yearsFilter">
+                                <div>
+                                    <div
+                                        class="block-finder__body container container--max--xl"
+                                    >
+                                        <input
+                                            type="range"
+                                            min="2010"
+                                            max="2020"
+                                            value="0"
+                                            class="slider"
+                                            #carYear
+                                            (change)="
+                                                onCarYearChange(carYear.value)
+                                            "
+                                            data-toggle="tooltip"
+                                            data-placement="top"
+                                            title="{{ carYear }}"
+                                            (input)="
+                                                onCarYearChange(carYear.value)
+                                            "
+                                        />
+                                        <p style="color: black;">
+                                            {{ carYear.value }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr />
+                        <br />
+
+                        <div style="width: 100%; color: black;">
+                            <button class="filter-btn" (click)="showPrice()">
+                                <div style="float: left;">
+                                    Price
+                                </div>
+                                <div style="float: right;">
+                                    <img
+                                        src="../../../../assets/images/arrow-img.png"
+                                        alt=""
+                                        width="18px"
+                                    />
+                                </div>
+                                <div style="float: right; margin: 2px;">
+                                    {{ minPrice }} - {{ maxPrice }}
+                                </div>
+                            </button>
+                            <br />
+                            <div *ngIf="priceFilter">
+                                <div>
+                                    <label for="min">Min</label>
+                                    <input
+                                        type="number"
+                                        name="min"
+                                        id=""
+                                        value="0"
+                                        #min
+                                        (input)="changeMinPrice(min.value)"
+                                        style="width: 50%; margin: 10px;"
+                                    />
+                                    <br />
+                                    <label for="Max">Max</label>
+                                    <input
+                                        type="number"
+                                        name="max"
+                                        id=""
+                                        value="100000"
+                                        #max
+                                        (input)="changeMaxPrice(max.value)"
+                                        style="width: 50%; margin: 10px;"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+
+                        <!-- <select
                             class="vehicle-select__item-control"
                             #selectedYear
                             (change)="onYearSelected(selectedYear.value)"
@@ -61,9 +212,9 @@
                             <option value="2020" name="" id="">
                                 2020
                             </option>
-                        </select>
+                        </select> -->
 
-                        <select
+                        <!-- <select
                             class="vehicle-select__item-control"
                             #selectedPrice
                             (change)="onYearSelected(selectedYear.value)"
@@ -76,14 +227,14 @@
                             <option value="10001-15000">10,001-15,000 </option>
                             <option value="15001-20000">15,001-20,000 </option>
                             <option value="20001-50000">20,001-50,00 </option>
-                        </select>
+                        </select> -->
 
                         <a
                             [routerLink]="['/shop/category/cars']"
                             [queryParams]="{
-                                brand: selectedBrand.value,
-                                year: selectedYear.value,
-                                price: selectedPrice.value
+                                brand: filterdBrands,
+                                year: carYear,
+                                price: minPrice + '-' + maxPrice
                             }"
                         >
                             <button class="block-finder__button" type="submit">
@@ -152,7 +303,7 @@
                         <a
                             [routerLink]="['/shop/category/cars']"
                             [queryParams]="{
-                                brand: selectedBrand.value,
+                                brand: filterdBrands,
                                 year: selectedYear.value,
                                 price: selectedPrice.value
                             }"
@@ -184,13 +335,13 @@
                     <p style="color: black;">{{ income.value }} $</p>
                 </div> -->
 
-                <h5>How much I could pay</h5>
+                <h5>What is your gross monthly income</h5>
 
                 <div class="block-finder__body container container--max--xl">
                     <input
                         type="range"
-                        min="1"
-                        max="5000"
+                        min="0"
+                        max="10000"
                         value="0"
                         class="slider"
                         #monthlyinstallment
@@ -216,7 +367,7 @@
                 <div class="block-finder__body container container--max--xl">
                     <input
                         type="range"
-                        min="1"
+                        min="0"
                         max="10000"
                         value="0"
                         class="slider"
@@ -230,32 +381,79 @@
                     <p style="color: black;">{{ downpaymentValue }} $</p>
                 </div>
 
-                <!-- <h5>How much I have as other liabilities</h5> -->
+                <h5 *ngIf="isVisable">what is your monthly income debt repayment</h5>
 
-                <!-- <div class="block-finder__body container container--max--xl">
+                <div class="block-finder__body container container--max--xl" *ngIf="isVisable">
+                    <p
+                        style="
+                            color: black;
+                            text-align: center;
+                            float: right;
+                            width: 15%;
+                        "
+                    >
+                        {{ liabilitiesValue }} $
+                    </p>
                     <input
                         type="range"
-                        min="1"
+                        min="0"
                         max="10000"
                         value="0"
                         class="slider"
                         #liabilities
+                        style="width: 60%; float: right;"
                         (change)="onChangeLiabilitiesValue(liabilities.value)"
                         data-toggle="tooltip"
                         data-placement="top"
                         title="{{ liabilitiesValue }}"
                         (input)="onChangeLiabilitiesValue(liabilities.value)"
                     />
-                    <p style="color: black;">{{ liabilitiesValue }} $</p>
-                </div> -->
+                    <h6 style="float: right; width: 20%;">Loan</h6>
+                </div>
+                <br />
 
-                <h5>How much months my plan</h5>
+                <br />
 
-                <div class="block-finder__body container container--max--xl">
+                <div class="block-finder__body container container--max--xl" *ngIf="isVisable">
+                    <p
+                        style="
+                            color: black;
+                            text-align: center;
+                            float: right;
+                            width: 15%;
+                        "
+                    >
+                        {{ creditValue }} $
+                    </p>
                     <input
                         type="range"
-                        min="1"
-                        max="96"
+                        min="0"
+                        max="10000"
+                        value="0"
+                        class="slider"
+                        #credit
+                        style="width: 60%; float: right;"
+                        (change)="onChangeLCreditValue(credit.value)"
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title="{{ creditValue }}"
+                        (input)="onChangeLCreditValue(credit.value)"
+                    />
+
+                    <h6 style="float: right; width: 20%;">Credit</h6>
+                </div>
+
+                <br />
+                <br />
+                <br />
+
+                <h5 *ngIf="isVisable">What is your preferred loan period</h5>
+
+                <div class="block-finder__body container container--max--xl" *ngIf="isVisable">
+                    <input
+                        type="range"
+                        min="0"
+                        max="30"
                         value="0"
                         class="slider"
                         #years
@@ -266,36 +464,36 @@
                         (input)="onChangeYearsValue(years.value)"
                     />
                     <p style="color: black;">
-                        {{ yearsValue }} Months
+                        {{ yearsValue }} Years
                         <!-- -
                         {{ yearsValue / 12 | number: "2.1-2" }} Years -->
                     </p>
                 </div>
-                <div *ngIf="yearsValue != 0">
+                <div *ngIf="yearsValue > 0 && mmmm > 0">
                     <h5>You are eligible to take a loan for car cost</h5>
                     <h3 style="color: black;">
-                        {{
-                            yearsValue * monthlyinstallmentValue -
-                                (yearsValue * monthlyinstallmentValue * 7) /
-                                    100 -
-                                downpaymentValue
-                        }}
+                        {{ mmmm }}
                         $
                     </h3>
+                    <h6
+                        *ngIf="yearsValue > 0 && mmmm > 0 && monthlyRepaument>0"
+                        style="color: black;"
+                    >
+                        monthly installment : {{ monthlyRepaument }}
+                    </h6>
                     <h5>with 7% interest rate</h5>
                 </div>
-                <div *ngIf="yearsValue != 0">
+                <div *ngIf="yearsValue > 0 && mmmm < 0">
+                    <h5 style="color: red;">you are not eligible for Auto loan</h5>
+                </div>
+                <div *ngIf="yearsValue > 0 && mmmm > 0">
                     <a
                         [routerLink]="['/shop/category/cars']"
                         [queryParams]="{
-                            brand: 'none',
+                            brand: 'All',
                             year: 'all',
                             price:
-                                '0-' +
-                                (yearsValue * monthlyinstallmentValue -
-                                    (yearsValue * monthlyinstallmentValue * 7) /
-                                        100 -
-                                    downpaymentValue)
+                                '0-' + mmmm
                         }"
                     >
                         <button class="block-finder__button" type="submit">

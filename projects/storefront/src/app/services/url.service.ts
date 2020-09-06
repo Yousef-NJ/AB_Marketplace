@@ -9,7 +9,7 @@ import { Brand } from '../interfaces/brand';
     providedIn: 'root',
 })
 export class UrlService {
-    constructor() { }
+    constructor() {}
 
     home(): string {
         return '/';
@@ -28,7 +28,10 @@ export class UrlService {
     }
 
     shopCategory(category: ShopCategory): string {
-        return `/shop/category/${category.slug}` + (category.layout === 'products' ? '/products' : '');
+        return (
+            `/shop/category/${category.slug}` +
+            (category.layout === 'products' ? '/products' : '')
+        );
     }
 
     allProducts(): string {

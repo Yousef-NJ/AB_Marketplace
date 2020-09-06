@@ -43,7 +43,7 @@
                             <option value="all"> Type</option>
 
                             <option value="apartment">
-                                Apartment
+                                Studio
                             </option>
                         </select>
                         <select
@@ -154,8 +154,8 @@
                 </div>
             </div>
             <div class="panel" id="three-panel">
-                <h5>How much I make monthlly</h5>
-                <div class="block-finder__body container container--max--xl">
+                <!-- <h5>How much I make monthlly</h5> -->
+                <!-- <div class="block-finder__body container container--max--xl">
                     <input
                         type="range"
                         min="1"
@@ -167,18 +167,18 @@
                         data-placement="top"
                         trigger="click"
                         title="{{ incomeValue }}"
-                        (input)="onChangeIncomeValue(income.value)"
+                        (input)="changeIncome(income.value)"
                         #income
                     />
                     <p style="color: black;">{{ income.value }} $</p>
-                </div>
+                </div> -->
 
-                <h5>How much I could pay</h5>
+                <h5>What is your gross monthly income</h5>
 
                 <div class="block-finder__body container container--max--xl">
                     <input
                         type="range"
-                        min="1"
+                        min="0"
                         max="10000"
                         value="0"
                         class="slider"
@@ -205,7 +205,7 @@
                 <div class="block-finder__body container container--max--xl">
                     <input
                         type="range"
-                        min="1"
+                        min="0"
                         max="10000"
                         value="0"
                         class="slider"
@@ -219,32 +219,94 @@
                     <p style="color: black;">{{ downpaymentValue }} $</p>
                 </div>
 
-                <h5>How much I have as other liabilities</h5>
+                <h5 *ngIf="isVisable">
+                    what is your monthly income debt repayment
+                </h5>
 
-                <div class="block-finder__body container container--max--xl">
+                <div
+                    class="block-finder__body container container--max--xl"
+                    *ngIf="isVisable"
+                >
+                    <p
+                        style="
+                            color: black;
+                            text-align: center;
+                            float: right;
+                            width: 15%;
+                        "
+                    >
+                        {{ liabilitiesValue }} $
+                    </p>
                     <input
                         type="range"
-                        min="1"
+                        min="0"
                         max="10000"
                         value="0"
                         class="slider"
                         #liabilities
+                        style="width: 60%; float: right;"
                         (change)="onChangeLiabilitiesValue(liabilities.value)"
                         data-toggle="tooltip"
                         data-placement="top"
                         title="{{ liabilitiesValue }}"
                         (input)="onChangeLiabilitiesValue(liabilities.value)"
                     />
-                    <p style="color: black;">{{ liabilitiesValue }} $</p>
+                    <h6 style="float: right; width: 20%; color: black;">
+                        Loan
+                    </h6>
                 </div>
+                <br />
 
-                <h5>How much months my plan</h5>
+                <br />
 
-                <div class="block-finder__body container container--max--xl">
+                <div
+                    class="block-finder__body container container--max--xl"
+                    *ngIf="isVisable"
+                >
+                    <p
+                        style="
+                            color: black;
+                            text-align: center;
+                            float: right;
+                            width: 15%;
+                        "
+                    >
+                        {{ creditValue }} $
+                    </p>
                     <input
                         type="range"
-                        min="1"
-                        max="96"
+                        min="0"
+                        max="10000"
+                        value="0"
+                        class="slider"
+                        #credit
+                        style="width: 60%; float: right;"
+                        (change)="onChangeLCreditValue(credit.value)"
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title="{{ creditValue }}"
+                        (input)="onChangeLCreditValue(credit.value)"
+                    />
+
+                    <h6 style="float: right; width: 20%; color: black;">
+                        Credit
+                    </h6>
+                </div>
+
+                <br />
+                <br />
+                <br />
+
+                <h5 *ngIf="isVisable">What is your preferred loan period</h5>
+
+                <div
+                    class="block-finder__body container container--max--xl"
+                    *ngIf="isVisable"
+                >
+                    <input
+                        type="range"
+                        min="0"
+                        max="30"
                         value="0"
                         class="slider"
                         #years
@@ -255,24 +317,37 @@
                         (input)="onChangeYearsValue(years.value)"
                     />
                     <p style="color: black;">
-                        {{ yearsValue }} Months
+                        {{ yearsValue }} Years
                         <!-- -
                         {{ yearsValue / 12 | number: "2.1-2" }} Years -->
                     </p>
                 </div>
-                <div *ngIf="yearsValue != 0">
+                <div *ngIf="yearsValue > 0 && mmmm > 0">
                     <h5>You are eligible to take a loan for car cost</h5>
                     <h3 style="color: black;">
-                        {{ yearsValue * monthlyinstallmentValue }} $
+                        {{ mmmm }}
+                        $
                     </h3>
+                    <h6
+                        *ngIf="
+                            yearsValue > 0 && mmmm > 0 && monthlyRepaument > 0
+                        "
+                        style="color: black;"
+                    >
+                        monthly installment : {{ monthlyRepaument }}
+                    </h6>
                     <h5>with 7% interest rate</h5>
                 </div>
-                <div *ngIf="yearsValue != 0">
+                <div *ngIf="yearsValue > 0 && mmmm < 0">
+                    <h5 style="color: red;">
+                        you are not eligible for mortgage loan
+                    </h5>
+                </div>
+                <div *ngIf="yearsValue > 0 && mmmm > 0">
                     <a
                         [routerLink]="['/shop/category/products']"
-                        rel="noopener noreferrer"
                         [queryParams]="{
-                            numberOfRooms: numberOfRooms.value
+                            numberOfRooms: 'all'
                         }"
                     >
                         <button class="block-finder__button" type="submit">

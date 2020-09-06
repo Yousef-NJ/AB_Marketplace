@@ -5,6 +5,7 @@ import { OrdersList } from '../../../../interfaces/list';
 import { distinctUntilChanged, mergeMap, takeUntil } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { UrlService } from '../../../../services/url.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     selector: 'app-page-orders',
@@ -16,10 +17,27 @@ export class PageOrdersComponent implements OnInit, OnDestroy {
 
     currentPage: FormControl = new FormControl(1);
     list: OrdersList;
+    orders: any;
 
-    constructor(private accountApi: AccountApi, public url: UrlService) {}
+    constructor(
+        private accountApi: AccountApi,
+        public url: UrlService,
+        private http: HttpClient
+    ) {}
 
     ngOnInit(): void {
+        // this.http
+        //     .get('http://192.168.43.38:4040/order')
+        //     .subscribe((data: any) => {
+        //         this.orders = data;
+        //         console.log(this.orders);
+        //     });
+        this.http
+            .get('http://192.168.43.38:4040/order')
+            .subscribe((data: any) => {
+                this.orders = data.reverse();
+                console.log(this.orders);
+            });
         merge(of(this.currentPage.value), this.currentPage.valueChanges)
             .pipe(
                 distinctUntilChanged(),

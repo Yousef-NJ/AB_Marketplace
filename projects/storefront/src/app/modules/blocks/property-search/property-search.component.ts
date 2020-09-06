@@ -26,6 +26,10 @@ export class PropertySearchComponent implements OnInit {
     incomeValue: any = 0;
     numberOfRooms: string = 'all';
     downpaymentValue: any = 0;
+    isVisable: boolean = false;
+    creditValue: any = 0;
+    monthlyRepaument: number = 0;
+    mmmm: number = 0;
 
     get vehicle(): Vehicle {
         return this.vehicleControl.value;
@@ -90,33 +94,65 @@ export class PropertySearchComponent implements OnInit {
         this.value = event;
     }
 
+    cal() {
+        let m: number = +this.liabilitiesValue;
+        let c: number = +this.creditValue;
+        let k: number = +this.monthlyinstallmentValue;
+        let x: number = +(k * 0.5 - (c + m)) * this.yearsValue * 12;
+        let y: number = +(x * 7) / 100;
+        let down: number = +this.downpaymentValue;
+        this.mmmm = down + x + y;
+        this.monthlyRepaument = +y / 12;
+
+        this.mmmm = Math.ceil(this.mmmm);
+        this.monthlyRepaument = Math.ceil(this.monthlyRepaument);
+    }
+
     onChangeYearsValue(value: string) {
         console.log('the selected value is ' + value);
         this.value = value;
         this.yearsValue = value;
+        this.cal();
     }
 
     onChangeLiabilitiesValue(value: string) {
         console.log('the selected value is ' + value);
         this.value = value;
         this.liabilitiesValue = value;
+        this.cal();
+    }
+
+    onChangeLCreditValue(value: any) {
+        this.creditValue = value;
+        this.cal();
     }
 
     onChangeMonthlyInstallmentValue(value: string) {
-        console.log('the selected value is ' + value);
+        // console.log('the selected value is ' + value);
         this.value = value;
         this.monthlyinstallmentValue = value;
+        if (this.downpaymentValue > 0) {
+            this.isVisable = true;
+        }
+        this.cal();
     }
 
     onChangeIncomeValue(value: string) {
-        console.log('the selected value is ' + value);
+        // console.log('the selected value is ' + value);
         this.value = value;
         this.incomeValue = value;
+        this.cal();
     }
-    onNumberOfRoomsSelected(value: string) {
-        this.numberOfRooms = value;
-    }
+
     onChangedownpaymentValue(value: string) {
         this.downpaymentValue = value;
+        if (this.monthlyinstallmentValue > 0) {
+            this.isVisable = true;
+        }
+        this.cal();
+    }
+
+    onNumberOfRoomsSelected(value: string) {
+        this.numberOfRooms = value;
     }
 }

@@ -339,6 +339,7 @@
                                     class="compare-table__column compare-table__column--product"
                                 >
                                     <button
+                                        *ngIf="product.type == 'voucher'"
                                         appAddToCart
                                         type="button"
                                         class="btn btn-sm btn-primary"

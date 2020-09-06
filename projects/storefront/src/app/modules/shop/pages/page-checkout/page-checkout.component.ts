@@ -25,6 +25,7 @@ import { AddressData } from '../../../../interfaces/address';
 import { UrlService } from '../../../../services/url.service';
 
 import { Order } from '../../../../interfaces/order';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     selector: 'app-page-checkout',
@@ -88,7 +89,8 @@ export class PageCheckoutComponent implements OnInit, OnDestroy {
         private zone: NgZone,
         public url: UrlService,
         public accountApi: AccountApi,
-        public cart: CartService
+        public cart: CartService,
+        public http: HttpClient
     ) {
         this.form = this.fb.group({
             billingAddress: [{}],
@@ -238,8 +240,15 @@ export class PageCheckoutComponent implements OnInit, OnDestroy {
             })),
             billingAddress,
             shippingAddress,
-            comment: value.comment,
         };
+
+        console.log(checkoutData);
+        // this.http
+        //     .post('http://192.168.43.38:4040/order', checkoutData)
+        //     .subscribe((data: any) => console.log(data));
+        this.http
+            .post('http://192.168.43.38:4040/order', checkoutData)
+            .subscribe((data: any) => console.log(data));
     }
 
     private initConfig(): void {

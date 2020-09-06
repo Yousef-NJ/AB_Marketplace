@@ -17,5 +17,4 @@ export interface OrderDef {
     items: CheckoutItemData[];
     billingAddress: AddressData;
     shippingAddress: AddressData;
-    comment: string;
 }

@@ -130,6 +130,14 @@
                             Ask for Quotation
                         </button></a
                     >
+                    <button
+                        type="button"
+                        class="btn btn-info"
+                        *ngIf="product.type != 'voucher'"
+                        style="margin-left: 20px;"
+                    >
+                        Product Inquiry
+                    </button>
 
                     <button
                         type="button"

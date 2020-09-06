@@ -49,6 +49,10 @@ const routes: Routes = [
                 component: PageOrderDetailsComponent,
             },
             {
+                path: 'order-details',
+                component: PageOrderDetailsComponent,
+            },
+            {
                 path: 'addresses',
                 component: PageAddressesComponent,
             },

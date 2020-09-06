@@ -59,9 +59,6 @@
                         <span class="filters-button__title">{{
                             "BUTTON_FILTERS" | translate
                         }}</span>
-                        <span class="filters-button__counter">{{
-                            currentFiltersCount$ | async
-                        }}</span>
                     </button></a
                 >
 
@@ -237,8 +234,10 @@
             </div>
 
             <div *ngIf="cars.length == 0">
-                <h2>Sorry ...</h2>
-                <h4>No results are available</h4>
+                <div style="text-align: center;">
+                    <h4>Sorry ...</h4>
+                    <h6>No results are available</h6>
+                </div>
             </div>
         </div>
 
